@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Business Name | Professional Cleaning Services</title>
+    <link rel="preconnect" href="[fonts.googleapis.com](https://fonts.googleapis.com)">
+    <link rel="preconnect" href="[fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+    <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap)" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #4A90B8;
+            --light-blue: #E8F4F8;
+            --dark: #1a1a1a;
+            --gray: #6b7280;
+            --light-gray: #f8f9fa;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .logo span {
+            color: var(--primary-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 2px;
+            background: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 5% 4rem;
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-blue) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(74, 144, 184, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--primary-blue);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+            box-shadow: 0 10px 30px rgba(74, 144, 184, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #3d7a9e;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(74, 144, 184, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--dark);
+            border: 2px solid var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--dark);
+            color: var(--white);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--gray);
+        }
+
+        /* Services Section */
+        .services {
+            background: var(--light-gray);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--light-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* Why Choose Us */
+        .why-us {
+            background: var(--white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--light-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+
+        .feature h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* Service Area */
+        .service-area {
+            background: var(--light-blue);
+        }
+
+        .area-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .area-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .area-info p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .area-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .area-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .area-detail span:first-child {
+            font-size: 1.25rem;
+        }
+
+        .map-placeholder {
+            background: var(--white);
+            border-radius: 16px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            border: 2px dashed rgba(74, 144, 184, 0.3);
+        }
+
+        /* Gallery */
+        .gallery {
+            background: var(--white);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .gallery-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .gallery-img {
+            aspect-ratio: 4/3;
+            background: var(--light-gray);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .gallery-img span {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-label {
+            position: absolute;
+            top: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .gallery-label.before {
+            left: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+        }
+
+        .gallery-label.after {
+            right: 1rem;
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Pricing */
+        .pricing {
+            background: var(--light-gray);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary-blue);
+            position: relative;
+        }
+
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin: 1rem 0;
+        }
+
+        .pricing-card .price span {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features .check {
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        /* Contact */
+        .contact {
+            background: var(--white);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-method-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--light-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .contact-method-text h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-method-text p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .contact-form {
+            background: var(--light-gray);
+            padding: 2.5rem;
+            border-radius: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--white);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand .logo {
+            color: var(--white);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-blue);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.75rem;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            }
+            50% {
+                box-shadow: 0 5px 30px rgba(37, 211, 102, 0.6);
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                padding: 1rem;
+                border-bottom: 1px solid var(--light-gray);
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero {
+                padding: 7rem 5% 4rem;
+            }
+
+            .area-content {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .whatsapp-float {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 55px;
+                height: 55px;
+            }
+
+            section {
+                padding: 4rem 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .services-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Your<span>Business</span>Name</div>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#why-us">Why Us</a></li>
+            <li><a href="#area">Service Area</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content fade-in">
+            <h1>Professional Cleaning Services <span>You Can Trust</span></h1>
+            <p>Homes & Offices cleaned to perfection. We bring sparkle to every corner with our expert cleaning solutions.</p>
+            <a href="[wa.me](https://wa.me/YOUR_PHONE_NUMBER)" class="btn btn-primary">
+                <span>📱</span> Book Now on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-header fade-in">
+            <h2>Our Services</h2>
+            <p>Comprehensive cleaning solutions tailored to your needs</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card fade-in">
+                <div class="service-icon">🏠</div>
+                <h3>Home & Office Cleaning</h3>
+                <p>Complete cleaning solutions for residential and commercial spaces, leaving every room spotless.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">✨</div>
+                <h3>Dusting & Vacuuming</h3>
+                <p>Thorough dust removal and floor care using professional-grade equipment for pristine results.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🚿</div>
+                <h3>Kitchen & Bathroom</h3>
+                <p>Deep sanitization and cleaning of kitchens and bathrooms, eliminating germs and grime.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🧹</div>
+                <h3>Deep Cleaning</h3>
+                <p>Intensive cleaning service that reaches every corner, perfect for seasonal refreshes.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🔲</div>
+                <h3>Carpet Cleaning</h3>
+                <p>Professional steam and deep wash treatments to restore your carpets to their original beauty.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🛋️</div>
+                <h3>Upholstery Cleaning</h3>
+                <p>Gentle yet effective cleaning for sofas, chairs, and other upholstered furniture.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🛏️</div>
+                <h3>Mattress Cleaning</h3>
+                <p>Deep cleaning and sanitizing of mattresses for a healthier sleep environment.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-us" id="why-us">
+        <div class="section-header fade-in">
+            <h2>Why Choose Us</h2>
+            <p>We're committed to delivering exceptional cleaning services every time</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature fade-in">
+                <div class="feature-icon">⭐</div>
+                <h3>Reliable & Professional</h3>
+                <p>Our trained team arrives on time and delivers consistent, high-quality results you can count on.</p>
+            </div>
+            <div class="feature fade-in">
+                <div class="feature-icon">🔧</div>
+                <h3>High-Quality Equipment</h3>
+                <p>We use professional-grade tools and eco-friendly products for superior cleaning performance.</p>
+            </div>
+            <div class="feature fade-in">
+                <div class="feature-icon">👁️</div>
+                <h3>Attention to Detail</h3>
+                <p>We don't cut corners. Every surface, every crevice gets the attention it deserves.</p>
+            </div>
+            <div class="feature fade-in">
+                <div class="feature-icon">📅</div>
+                <h3>Flexible Scheduling</h3>
+                <p>Book at your convenience. We work around your schedule to minimize disruption.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Area -->
+    <section class="service-area" id="area">
+        <div class="section-header fade-in">
+            <h2>Service Area</h2>
+            <p>Proudly serving Karlovo and surrounding communities</p>
+        </div>
+        <div class="area-content">
+            <div class="area-info fade-in">
+                <h3>We Come To You</h3>
+                <p>Based in Karlovo, we provide professional cleaning services throughout the region. No matter where you are within our coverage area, we bring the same high-quality service to your doorstep.</p>
+                <div class="area-details">
+                    <div class="area-detail">
+                        <span>📍</span>
+                        <span><strong>Location:</strong> Karlovo, Bulgaria</span>
+                    </div>
+                    <div class="area-detail">
+                        <span>🚗</span>
+                        <span><strong>Coverage:</strong> Up to 100 km radius</span>
+                    </div>
+                    <div class="area-detail">
+                        <span>⏰</span>
+                        <span><strong>Hours:</strong> Mon-Sat, 8:00 - 18:00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="map-placeholder fade-in">
+                <div style="text-align: center;">
+                    <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🗺️</span>
+                    <p>Map Placeholder</p>
+                    <p style="font-size: 0.8rem; margin-top: 0.5rem;">Embed your Google Maps here</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery" id="gallery">
+        <div class="section-header fade-in">
+            <h2>Before & After</h2>
+            <p>See the transformation our cleaning services deliver</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item fade-in">
+                <div class="gallery-comparison">
+                    <div class="gallery-img">
+                        <span>🏚️</span>
+                        Before
+                    </div>
+                    <div class="gallery-img" style="background: var(--light-blue);">
+                        <span>✨</span>
+                        After
+                    </div>
+                </div>
+                <span class="gallery-label before">Before</span>
+                <span class="gallery-label after">After</span>
+            </div>
+            <div class="gallery-item fade-in">
+                <div class="gallery-comparison">
+                    <div class="gallery-img">
+                        <span>🛋️</span>
+                        Before
+                    </div>
+                    <div class="gallery-img" style="background: var(--light-blue);">
+                        <span>✨</span>
+                        After
+                    </div>
+                </div>
+                <span class="gallery-label before">Before</span>
+                <span class="gallery-label after">After</span>
+            </div>
+            <div class="gallery-item fade-in">
+                <div class="gallery-comparison">
+                    <div class="gallery-img">
+                        <span>🚿</span>
+                        Before
+                    </div>
+                    <div class="gallery-img" style="background: var(--light-blue);">
+                        <span>✨</span>
+                        After
+                    </div>
+                </div>
+                <span class="gallery-label before">Before</span>
+                <span class="gallery-label after">After</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="section-header fade-in">
+            <h2>Our Packages</h2>
+            <p>Transparent pricing for every budget</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card fade-in">
+                <h3>Basic</h3>
+                <p style="color: var(--gray);">Essential cleaning</p>
+                <div class="price">$XX <span>/ visit</span></div>
+                <ul class="pricing-features">
+                    <li><span class="check">✓</span> Dusting all surfaces</li>
+                    <li><span class="check">✓</span> Vacuuming floors</li>
+                    <li><span class="check">✓</span> Bathroom cleaning</li>
+                    <li><span class="check">✓</span> Kitchen surfaces</li>
+                    <li><span class="check">✓</span> Trash removal</li>
+                </ul>
+                <a href="#contact" class="btn btn-secondary" style="width: 100%; justify-content: center;">Get Quote</a>
+            </div>
+            <div class="pricing-card featured fade-in">
+                <h3>Standard</h3>
+                <p style="color: var(--gray);">Complete home care</p>
+                <div class="price">$XX <span>/ visit</span></div>
+                <ul class="pricing-features">
+                    <li><span class="check">✓</span> All Basic features</li>
+                    <li><span class="check">✓</span> Deep bathroom clean</li>
+                    <li><span class="check">✓</span> Kitchen appliances</li>
+                    <li><span class="check">✓</span> Window cleaning</li>
+                    <li><span class="check">✓</span> Floor mopping</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Get Quote</a>
+            </div>
+            <div class="pricing-card fade-in">
+                <h3>Premium</h3>
+                <p style="color: var(--gray);">Ultimate deep clean</p>
+                <div class="price">$XX <span>/ visit</span></div>
+                <ul class="pricing-features">
+                    <li><span class="check">✓</span> All Standard features</li>
+                    <li><span class="check">✓</span> Carpet steam cleaning</li>
+                    <li><span class="check">✓</span> Upholstery cleaning</li>
+                    <li><span class="check">✓</span> Mattress sanitizing</li>
+                    <li><span class="check">✓</span> Priority scheduling</li>
+                </ul>
+                <a href="#contact" class="btn btn-secondary" style="width: 100%; justify-content: center;">Get Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="section-header fade-in">
+            <h2>Get In Touch</h2>
+            <p>Ready to experience the difference? Contact us today!</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info fade-in">
+                <h3>Contact Information</h3>
+                <div class="contact-methods">
+                    <a href="[wa.me](https://wa.me/YOUR_PHONE_NUMBER)" class="btn btn-primary" style="margin-bottom: 1rem;">
+                        <span>📱</span> Chat on WhatsApp
+                    </a>
+                    <div class="contact-method">
+                        <div class="contact-method-icon">📞</div>
+                        <div class="contact-method-text">
+                            <h4>Phone</h4>
+                            <p>+359 XXX XXX XXX</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-method-icon">📧</div>
+                        <div class="contact-method-text">
+                            <h4>Email</h4>
+                            <p>info@yourbusiness.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-method-icon">📍</div>
+                        <div class="contact-method-text">
+                            <h4>Location</h4>
+                            <p>Karlovo, Bulgaria</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form fade-in" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+359 XXX XXX XXX" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Tell us about your cleaning needs..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">Your<span>Business</span>Name</div>
+                <p>Professional cleaning services you can trust. Serving Karlovo and surrounding areas with dedication and excellence.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">📘</a>
+                    <a href="#" class="social-link">📸</a>
+                    <a href="#" class="social-link">🐦</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#why-us">Why Us</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#services">Home Cleaning</a></li>
+                    <li><a href="#services">Office Cleaning</a></li>
+                    <li><a href="#services">Carpet Cleaning</a></li>
+                    <li><a href="#services">Deep Cleaning</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 YourBusinessName. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="[wa.me](https://wa.me/YOUR_PHONE_NUMBER)" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        💬
+    </a>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // Scroll Animation
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.fade-in');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Initial check
+        handleScrollAnimation();
+
+        // Listen for scroll
+        window.addEventListener('scroll', handleScrollAnimation);
+
+        // Form Submit Handler
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            // Create WhatsApp message
+            const whatsappMessage = `Hello! My name is ${name}. ${message} You can reach me at ${phone}.`;
+            const whatsappUrl = `[wa.me](https://wa.me/YOUR_PHONE_NUMBER?text=${encodeURIComponent(whatsappMessage)})`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
