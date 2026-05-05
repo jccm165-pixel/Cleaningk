@@ -73,6 +73,54 @@ section{padding:95px 8%}
 .section-title h2{font-size:42px;text-transform:uppercase;margin-bottom:14px}
 .section-title span{color:var(--green)}
 .section-title p{color:var(--soft)}
+  @media (max-width: 600px){
+  .hero{
+    min-height:100vh !important;
+    padding:80px 16px !important;
+    overflow:hidden !important;
+  }
+
+  .hero-content{
+    width:100% !important;
+    max-width:360px !important;
+    margin:0 auto !important;
+    text-align:center !important;
+  }
+
+  .badge{
+    max-width:100% !important;
+    white-space:normal !important;
+    font-size:12px !important;
+  }
+
+  .hero h1{
+    font-size:40px !important;
+    line-height:1 !important;
+    max-width:100% !important;
+    word-break:break-word !important;
+  }
+
+  .hero p{
+    max-width:100% !important;
+    font-size:17px !important;
+  }
+
+  .cta,
+  .buttons{
+    width:100% !important;
+    flex-direction:column !important;
+    align-items:center !important;
+  }
+
+  .cta a,
+  .buttons a,
+  .btn{
+    width:100% !important;
+    max-width:320px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+}
 
 .offer{
 background:var(--green);color:#000;text-align:center;padding:14px;
