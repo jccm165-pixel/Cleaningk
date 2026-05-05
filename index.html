@@ -12,32 +12,45 @@ body{background:#050505;color:#fff}
 :root{--green:#a6e63f;--dark:#050505;--card:#111;--soft:#cfcfcf}
 
 header{
-position:fixed;top:0;width:100%;z-index:1000;
-background:rgba(0,0,0,.75);backdrop-filter:blur(14px);
+position:fixed;top:0;left:0;width:100%;z-index:9999;
+background:rgba(0,0,0,.78);backdrop-filter:blur(16px);
 border-bottom:1px solid rgba(166,230,63,.25);
-padding:18px 8%;display:flex;justify-content:space-between;align-items:center
+padding:16px 8%;display:flex;justify-content:space-between;align-items:center
 }
-.brand{font-size:24px;font-weight:900;letter-spacing:1px}
+
+.brand{font-size:26px;font-weight:900;letter-spacing:1px}
 .brand span{color:var(--green)}
-nav a{color:#fff;text-decoration:none;margin-left:24px;font-size:13px;text-transform:uppercase;letter-spacing:1px}
+
+nav{display:flex;align-items:center;gap:22px}
+nav a{
+color:#fff;text-decoration:none;font-size:13px;text-transform:uppercase;
+letter-spacing:1.2px;font-weight:700;transition:.3s
+}
 nav a:hover{color:var(--green)}
+
+.menu-btn{
+display:none;background:none;border:1px solid rgba(166,230,63,.45);
+color:white;padding:9px 12px;border-radius:8px;font-size:22px
+}
 
 .hero{
 min-height:100vh;
 background:
-radial-gradient(circle at 25% 45%,rgba(166,230,63,.25),transparent 28%),
-linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.94)),
+radial-gradient(circle at 20% 45%,rgba(166,230,63,.28),transparent 28%),
+linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.95)),
 url("Car.jpeg") center/cover no-repeat;
 display:flex;align-items:center;padding:120px 8% 80px
 }
-.hero-content{max-width:760px}
+
+.hero-content{max-width:780px}
 .badge{
 display:inline-block;color:var(--green);border:1px solid rgba(166,230,63,.45);
 padding:8px 15px;border-radius:50px;font-size:12px;letter-spacing:2px;
 text-transform:uppercase;margin-bottom:24px;background:rgba(0,0,0,.45)
 }
-.hero h1{font-size:72px;line-height:.95;text-transform:uppercase;margin-bottom:22px}
-.hero h1 span{color:var(--green);text-shadow:0 0 25px rgba(166,230,63,.45)}
+
+.hero h1{font-size:74px;line-height:.95;text-transform:uppercase;margin-bottom:22px}
+.hero h1 span{color:var(--green);text-shadow:0 0 25px rgba(166,230,63,.5)}
 .hero p{font-size:18px;color:#ddd;max-width:620px;margin-bottom:34px}
 
 .btn{
@@ -46,6 +59,7 @@ border-radius:8px;text-decoration:none;font-weight:900;
 box-shadow:0 0 25px rgba(166,230,63,.35);transition:.3s
 }
 .btn:hover{background:#fff;transform:translateY(-3px)}
+
 .btn-outline{
 display:inline-block;color:#fff;padding:14px 26px;border-radius:8px;
 text-decoration:none;font-weight:900;border:1px solid rgba(255,255,255,.35);
@@ -60,6 +74,7 @@ section{padding:95px 8%}
 .section-title p{color:var(--soft)}
 
 .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+
 .card{
 background:linear-gradient(180deg,#171717,#080808);
 border:1px solid rgba(166,230,63,.22);
@@ -71,6 +86,7 @@ box-shadow:0 0 35px rgba(0,0,0,.45);transition:.3s
 .card ul{list-style:none;margin-bottom:24px}
 .card li{color:#ddd;margin-bottom:11px}
 .price{font-size:22px;font-weight:900}
+
 .featured{border:1px solid var(--green);position:relative}
 .featured::before{
 content:"Most Popular";position:absolute;top:-14px;right:20px;background:var(--green);
@@ -115,7 +131,6 @@ footer{
 background:#000;text-align:center;padding:35px 8%;
 border-top:1px solid rgba(166,230,63,.25);color:#aaa
 }
-footer .brand{margin-bottom:10px}
 
 .whatsapp-float{
 position:fixed;right:20px;bottom:20px;background:#25D366;color:#fff;
@@ -125,11 +140,19 @@ z-index:2000;box-shadow:0 0 25px rgba(37,211,102,.4)
 
 @media(max-width:768px){
 header{padding:14px 5%}
-nav{display:none}
-.brand{font-size:22px}
-.hero{padding:115px 6% 70px;background-position:center}
-.hero h1{font-size:48px}
-hero p{font-size:16px}
+.menu-btn{display:block}
+nav{
+position:absolute;top:68px;left:5%;right:5%;
+background:rgba(0,0,0,.95);backdrop-filter:blur(18px);
+border:1px solid rgba(166,230,63,.25);
+border-radius:16px;padding:18px;
+display:none;flex-direction:column;align-items:flex-start;gap:16px
+}
+nav.active{display:flex}
+nav a{font-size:13px}
+.hero{padding:120px 6% 70px;background-position:center}
+.hero h1{font-size:50px}
+.hero p{font-size:16px}
 .btn-outline{margin-left:0;margin-top:12px}
 section{padding:75px 6%}
 .section-title h2{font-size:32px}
@@ -143,24 +166,33 @@ section{padding:75px 6%}
 
 <header>
   <div class="brand">Direct<span>2</span>You</div>
-  <nav>
-    <a href="#services">Services</a>
-    <a href="#about">About</a>
-    <a href="#why">Why Us</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#contact">Contact</a>
+
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+  <nav id="menu">
+    <a href="#services" onclick="toggleMenu()">Services</a>
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="#why" onclick="toggleMenu()">Why Us</a>
+    <a href="#gallery" onclick="toggleMenu()">Gallery</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
   </nav>
 </header>
 
 <section class="hero">
   <div class="hero-content">
     <div class="badge">Mobile Valeting & Detailing Dublin</div>
+
     <h1>Direct<span>2</span>You</h1>
+
     <p>
       Premium mobile car valeting and detailing at your location in Dublin.
       Reliable service, clean results, and attention to detail every time.
     </p>
-    <a class="btn" href="https://wa.me/353894439214?text=Hi%2C%20I%27d%20like%20to%20book%20a%20car%20valet.%20When%20are%20you%20available%3F" target="_blank">Book via WhatsApp</a>
+
+    <a class="btn" href="https://wa.me/353894439214?text=Hi%2C%20I%27d%20like%20to%20book%20a%20car%20valet.%20When%20are%20you%20available%3F" target="_blank">
+      Book via WhatsApp
+    </a>
+
     <a class="btn-outline" href="#services">View Services</a>
   </div>
 </section>
@@ -267,7 +299,10 @@ section{padding:75px 6%}
 <section id="contact" class="contact">
   <h2>Ready to <span>Book?</span></h2>
   <p>Send us a message on WhatsApp and we’ll get you booked in quickly.</p>
-  <a class="btn" href="https://wa.me/353894439214?text=Hi%2C%20I%27d%20like%20to%20book%20a%20car%20valet.%20When%20are%20you%20available%3F" target="_blank">Message Us on WhatsApp</a>
+
+  <a class="btn" href="https://wa.me/353894439214?text=Hi%2C%20I%27d%20like%20to%20book%20a%20car%20valet.%20When%20are%20you%20available%3F" target="_blank">
+    Message Us on WhatsApp
+  </a>
 </section>
 
 <footer>
@@ -275,7 +310,15 @@ section{padding:75px 6%}
   <p>© 2026 Direct2You Mobile Valeting & Detailing. Dublin, Ireland.</p>
 </footer>
 
-<a class="whatsapp-float" href="https://wa.me/353894439214?text=Hi%2C%20I%20want%20to%20book%20a%20car%20valet" target="_blank">WhatsApp</a>
+<a class="whatsapp-float" href="https://wa.me/353894439214?text=Hi%2C%20I%20want%20to%20book%20a%20car%20valet" target="_blank">
+  WhatsApp
+</a>
+
+<script>
+function toggleMenu(){
+  document.getElementById("menu").classList.toggle("active");
+}
+</script>
 
 </body>
 </html>
