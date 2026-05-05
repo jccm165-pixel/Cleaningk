@@ -203,6 +203,77 @@ section{padding:75px 6%}
 
 .card{
   animation:fadeUp .8s ease both;
+}/* ULTRA PREMIUM UPGRADE */
+
+header{
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(22px);
+  box-shadow:0 8px 35px rgba(0,0,0,.45);
+}
+
+.hero-content{
+  animation:heroReveal 1s ease both;
+}
+
+@keyframes heroReveal{
+  from{
+    opacity:0;
+    transform:translateY(35px) scale(.98);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+.badge{
+  box-shadow:0 0 25px rgba(166,230,63,.18);
+}
+
+.hero h1{
+  letter-spacing:-2px;
+  text-shadow:0 0 35px rgba(0,0,0,.7);
+}
+
+.hero h1 span{
+  text-shadow:0 0 35px rgba(166,230,63,.75);
+}
+
+.btn,
+.btn-outline{
+  position:relative;
+  overflow:hidden;
+}
+
+.btn::before,
+.btn-outline::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-120%;
+  width:80%;
+  height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.45), transparent);
+  transform:skewX(-20deg);
+  transition:.7s;
+}
+
+.btn:hover::before,
+.btn-outline:hover::before{
+  left:130%;
+}
+
+nav a{
+  transition:.3s ease;
+}
+
+nav a:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 18px rgba(166,230,63,.25);
+}
+
+.offer{
+  box-shadow:0 0 35px rgba(166,230,63,.22);
 }
 </style>
 </head>
