@@ -9,49 +9,45 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 html{scroll-behavior:smooth}
 body{background:#050505;color:#fff}
-:root{--green:#a6e63f;--dark:#050505;--card:#111;--soft:#cfcfcf}
+:root{--green:#a6e63f;--soft:#cfcfcf}
 
 header{
 position:fixed;top:0;left:0;width:100%;z-index:9999;
-background:rgba(0,0,0,.78);backdrop-filter:blur(16px);
+background:rgba(0,0,0,.82);backdrop-filter:blur(16px);
 border-bottom:1px solid rgba(166,230,63,.25);
-padding:16px 8%;display:flex;justify-content:space-between;align-items:center
+padding:14px 6%;display:flex;justify-content:space-between;align-items:center
 }
 
 .brand{font-size:26px;font-weight:900;letter-spacing:1px}
 .brand span{color:var(--green)}
 
-nav{display:flex;align-items:center;gap:22px}
+nav{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
 nav a{
-color:#fff;text-decoration:none;font-size:13px;text-transform:uppercase;
-letter-spacing:1.2px;font-weight:700;transition:.3s
+color:#fff;text-decoration:none;font-size:12px;text-transform:uppercase;
+letter-spacing:1px;font-weight:800;padding:8px 12px;border-radius:20px;
+border:1px solid rgba(166,230,63,.25);background:rgba(0,0,0,.35)
 }
-nav a:hover{color:var(--green)}
-
-.menu-btn{
-display:none;background:none;border:1px solid rgba(166,230,63,.45);
-color:white;padding:9px 12px;border-radius:8px;font-size:22px
-}
+nav a:hover{color:#000;background:var(--green)}
 
 .hero{
 min-height:100vh;
 background:
-radial-gradient(circle at 20% 45%,rgba(166,230,63,.28),transparent 28%),
+radial-gradient(circle at 25% 45%,rgba(166,230,63,.28),transparent 30%),
 linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.95)),
-url("Car.jpeg") center/cover no-repeat;
-display:flex;align-items:center;padding:120px 8% 80px
+url("https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+display:flex;align-items:center;padding:130px 8% 80px
 }
 
 .hero-content{max-width:780px}
 .badge{
 display:inline-block;color:var(--green);border:1px solid rgba(166,230,63,.45);
 padding:8px 15px;border-radius:50px;font-size:12px;letter-spacing:2px;
-text-transform:uppercase;margin-bottom:24px;background:rgba(0,0,0,.45)
+text-transform:uppercase;margin-bottom:24px;background:rgba(0,0,0,.55)
 }
 
-.hero h1{font-size:74px;line-height:.95;text-transform:uppercase;margin-bottom:22px}
+.hero h1{font-size:76px;line-height:.95;text-transform:uppercase;margin-bottom:22px}
 .hero h1 span{color:var(--green);text-shadow:0 0 25px rgba(166,230,63,.5)}
-.hero p{font-size:18px;color:#ddd;max-width:620px;margin-bottom:34px}
+.hero p{font-size:18px;color:#ddd;max-width:640px;margin-bottom:34px}
 
 .btn{
 display:inline-block;background:var(--green);color:#000;padding:15px 28px;
@@ -65,63 +61,69 @@ display:inline-block;color:#fff;padding:14px 26px;border-radius:8px;
 text-decoration:none;font-weight:900;border:1px solid rgba(255,255,255,.35);
 margin-left:12px
 }
-.btn-outline:hover{border-color:var(--green);color:var(--green)}
 
 section{padding:95px 8%}
-.section-title{text-align:center;max-width:780px;margin:0 auto 55px}
+.section-title{text-align:center;max-width:800px;margin:0 auto 55px}
 .section-title h2{font-size:42px;text-transform:uppercase;margin-bottom:14px}
 .section-title span{color:var(--green)}
 .section-title p{color:var(--soft)}
 
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.offer{
+background:var(--green);color:#000;text-align:center;padding:14px;
+font-weight:900;margin-top:70px
+}
 
-.card{
+.services,.why-grid,.gallery,.reviews{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px
+}
+
+.card,.why-box,.review{
 background:linear-gradient(180deg,#171717,#080808);
 border:1px solid rgba(166,230,63,.22);
 padding:32px;border-radius:20px;
 box-shadow:0 0 35px rgba(0,0,0,.45);transition:.3s
 }
-.card:hover{transform:translateY(-8px);border-color:var(--green);box-shadow:0 0 35px rgba(166,230,63,.18)}
-.card h3{color:var(--green);font-size:25px;margin-bottom:18px}
+.card:hover,.why-box:hover,.review:hover{transform:translateY(-7px);border-color:var(--green)}
+.card h3,.why-box h3{color:var(--green);font-size:24px;margin-bottom:18px}
 .card ul{list-style:none;margin-bottom:24px}
 .card li{color:#ddd;margin-bottom:11px}
 .price{font-size:22px;font-weight:900}
-
 .featured{border:1px solid var(--green);position:relative}
 .featured::before{
 content:"Most Popular";position:absolute;top:-14px;right:20px;background:var(--green);
 color:#000;padding:7px 13px;border-radius:50px;font-size:12px;font-weight:900
 }
 
-.about{background:#080808}
-.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}
-.about img{width:100%;border-radius:24px;border:1px solid rgba(166,230,63,.3);box-shadow:0 0 45px rgba(166,230,63,.13)}
-.about h2{font-size:42px;margin-bottom:20px}
-.about h2 span{color:var(--green)}
-.about p{color:#ccc;margin-bottom:16px}
+.dark{background:#080808}
 
-.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:22px}
-.why-box{
-background:#101010;border:1px solid rgba(255,255,255,.08);
-border-radius:18px;padding:30px;text-align:center
+.split{
+display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center
 }
-.why-box h3{color:var(--green);margin-bottom:10px}
-.why-box p{color:#ccc}
+.split img,.gallery img{
+width:100%;border-radius:24px;border:1px solid rgba(166,230,63,.3);
+box-shadow:0 0 45px rgba(166,230,63,.13);object-fit:cover
+}
+.split img{height:480px}
+.gallery img{height:280px}
 
-.gallery{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px
+.split h2{font-size:42px;margin-bottom:20px}
+.split h2 span{color:var(--green)}
+.split p{color:#ccc;margin-bottom:16px;line-height:1.7}
+
+.video-box video{
+width:100%;border-radius:24px;border:1px solid rgba(166,230,63,.3);
+box-shadow:0 0 45px rgba(166,230,63,.13)
 }
-.gallery-box{
-height:280px;border-radius:22px;background:url("Car.jpeg") center/cover no-repeat;
-border:1px solid rgba(166,230,63,.25);box-shadow:0 0 35px rgba(0,0,0,.5)
-}
+
+.review p{color:#ddd;line-height:1.6}
+.review strong{color:var(--green)}
 
 .contact{
 text-align:center;
 background:
 radial-gradient(circle at center,rgba(166,230,63,.18),transparent 35%),
 linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.97)),
-url("Car.jpeg") center/cover no-repeat
+url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat
 }
 .contact h2{font-size:48px;text-transform:uppercase;margin-bottom:12px}
 .contact span{color:var(--green)}
@@ -139,24 +141,18 @@ z-index:2000;box-shadow:0 0 25px rgba(37,211,102,.4)
 }
 
 @media(max-width:768px){
-header{padding:14px 5%}
-.menu-btn{display:block}
-nav{
-position:absolute;top:68px;left:5%;right:5%;
-background:rgba(0,0,0,.95);backdrop-filter:blur(18px);
-border:1px solid rgba(166,230,63,.25);
-border-radius:16px;padding:18px;
-display:none;flex-direction:column;align-items:flex-start;gap:16px
-}
-nav.active{display:flex}
-nav a{font-size:13px}
-.hero{padding:120px 6% 70px;background-position:center}
-.hero h1{font-size:50px}
+header{flex-direction:column;gap:10px;padding:12px 4%}
+.brand{font-size:24px}
+nav{gap:8px}
+nav a{font-size:10px;padding:7px 9px}
+.hero{padding:155px 6% 70px}
+.hero h1{font-size:48px}
 .hero p{font-size:16px}
 .btn-outline{margin-left:0;margin-top:12px}
 section{padding:75px 6%}
 .section-title h2{font-size:32px}
-.about-wrap{grid-template-columns:1fr}
+.split{grid-template-columns:1fr}
+.split img{height:330px}
 .contact h2{font-size:36px}
 }
 </style>
@@ -166,33 +162,29 @@ section{padding:75px 6%}
 
 <header>
   <div class="brand">Direct<span>2</span>You</div>
-
-  <button class="menu-btn" onclick="toggleMenu()">☰</button>
-
-  <nav id="menu">
-    <a href="#services" onclick="toggleMenu()">Services</a>
-    <a href="#about" onclick="toggleMenu()">About</a>
-    <a href="#why" onclick="toggleMenu()">Why Us</a>
-    <a href="#gallery" onclick="toggleMenu()">Gallery</a>
-    <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <nav>
+    <a href="#services">Services</a>
+    <a href="#story">Our Story</a>
+    <a href="#why">Why Us</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#video">Video</a>
+    <a href="#contact">Contact</a>
   </nav>
 </header>
+
+<div class="offer">
+🔥 Launch Offer: 10% OFF your first booking — Limited time only
+</div>
 
 <section class="hero">
   <div class="hero-content">
     <div class="badge">Mobile Valeting & Detailing Dublin</div>
-
     <h1>Direct<span>2</span>You</h1>
-
     <p>
       Premium mobile car valeting and detailing at your location in Dublin.
-      Reliable service, clean results, and attention to detail every time.
+      No hassle. No shortcuts. Just clean done right.
     </p>
-
-    <a class="btn" href="https://wa.me/353894439214?text=Hi%2C%20I%27d%20like%20to%20book%20a%20car%20valet.%20When%20are%20you%20available%3F" target="_blank">
-      Book via WhatsApp
-    </a>
-
+    <a class="btn" href="https://wa.me/353894439214?text=Hi%2C%20I%27d%20like%20to%20book%20a%20car%20valet.%20When%20are%20you%20available%3F" target="_blank">Book via WhatsApp</a>
     <a class="btn-outline" href="#services">View Services</a>
   </div>
 </section>
@@ -200,7 +192,7 @@ section{padding:75px 6%}
 <section id="services">
   <div class="section-title">
     <h2>Our <span>Services</span></h2>
-    <p>Designed to keep your car clean, fresh, and well-maintained. Prices may vary depending on vehicle size and condition.</p>
+    <p>Designed to keep your car clean, fresh and well-maintained. Prices may vary depending on vehicle size and condition.</p>
   </div>
 
   <div class="services">
@@ -247,14 +239,25 @@ section{padding:75px 6%}
   </div>
 </section>
 
-<section id="about" class="about">
-  <div class="about-wrap">
-    <img src="Car.jpeg" alt="Direct2You car detailing">
+<section id="story" class="dark">
+  <div class="split">
+    <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=1000&q=80" alt="Car detailer working">
+
     <div>
-      <h2>About <span>Direct2You</span></h2>
-      <p>Direct2You is a mobile car valeting and detailing service based in Dublin.</p>
-      <p>We come to your location, saving you time while keeping your vehicle clean, fresh, and well-maintained.</p>
-      <p>Our focus is simple: honest pricing, reliable service, and visible results.</p>
+      <h2>Why <span>Direct2You?</span></h2>
+      <p>
+        Direct2You started from a simple frustration — seeing cars cleaned badly and rushed.
+      </p>
+      <p>
+        At first, it was just one car. Then another. Then people started asking for help because they didn’t have the time or patience to keep their car looking fresh.
+      </p>
+      <p>
+        So Direct2You was built around one simple promise: we come to you, we take our time, and we do it properly.
+      </p>
+      <p>
+        This isn’t about being the biggest. It’s about being reliable, paying attention to detail, and building trust one car at a time.
+      </p>
+      <p><strong>No shortcuts. No hassle. Just clean done right.</strong></p>
     </div>
   </div>
 </section>
@@ -284,15 +287,63 @@ section{padding:75px 6%}
   </div>
 </section>
 
-<section id="gallery">
+<section id="gallery" class="dark">
   <div class="section-title">
-    <h2>Clean <span>Finish</span></h2>
-    <p>Professional look, fresh results, and a finish that stands out.</p>
+    <h2>Gallery <span>& Results</span></h2>
+    <p>Example visuals for your website. Replace these later with your real before/after work.</p>
   </div>
+
   <div class="gallery">
-    <div class="gallery-box"></div>
-    <div class="gallery-box"></div>
-    <div class="gallery-box"></div>
+    <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=900&q=80" alt="Clean car">
+    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80" alt="Car detail">
+    <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80" alt="Detailed car">
+  </div>
+</section>
+
+<section id="video">
+  <div class="section-title">
+    <h2>Watch <span>Our Work</span></h2>
+    <p>Detailing is all about transformation: dirty to clean, dull to fresh, ordinary to sharp.</p>
+  </div>
+
+  <div class="video-box">
+    <video controls autoplay muted loop playsinline>
+      <source src="https://cdn.coverr.co/videos/coverr-car-wash-9717/1080p.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<section id="reviews" class="dark">
+  <div class="section-title">
+    <h2>Customer <span>Reviews</span></h2>
+    <p>Use this section for real reviews once you start getting customers.</p>
+  </div>
+
+  <div class="reviews">
+    <div class="review">
+      <p>⭐️⭐️⭐️⭐️⭐️</p>
+      <p>“Super convenient. Came to my place and left the car looking fresh.”</p>
+      <p><strong>- First Customer</strong></p>
+    </div>
+
+    <div class="review">
+      <p>⭐️⭐️⭐️⭐️⭐️</p>
+      <p>“Great attention to detail. The interior felt much cleaner.”</p>
+      <p><strong>- Dublin Driver</strong></p>
+    </div>
+
+    <div class="review">
+      <p>⭐️⭐️⭐️⭐️⭐️</p>
+      <p>“Easy booking, fair price and reliable service.”</p>
+      <p><strong>- Local Client</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="areas">
+  <div class="section-title">
+    <h2>Areas <span>We Cover</span></h2>
+    <p>Dublin City Centre, Ranelagh, Rathmines, Ballsbridge, Sandyford, Dundrum and nearby areas.</p>
   </div>
 </section>
 
@@ -313,12 +364,6 @@ section{padding:75px 6%}
 <a class="whatsapp-float" href="https://wa.me/353894439214?text=Hi%2C%20I%20want%20to%20book%20a%20car%20valet" target="_blank">
   WhatsApp
 </a>
-
-<script>
-function toggleMenu(){
-  document.getElementById("menu").classList.toggle("active");
-}
-</script>
 
 </body>
 </html>
