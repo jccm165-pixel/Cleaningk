@@ -305,6 +305,29 @@ nav a:hover{
 .stats span{
   color:#ccc;
   font-size:13px;
+} .floating-actions{
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+  z-index:9999;
+}
+
+.floating-actions a{
+  text-decoration:none;
+  padding:13px 18px;
+  border-radius:50px;
+  font-weight:900;
+  background:#a6e63f;
+  color:#000;
+  box-shadow:0 0 25px rgba(166,230,63,.35);
+}
+
+.floating-actions a:last-child{
+  background:#25D366;
+  color:#fff;
 }
 </style>
 </head>
@@ -327,14 +350,27 @@ nav a:hover{
 🔥 Launch Offer: 10% OFF your first booking — Limited time only
 </div>
 
-<section class="hero">
+<section class="hero video-hero">
+  
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="https://cdn.coverr.co/videos/coverr-car-wash-7991/1080p.mp4" type="video/mp4">
+  </video>
   <div class="hero-content">
     <div class="badge">Mobile Valeting & Detailing Dublin</div>
-    <h1>Direct<span>2</span>You</h1>
-    <p>
-      Premium mobile car valeting and detailing at your location in Dublin.
-      No hassle. No shortcuts. Just clean done right.
-    </p>
+ 
+ <h1>Mobile Car Care <span>Delivered</span></h1>
+
+<div class="animated-text">
+  <span>Valeting.</span>
+  <span>Detailing.</span>
+  <span>Fresh finish.</span>
+  <span>Delivered to you.</span>
+</div>
+
+<p>
+  Premium mobile car valeting and detailing.
+  No hassle. No shortcuts. Just clean done right.
+</p>
   <a class="btn main-cta pulse" href="https://wa.me/353894439214?text=Hi%20I%27d%20like%20to%20book" target="_blank">
   Book Now on WhatsApp
 </a>
@@ -353,6 +389,9 @@ nav a:hover{
 <a class="whatsapp-float" href="https://wa.me/353894439214?text=Hi%2C%20I%20want%20to%20book%20a%20car%20valet" target="_blank">
   WhatsApp
 </a>
-
+<div class="floating-actions">
+  <a href="services.html">💎 View services</a>
+<a href="https://wa.me/...">⚡ Book Now</a>
+</div>
 </body>
 </html>
