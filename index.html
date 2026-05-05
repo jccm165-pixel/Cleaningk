@@ -185,7 +185,11 @@ section{padding:75px 6%}
   background:rgba(166,230,63,.12);
   box-shadow:0 0 28px rgba(166,230,63,.35);
 }
-
+<div class="stats">
+  <div><strong>Mobile</strong><span>We come to you</span></div>
+  <div><strong>Dublin</strong><span>Local service</span></div>
+  <div><strong>10% OFF</strong><span>First booking</span></div>
+</div>
 .pulse{
   animation:pulseGlow 2.2s infinite;
 }
@@ -273,7 +277,34 @@ nav a:hover{
 }
 
 .offer{
-  box-shadow:0 0 35px rgba(166,230,63,.22);
+  box-shadow:0 0 35px rgba(166,230,63,.22); 
+} .stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:14px;
+  margin-top:35px;
+  max-width:650px;
+}
+
+.stats div{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(166,230,63,.28);
+  border-radius:18px;
+  padding:18px;
+  backdrop-filter:blur(12px);
+  box-shadow:0 0 25px rgba(166,230,63,.08);
+}
+
+.stats strong{
+  display:block;
+  color:#a6e63f;
+  font-size:22px;
+  margin-bottom:5px;
+}
+
+.stats span{
+  color:#ccc;
+  font-size:13px;
 }
 </style>
 </head>
