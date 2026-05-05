@@ -1,385 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Direct2You | Mobile Valeting & Detailing Dublin</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, Helvetica, sans-serif;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:#050505;
-  color:#fff;
-}
-
-:root{
-  --green:#a6e63f;
-  --dark:#050505;
-  --card:#111;
-  --soft:#cfcfcf;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+html{scroll-behavior:smooth}
+body{background:#050505;color:#fff}
+:root{--green:#a6e63f;--dark:#050505;--card:#111;--soft:#cfcfcf}
 
 header{
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:1000;
-  background:rgba(0,0,0,0.78);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(166,230,63,0.25);
-  padding:14px 8%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+position:fixed;top:0;width:100%;z-index:1000;
+background:rgba(0,0,0,.75);backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(166,230,63,.25);
+padding:18px 8%;display:flex;justify-content:space-between;align-items:center
 }
-
-header img{
-  width:105px;
-}
-
-nav a{
-  color:white;
-  text-decoration:none;
-  margin-left:24px;
-  font-size:13px;
-  letter-spacing:1px;
-  text-transform:uppercase;
-}
-
-nav a:hover{
-  color:var(--green);
-}
+.brand{font-size:24px;font-weight:900;letter-spacing:1px}
+.brand span{color:var(--green)}
+nav a{color:#fff;text-decoration:none;margin-left:24px;font-size:13px;text-transform:uppercase;letter-spacing:1px}
+nav a:hover{color:var(--green)}
 
 .hero{
-  min-height:100vh;
-  background:
-    radial-gradient(circle at 20% 40%, rgba(166,230,63,0.22), transparent 30%),
-    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.92)),
-    url("car.jpeg") center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  padding:120px 8% 80px;
+min-height:100vh;
+background:
+radial-gradient(circle at 25% 45%,rgba(166,230,63,.25),transparent 28%),
+linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.94)),
+url("Car.jpeg") center/cover no-repeat;
+display:flex;align-items:center;padding:120px 8% 80px
 }
-
-.hero-content{
-  max-width:720px;
-}
-
-.hero-logo{
-  width:220px;
-  margin-bottom:24px;
-  filter:drop-shadow(0 0 18px rgba(166,230,63,0.35));
-}
-
+.hero-content{max-width:760px}
 .badge{
-  display:inline-block;
-  color:var(--green);
-  border:1px solid rgba(166,230,63,0.45);
-  padding:8px 14px;
-  border-radius:50px;
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  margin-bottom:22px;
-  background:rgba(0,0,0,0.45);
+display:inline-block;color:var(--green);border:1px solid rgba(166,230,63,.45);
+padding:8px 15px;border-radius:50px;font-size:12px;letter-spacing:2px;
+text-transform:uppercase;margin-bottom:24px;background:rgba(0,0,0,.45)
 }
-
-.hero h1{
-  font-size:58px;
-  line-height:1.05;
-  text-transform:uppercase;
-  margin-bottom:22px;
-}
-
-.hero h1 span{
-  color:var(--green);
-  text-shadow:0 0 20px rgba(166,230,63,0.35);
-}
-
-.hero p{
-  color:#ddd;
-  font-size:18px;
-  max-width:590px;
-  margin-bottom:32px;
-}
+.hero h1{font-size:72px;line-height:.95;text-transform:uppercase;margin-bottom:22px}
+.hero h1 span{color:var(--green);text-shadow:0 0 25px rgba(166,230,63,.45)}
+.hero p{font-size:18px;color:#ddd;max-width:620px;margin-bottom:34px}
 
 .btn{
-  display:inline-block;
-  background:var(--green);
-  color:#000;
-  padding:15px 28px;
-  border-radius:6px;
-  text-decoration:none;
-  font-weight:bold;
-  box-shadow:0 0 24px rgba(166,230,63,0.32);
-  transition:0.3s;
+display:inline-block;background:var(--green);color:#000;padding:15px 28px;
+border-radius:8px;text-decoration:none;font-weight:900;
+box-shadow:0 0 25px rgba(166,230,63,.35);transition:.3s
 }
-
-.btn:hover{
-  background:#fff;
-  transform:translateY(-3px);
-}
-
+.btn:hover{background:#fff;transform:translateY(-3px)}
 .btn-outline{
-  display:inline-block;
-  color:#fff;
-  padding:14px 26px;
-  border-radius:6px;
-  text-decoration:none;
-  font-weight:bold;
-  border:1px solid rgba(255,255,255,0.35);
-  margin-left:12px;
+display:inline-block;color:#fff;padding:14px 26px;border-radius:8px;
+text-decoration:none;font-weight:900;border:1px solid rgba(255,255,255,.35);
+margin-left:12px
 }
+.btn-outline:hover{border-color:var(--green);color:var(--green)}
 
-section{
-  padding:90px 8%;
-}
+section{padding:95px 8%}
+.section-title{text-align:center;max-width:780px;margin:0 auto 55px}
+.section-title h2{font-size:42px;text-transform:uppercase;margin-bottom:14px}
+.section-title span{color:var(--green)}
+.section-title p{color:var(--soft)}
 
-.section-title{
-  text-align:center;
-  max-width:780px;
-  margin:0 auto 50px;
-}
-
-.section-title h2{
-  font-size:40px;
-  text-transform:uppercase;
-  margin-bottom:14px;
-}
-
-.section-title span{
-  color:var(--green);
-}
-
-.section-title p{
-  color:var(--soft);
-}
-
-.services{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:24px;
-}
-
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
 .card{
-  background:linear-gradient(180deg,#151515,#080808);
-  border:1px solid rgba(166,230,63,0.22);
-  padding:30px;
-  border-radius:18px;
-  box-shadow:0 0 30px rgba(0,0,0,0.45);
-  transition:0.3s;
+background:linear-gradient(180deg,#171717,#080808);
+border:1px solid rgba(166,230,63,.22);
+padding:32px;border-radius:20px;
+box-shadow:0 0 35px rgba(0,0,0,.45);transition:.3s
 }
-
-.card:hover{
-  transform:translateY(-8px);
-  border-color:var(--green);
-  box-shadow:0 0 35px rgba(166,230,63,0.18);
-}
-
-.card h3{
-  color:var(--green);
-  font-size:24px;
-  margin-bottom:18px;
-}
-
-.card ul{
-  list-style:none;
-  margin-bottom:22px;
-}
-
-.card li{
-  color:#ddd;
-  margin-bottom:10px;
-}
-
-.price{
-  font-size:20px;
-  font-weight:bold;
-}
-
-.featured{
-  border:1px solid var(--green);
-  position:relative;
-}
-
+.card:hover{transform:translateY(-8px);border-color:var(--green);box-shadow:0 0 35px rgba(166,230,63,.18)}
+.card h3{color:var(--green);font-size:25px;margin-bottom:18px}
+.card ul{list-style:none;margin-bottom:24px}
+.card li{color:#ddd;margin-bottom:11px}
+.price{font-size:22px;font-weight:900}
+.featured{border:1px solid var(--green);position:relative}
 .featured::before{
-  content:"Most Popular";
-  position:absolute;
-  top:-14px;
-  right:20px;
-  background:var(--green);
-  color:#000;
-  padding:6px 12px;
-  border-radius:50px;
-  font-size:12px;
-  font-weight:bold;
+content:"Most Popular";position:absolute;top:-14px;right:20px;background:var(--green);
+color:#000;padding:7px 13px;border-radius:50px;font-size:12px;font-weight:900
 }
 
-.about{
-  background:#080808;
-}
+.about{background:#080808}
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}
+.about img{width:100%;border-radius:24px;border:1px solid rgba(166,230,63,.3);box-shadow:0 0 45px rgba(166,230,63,.13)}
+.about h2{font-size:42px;margin-bottom:20px}
+.about h2 span{color:var(--green)}
+.about p{color:#ccc;margin-bottom:16px}
 
-.about-wrap{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:55px;
-  align-items:center;
-}
-
-.about img{
-  width:100%;
-  border-radius:22px;
-  border:1px solid rgba(166,230,63,0.3);
-  box-shadow:0 0 40px rgba(166,230,63,0.12);
-}
-
-.about h2{
-  font-size:38px;
-  margin-bottom:20px;
-}
-
-.about h2 span{
-  color:var(--green);
-}
-
-.about p{
-  color:#ccc;
-  margin-bottom:16px;
-}
-
-.why-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:22px;
-}
-
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:22px}
 .why-box{
-  background:#101010;
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:16px;
-  padding:28px;
-  text-align:center;
+background:#101010;border:1px solid rgba(255,255,255,.08);
+border-radius:18px;padding:30px;text-align:center
 }
+.why-box h3{color:var(--green);margin-bottom:10px}
+.why-box p{color:#ccc}
 
-.why-box h3{
-  color:var(--green);
-  margin-bottom:10px;
+.gallery{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px
 }
-
-.why-box p{
-  color:#ccc;
+.gallery-box{
+height:280px;border-radius:22px;background:url("Car.jpeg") center/cover no-repeat;
+border:1px solid rgba(166,230,63,.25);box-shadow:0 0 35px rgba(0,0,0,.5)
 }
 
 .contact{
-  text-align:center;
-  background:
-    radial-gradient(circle at center, rgba(166,230,63,0.18), transparent 35%),
-    linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.97)),
-    url("car.jpeg") center/cover no-repeat;
+text-align:center;
+background:
+radial-gradient(circle at center,rgba(166,230,63,.18),transparent 35%),
+linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.97)),
+url("Car.jpeg") center/cover no-repeat
 }
-
-.contact h2{
-  font-size:44px;
-  text-transform:uppercase;
-  margin-bottom:12px;
-}
-
-.contact span{
-  color:var(--green);
-}
-
-.contact p{
-  color:#ddd;
-  margin-bottom:28px;
-}
+.contact h2{font-size:48px;text-transform:uppercase;margin-bottom:12px}
+.contact span{color:var(--green)}
+.contact p{color:#ddd;margin-bottom:28px}
 
 footer{
-  background:#000;
-  text-align:center;
-  padding:35px 8%;
-  border-top:1px solid rgba(166,230,63,0.25);
-  color:#aaa;
+background:#000;text-align:center;padding:35px 8%;
+border-top:1px solid rgba(166,230,63,.25);color:#aaa
 }
-
-footer img{
-  width:110px;
-  margin-bottom:12px;
-}
+footer .brand{margin-bottom:10px}
 
 .whatsapp-float{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  background:#25D366;
-  color:white;
-  padding:15px 18px;
-  border-radius:50px;
-  text-decoration:none;
-  font-weight:bold;
-  z-index:2000;
-  box-shadow:0 0 25px rgba(37,211,102,0.4);
+position:fixed;right:20px;bottom:20px;background:#25D366;color:#fff;
+padding:15px 18px;border-radius:50px;text-decoration:none;font-weight:900;
+z-index:2000;box-shadow:0 0 25px rgba(37,211,102,.4)
 }
 
 @media(max-width:768px){
-  header{
-    padding:12px 5%;
-  }
-
-  nav{
-    display:none;
-  }
-
-  header img{
-    width:95px;
-  }
-
-  .hero{
-    padding:110px 6% 70px;
-    background-position:center;
-  }
-
-  .hero-logo{
-    width:170px;
-  }
-
-  .hero h1{
-    font-size:38px;
-  }
-
-  .hero p{
-    font-size:16px;
-  }
-
-  .btn-outline{
-    margin-left:0;
-    margin-top:12px;
-  }
-
-  section{
-    padding:70px 6%;
-  }
-
-  .section-title h2{
-    font-size:30px;
-  }
-
-  .about-wrap{
-    grid-template-columns:1fr;
-  }
-
-  .contact h2{
-    font-size:34px;
-  }
+header{padding:14px 5%}
+nav{display:none}
+.brand{font-size:22px}
+.hero{padding:115px 6% 70px;background-position:center}
+.hero h1{font-size:48px}
+hero p{font-size:16px}
+.btn-outline{margin-left:0;margin-top:12px}
+section{padding:75px 6%}
+.section-title h2{font-size:32px}
+.about-wrap{grid-template-columns:1fr}
+.contact h2{font-size:36px}
 }
 </style>
 </head>
@@ -387,32 +142,25 @@ footer img{
 <body>
 
 <header>
-  <img src="logo.png" alt="Direct2You Logo">
+  <div class="brand">Direct<span>2</span>You</div>
   <nav>
     <a href="#services">Services</a>
     <a href="#about">About</a>
     <a href="#why">Why Us</a>
-    <a href="#contact">Book</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
   </nav>
 </header>
 
 <section class="hero">
   <div class="hero-content">
-    <img src="logo.png" class="hero-logo" alt="Direct2You Logo">
-
-    <div class="badge">Mobile Car Valeting & Detailing Dublin</div>
-
-    <h1>Clean car. Fresh feel. <span>Direct to you.</span></h1>
-
+    <div class="badge">Mobile Valeting & Detailing Dublin</div>
+    <h1>Direct<span>2</span>You</h1>
     <p>
-      Direct2You provides mobile car valeting and detailing across Dublin.
-      Reliable service, real results, and attention to detail at your location.
+      Premium mobile car valeting and detailing at your location in Dublin.
+      Reliable service, clean results, and attention to detail every time.
     </p>
-
-    <a class="btn" href="https://wa.me/353894439214?text=Hi%2C%20I%27d%20like%20to%20book%20a%20car%20valet" target="_blank">
-      Book via WhatsApp
-    </a>
-
+    <a class="btn" href="https://wa.me/353894439214?text=Hi%2C%20I%27d%20like%20to%20book%20a%20car%20valet.%20When%20are%20you%20available%3F" target="_blank">Book via WhatsApp</a>
     <a class="btn-outline" href="#services">View Services</a>
   </div>
 </section>
@@ -420,10 +168,7 @@ footer img{
 <section id="services">
   <div class="section-title">
     <h2>Our <span>Services</span></h2>
-    <p>
-      Services designed to keep your car clean, fresh and well-maintained.
-      Prices may vary depending on vehicle size and condition.
-    </p>
+    <p>Designed to keep your car clean, fresh, and well-maintained. Prices may vary depending on vehicle size and condition.</p>
   </div>
 
   <div class="services">
@@ -472,21 +217,12 @@ footer img{
 
 <section id="about" class="about">
   <div class="about-wrap">
-    <img src="car.jpeg" alt="Car detailing">
-
+    <img src="Car.jpeg" alt="Direct2You car detailing">
     <div>
       <h2>About <span>Direct2You</span></h2>
-      <p>
-        Direct2You is a mobile valeting and detailing service based in Dublin.
-        We come to your location, saving you time while keeping your car looking clean and fresh.
-      </p>
-      <p>
-        Our focus is simple: honest pricing, reliable service and visible results.
-        Whether you need a regular clean or a deeper refresh, we treat every car with care.
-      </p>
-      <p>
-        Reliable service. Real results. Attention to detail.
-      </p>
+      <p>Direct2You is a mobile car valeting and detailing service based in Dublin.</p>
+      <p>We come to your location, saving you time while keeping your vehicle clean, fresh, and well-maintained.</p>
+      <p>Our focus is simple: honest pricing, reliable service, and visible results.</p>
     </div>
   </div>
 </section>
@@ -501,17 +237,14 @@ footer img{
       <h3>Mobile Service</h3>
       <p>We come to your location in Dublin.</p>
     </div>
-
     <div class="why-box">
       <h3>Honest Pricing</h3>
       <p>Clear starting prices with no hidden surprises.</p>
     </div>
-
     <div class="why-box">
       <h3>Attention to Detail</h3>
       <p>Every clean is done with care and patience.</p>
     </div>
-
     <div class="why-box">
       <h3>Easy Booking</h3>
       <p>Message us directly on WhatsApp.</p>
@@ -519,23 +252,30 @@ footer img{
   </div>
 </section>
 
+<section id="gallery">
+  <div class="section-title">
+    <h2>Clean <span>Finish</span></h2>
+    <p>Professional look, fresh results, and a finish that stands out.</p>
+  </div>
+  <div class="gallery">
+    <div class="gallery-box"></div>
+    <div class="gallery-box"></div>
+    <div class="gallery-box"></div>
+  </div>
+</section>
+
 <section id="contact" class="contact">
   <h2>Ready to <span>Book?</span></h2>
   <p>Send us a message on WhatsApp and we’ll get you booked in quickly.</p>
-
-  <a class="btn" href="https://wa.me/353894439214?text=Hi%2C%20I%27d%20like%20to%20book%20a%20car%20valet.%20When%20are%20you%20available%3F" target="_blank">
-    Message Us on WhatsApp
-  </a>
+  <a class="btn" href="https://wa.me/353894439214?text=Hi%2C%20I%27d%20like%20to%20book%20a%20car%20valet.%20When%20are%20you%20available%3F" target="_blank">Message Us on WhatsApp</a>
 </section>
 
 <footer>
-  <img src="logo.png" alt="Direct2You Logo">
+  <div class="brand">Direct<span>2</span>You</div>
   <p>© 2026 Direct2You Mobile Valeting & Detailing. Dublin, Ireland.</p>
 </footer>
 
-<a class="whatsapp-float" href="https://wa.me/353894439214?text=Hi%2C%20I%20want%20to%20book%20a%20car%20valet" target="_blank">
-  WhatsApp
-</a>
+<a class="whatsapp-float" href="https://wa.me/353894439214?text=Hi%2C%20I%20want%20to%20book%20a%20car%20valet" target="_blank">WhatsApp</a>
 
 </body>
 </html>
