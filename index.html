@@ -328,6 +328,43 @@ nav a:hover{
 .floating-actions a:last-child{
   background:#25D366;
   color:#fff;
+} .mobile-bottom-bar{
+  position:fixed;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  z-index:9999;
+  display:flex;
+  gap:10px;
+  background:rgba(0,0,0,.82);
+  border:1px solid rgba(166,230,63,.28);
+  border-radius:18px;
+  padding:10px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 30px rgba(0,0,0,.45);
+}
+
+.mobile-bottom-bar a{
+  flex:1;
+  text-align:center;
+  text-decoration:none;
+  font-weight:900;
+  padding:13px 10px;
+  border-radius:14px;
+  color:#000;
+  background:#a6e63f;
+  font-size:14px;
+}
+
+.mobile-bottom-bar a:last-child{
+  background:#25D366;
+  color:#fff;
+}
+
+@media(min-width:769px){
+  .mobile-bottom-bar{
+    display:none;
+  }
 }
 </style>
 </head>
@@ -388,9 +425,9 @@ nav a:hover{
 
 
 </a>
-<div class="floating-actions">
-  <a href="services.html">💎 View services</a>
-<a href="https://wa.me/...">⚡ Book Now</a>
+<div class="mobile-bottom-bar">
+  <a href="services.html">Packages</a>
+  <a href="https://wa.me/353894439214" target="_blank">WhatsApp</a>
 </div>
 </body>
 </html>
