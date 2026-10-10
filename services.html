@@ -1,57 +1,488 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Services | Direct2You</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services | D2Y Detailing</title>
 <link rel="stylesheet" href="style.css">
+
+<style>
+/* Styles for this page only */
+.services-page {
+  background: #080c0f;
+}
+.services-page header {
+  position: sticky;
+  background: #080c0f;
+  backdrop-filter: none;
+  border-bottom: 1px solid #263039;
+}
+.services-page .brand {
+  font-size: 25px;
+}
+.services-page nav a {
+  border: none;
+  background: transparent;
+}
+.services-page nav a.active,
+.services-page nav a:hover {
+  background: var(--green);
+  color: #080c0f;
+}
+.services-page main {
+  max-width: 1200px;
+  margin: auto;
+}
+.services-page .page-hero {
+  min-height: 0;
+  padding: 48px 6%;
+  background:
+    linear-gradient(90deg, rgba(8,12,15,.94), rgba(8,12,15,.65)),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80")
+    center/cover no-repeat;
+}
+.services-page .badge {
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+.services-page .page-hero h1 {
+  font-size: clamp(36px, 6vw, 64px);
+  margin-bottom: 18px;
+}
+.services-page .page-hero h1 span {
+  text-shadow: none;
+}
+.services-page .page-hero p {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 16px;
+}
+.services-page .services-section {
+  padding: 28px 6% 40px;
+}
+.services-page .services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+.services-page .service-card {
+  display: flex;
+  flex-direction: column;
+  background: #10171d;
+  border: 1px solid #2c3943;
+  border-radius: 12px;
+  padding: 28px;
+}
+.services-page .service-card h2 {
+  color: var(--green);
+  font-size: 25px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.services-page .duration {
+  color: #ccd3da;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+.services-page .description {
+  line-height: 1.6;
+  color: #f1f3f5;
+  margin-bottom: 20px;
+}
+.services-page .service-list {
+  list-style: none;
+  margin-bottom: 20px;
+}
+.services-page .service-list li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 10px;
+  color: #d7dce1;
+  line-height: 1.5;
+}
+.services-page .service-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-weight: bold;
+}
+.services-page .service-bottom {
+  margin-top: auto;
+}
+.services-page .price {
+  font-size: 26px;
+  margin: 4px 0 18px;
+}
+.services-page .book-button {
+  display: inline-block;
+  background: var(--green);
+  color: #080c0f;
+  padding: 13px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+}
+.services-page .book-button:hover {
+  background: #b8f25a;
+}
+.services-page a:focus-visible,
+.services-page summary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 5px;
+}
+.services-page .service-details {
+  margin-top: 18px;
+}
+.services-page .service-details summary {
+  color: var(--green);
+  cursor: pointer;
+  width: fit-content;
+  padding: 4px 0;
+}
+.services-page .service-details[open] summary {
+  margin-bottom: 14px;
+}
+.services-page .service-details .service-list {
+  margin-bottom: 0;
+}
+.services-page .detail-note {
+  color: #bbc4cd;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+.services-page .ceramic-card {
+  grid-column: 1 / -1;
+}
+.services-page .extras {
+  margin-top: 22px;
+  padding: 26px;
+  background: #10171d;
+  border: 1px solid #2c3943;
+  border-radius: 12px;
+}
+.services-page .extras h2 {
+  color: var(--green);
+  font-size: 24px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.services-page .extras-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 28px;
+}
+.services-page .extra-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #2c3943;
+  padding: 14px 0;
+  line-height: 1.5;
+}
+.services-page .extra-item strong {
+  white-space: nowrap;
+}
+.services-page .booking-notes {
+  margin-top: 24px;
+  color: #cbd2d9;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.services-page .booking-notes p {
+  margin-bottom: 8px;
+}
+.services-page footer {
+  padding-bottom: 90px;
+}
+.services-page .whatsapp-float {
+  box-shadow: none;
+  font-size: 14px;
+  padding: 12px 16px;
+}
+
+@media (max-width: 768px) {
+  .services-page .brand {
+    font-size: 23px;
+  }
+  .services-page .page-hero {
+    padding: 36px 6%;
+  }
+  .services-page .services-grid {
+    grid-template-columns: 1fr;
+  }
+  .services-page .ceramic-card {
+    grid-column: auto;
+  }
+  .services-page .service-card {
+    padding: 24px;
+  }
+  .services-page .service-card h2 {
+    font-size: 23px;
+  }
+  .services-page .extras-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
-<body>
+
+<body class="services-page">
 
 <header>
-<a class="brand" href="index.html">Direct<span>2</span>You</a>
-<nav>
-<a href="index.html">Home</a><a class="active" href="services.html">Services</a><a href="about.html">Our Story</a><a href="why.html">Why Us</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
-</nav>
+  <a class="brand" href="index.html">D<span>2</span>Y DETAILING</a>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a class="active" aria-current="page" href="services.html">Services</a>
+    <a href="about.html">Our Story</a>
+    <a href="why.html">Why Us</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 </header>
 
-<section class="page-hero">
-<div>
-<div class="badge">Services & Prices</div>
-<h1>Our <span>Services</span></h1>
-<p>Designed to keep your car clean, fresh and well-maintained. Prices may vary depending on vehicle size and condition.</p>
-</div>
-</section>
+<main>
+  <section class="page-hero">
+    <div>
+      <div class="badge">Services & Prices</div>
+      <h1>Our <span>Services</span></h1>
+      <p>
+        Designed to keep your car clean, fresh and well-maintained.<br>
+        Prices may vary depending on vehicle size and condition.
+      </p>
+    </div>
+  </section>
 
-<section>
-<div class="grid">
-<div class="card">
-<h3>Mini Valet</h3>
-<ul><li>✔ Exterior hand wash & dry</li><li>✔ Wheels,tyres & windows cleaned</li><li>✔ Dashboard wiped</li></ul>
-<p class="price">From €70</p>
-  <a href="https://calendly.com/jccm165/30min" target="_blank" style="display:inline-block; margin-top:16px; padding:10px 20px; background:#c9ff00; color:#111; border-radius:25px; text-decoration:none; font-weight:bold;">Book Now</a>
-</div>
+  <section class="services-section" aria-label="Valeting and detailing packages">
+    <div class="services-grid">
 
-<div class="card">
-<h3>Full Valet</h3>
-<ul><li>✔ Everything in mini valet</li><li>✔ Interior surfaces & mats cleaned</li><li>✔ Door shuts & boot detailed</li><li>✔ Exterior spray protection</li>ul>
-<p class="price">From €130</p>
-</div>
+      <!-- MINI VALET -->
+      <article class="service-card">
+        <h2>Mini Valet</h2>
+        <p class="duration">Approx. 1 hour</p>
+        <p class="description">
+          Regular interior and exterior maintenance.
+        </p>
+        <ul class="service-list">
+          <li>Exterior hand wash & dry</li>
+          <li>Interior vacuum & surface wipe</li>
+          <li>Wheels, tyres & windows</li>
+        </ul>
 
-<div class="card featured">
-<h3>Full Refresh</h3>
-<ul><li>✔ Complete interior & exterior valet</li><li>✔ Deep interior cleaning</li><li>✔ Seats & carpets refreshed</li><li>✔ Interior glass & mirrors cleaned</li></ul>
-<p class="price">From €90</p>
-</div>
+        <div class="service-bottom">
+          <p class="price">From €70</p>
+          <a class="book-button"
+             href="https://calendly.com/jccm165/30min"
+             target="_blank" rel="noopener noreferrer">
+            Book Now
+          </a>
 
-<div class="card">
-<h3>Enhancement Detail</h3>
-<ul><li>✔ Machine polish</li><li>✔ Paintwork improvement</li><li>✔ Long-lasting protection available</li></ul>
-<p class="price">Price on request</p>
-</div>
-</div>
-</section>
+          <details class="service-details">
+            <summary>View details</summary>
+            <ul class="service-list">
+              <li>Exterior hand wash and hand dry</li>
+              <li>Wheels and tyres cleaned</li>
+              <li>Tyre dressing</li>
+              <li>Seats, carpets, floor mats and boot vacuumed</li>
+              <li>Dashboard, centre console and interior surfaces wiped</li>
+              <li>Door shuts wiped clean</li>
+              <li>Windows cleaned inside and out</li>
+            </ul>
+          </details>
+        </div>
+      </article>
 
-<footer><div class="brand">Direct<span>2</span>You</div><p>© 2026 Direct2You Dublin.</p></footer>
-<a class="whatsapp-float" href="https://wa.me/353894439214">WhatsApp</a>
+      <!-- FULL VALET -->
+      <article class="service-card">
+        <h2>Full Valet</h2>
+        <p class="duration">Approx. 2 hours 30 minutes</p>
+        <p class="description">
+          A thorough clean, inside and out.
+        </p>
+        <ul class="service-list">
+          <li>Everything in Mini Valet</li>
+          <li>Seats, carpets & mats deep cleaned</li>
+          <li>Exterior spray protection</li>
+        </ul>
+
+        <div class="service-bottom">
+          <p class="price">From €130</p>
+          <a class="book-button"
+             href="https://calendly.com/jccm165"
+             target="_blank" rel="noopener noreferrer">
+            Book Now
+          </a>
+
+          <details class="service-details">
+            <summary>View details</summary>
+            <ul class="service-list">
+              <li>Everything included in Mini Valet</li>
+              <li>Fabric seats shampooed and extraction cleaned</li>
+              <li>Carpets and floor mats shampooed and extraction cleaned</li>
+              <li>Leather seats cleaned, where applicable</li>
+              <li>Dashboard, door panels, centre console and trims deep cleaned</li>
+              <li>Thorough boot cleaning</li>
+              <li>Door shuts cleaned</li>
+              <li>Exterior spray protection for added shine and water repellency</li>
+            </ul>
+          </details>
+        </div>
+      </article>
+
+      <!-- PREMIUM DETAIL -->
+      <article class="service-card">
+        <h2>Premium Detail</h2>
+        <p class="duration">Approx. 3 hours 30 minutes</p>
+        <p class="description">
+          Detailed cleaning with added paint protection.
+        </p>
+        <ul class="service-list">
+          <li>Everything in Full Valet</li>
+          <li>Targeted steam & detailed interior cleaning</li>
+          <li>Exterior decontamination & paint sealant</li>
+        </ul>
+
+        <div class="service-bottom">
+          <p class="price">From €180</p>
+          <a class="book-button"
+             href="https://calendly.com/jccm165"
+             target="_blank" rel="noopener noreferrer">
+            Book Now
+          </a>
+
+          <details class="service-details">
+            <summary>View details</summary>
+            <ul class="service-list">
+              <li>Everything included in Full Valet</li>
+              <li>Targeted steam cleaning on suitable interior surfaces</li>
+              <li>Air vents, seams, crevices and hard-to-reach areas detailed</li>
+              <li>Exterior tar and iron contamination removal</li>
+              <li>Exterior plastics cleaned and dressed</li>
+              <li>Paint sealant applied for added gloss and protection</li>
+            </ul>
+          </details>
+        </div>
+      </article>
+
+      <!-- PAINT ENHANCEMENT -->
+      <article class="service-card">
+        <h2>Paint Enhancement</h2>
+        <p class="duration">Approx. 4–6 hours</p>
+        <p class="description">
+          Restore gloss and reduce light swirls and shallow scratches.
+        </p>
+        <ul class="service-list">
+          <li>Decontamination & single-stage machine polish</li>
+          <li>Paint protection</li>
+          <li>Basic interior clean included</li>
+        </ul>
+
+        <div class="service-bottom">
+          <p class="price">From €250</p>
+          <a class="book-button"
+             href="https://calendly.com/jccm165"
+             target="_blank" rel="noopener noreferrer">
+            Book Now
+          </a>
+
+          <details class="service-details">
+            <summary>View details</summary>
+            <ul class="service-list">
+              <li>Thorough exterior hand wash</li>
+              <li>Wheels and tyres cleaned</li>
+              <li>Exterior decontamination and clay treatment</li>
+              <li>Single-stage machine polish to improve gloss and reduce light swirl marks and shallow scratches</li>
+              <li>Paint protection applied</li>
+              <li>Tyre dressing</li>
+              <li>Basic interior clean included</li>
+            </ul>
+            <p class="detail-note">
+              Deep scratches are not covered by this treatment.
+              Deep interior cleaning is available separately.
+            </p>
+          </details>
+        </div>
+      </article>
+
+      <!-- CERAMIC COATING -->
+      <article class="service-card ceramic-card">
+        <h2>Ceramic Coating</h2>
+        <p class="duration">Approx. 4–6 hours</p>
+        <p class="description">
+          Enhance gloss with durable ceramic paint protection.
+        </p>
+        <ul class="service-list">
+          <li>Exterior wash & decontamination</li>
+          <li>Surface preparation & ceramic application</li>
+          <li>Added gloss & water repellency</li>
+        </ul>
+
+        <div class="service-bottom">
+          <p class="price">From €300</p>
+          <a class="book-button"
+             href="https://calendly.com/jccm165"
+             target="_blank" rel="noopener noreferrer">
+            Book Now
+          </a>
+
+          <details class="service-details">
+            <summary>View details</summary>
+            <ul class="service-list">
+              <li>Thorough exterior wash</li>
+              <li>Paint decontamination</li>
+              <li>Surface preparation</li>
+              <li>Ceramic coating application</li>
+              <li>Added gloss and water repellency</li>
+            </ul>
+          </details>
+        </div>
+      </article>
+    </div>
+
+    <div class="extras">
+      <h2>Optional Extras</h2>
+      <div class="extras-grid">
+        <div class="extra-item">
+          <span>Pet Hair Removal</span>
+          <strong>€25</strong>
+        </div>
+        <div class="extra-item">
+          <span>Headlight Restoration</span>
+          <strong>€60 / pair</strong>
+        </div>
+        <div class="extra-item">
+          <span>Odour Treatment</span>
+          <strong>€30</strong>
+        </div>
+        <div class="extra-item">
+          <span>Leather Seat Coating</span>
+          <strong>€40</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="booking-notes">
+      <p>€20 booking deposit — deducted from your final bill.</p>
+      <p>Mobile appointments require access to water and electricity.</p>
+      <p>All service durations are approximate.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="brand">D<span>2</span>Y DETAILING</div>
+  <p>© 2026 D2Y Detailing Dublin.</p>
+</footer>
+
+<a class="whatsapp-float"
+   href="https://wa.me/353894439214"
+   target="_blank" rel="noopener noreferrer"
+   aria-label="Contact D2Y Detailing on WhatsApp">
+  WhatsApp
+</a>
+
 </body>
 </html>
