@@ -304,6 +304,30 @@ text-align:center !important;
     height: 100% !important;
   }
 
+}/* D2Y - VIDEOS PARA COMPUTADORA Y MOVIL */
+
+#desktop-video {
+  display: block;
+}
+
+#mobile-video {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+  #desktop-video {
+    display: none !important;
+  }
+
+  #mobile-video {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+
 }</style>
 </head>
 
@@ -324,9 +348,15 @@ text-align:center !important;
 <section class="hero video-hero">
 
   <!-- VIDEO BACKGROUND -->
-  <video autoplay muted loop playsinline class="bg-video">
-<source src="D53B00A5-3E65-463F-8845-0B1E1368568A.mov">
-  </video>
+  <!-- VIDEO PARA COMPUTADORA -->
+<video autoplay muted loop playsinline class="bg-video" id="desktop-video">
+  <source src="D53B00A5-3E65-463F-8845-0B1E1368568A.mov">
+</video>
+
+<!-- VIDEO PARA IPHONE -->
+<video autoplay muted loop playsinline class="bg-video" id="mobile-video">
+  <source src="d2y-mobile.MP4" type="video/mp4">
+</video>
 
   <!-- OVERLAY (para que el texto se vea bien) -->
   <div class="overlay"></div>
