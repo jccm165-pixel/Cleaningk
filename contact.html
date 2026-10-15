@@ -71,7 +71,43 @@
     padding: 160px 6% 60px !important;
   }
 }
-  </style>
+  @media (min-width: 769px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+  }
+
+  .page-hero {
+    flex-shrink: 0;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(68px, 7vw, 96px);
+  }
+
+  .page-hero p {
+    font-size: 24px;
+  }
+
+  .page-hero .btn {
+    font-size: 18px;
+    padding: 18px 28px;
+    max-width: 360px !important;
+  }
+
+  .page-hero + section {
+    margin-top: auto;
+    padding: 28px 8% 20px;
+  }
+
+  footer {
+    flex-shrink: 0;
+    margin-top: 0;
+    padding: 18px 8%;
+  }
+}
+</style>
   </head>
 <body>
 
