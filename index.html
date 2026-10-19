@@ -401,6 +401,27 @@ body::-webkit-scrollbar {
   <div class="brand">Direct<span>2</span>You</div>
   <p>© 2026 Direct2You Mobile Valeting & Detailing. Dublin, Ireland.</p>
 </footer>
+<script>
+function iniciarVideo() {
+  const movil = window.matchMedia("(max-width: 768px)").matches;
+  const video = document.getElementById(
+    movil ? "mobile-video" : "desktop-video"
+  );
 
+  if (!video) return;
+
+  video.muted = true;
+  video.playsInline = true;
+  video.play().catch(() => {});
+}
+
+window.addEventListener("load", iniciarVideo);
+document.addEventListener("click", iniciarVideo);
+document.addEventListener("touchend", iniciarVideo);
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) iniciarVideo();
+});
+</script>
 </body>
 </html>
