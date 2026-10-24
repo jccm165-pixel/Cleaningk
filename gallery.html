@@ -927,5 +927,724 @@ initPolish();
 
 })();
 </script>
+  <style>
+/* Outdoor hood: extra coating and buffing steps */
+.d2y-microfiber {
+  display: none;
+}
+
+.d2y-polish-stage[data-phase="coated"] .d2y-polish-tool {
+  opacity: 0;
+}
+
+.d2y-polish-stage[data-phase="buff"] .d2y-polisher,
+.d2y-polish-stage[data-phase="buff"] .d2y-applicator {
+  display: none;
+}
+
+.d2y-polish-stage[data-phase="buff"] .d2y-microfiber {
+  display: block;
+}
+</style>
+
+<script>
+(() => {
+  "use strict";
+
+  const previous = document.getElementById("d2y-polish-stage");
+  if (!previous) return;
+
+  /*
+    Refresh only the polishing section.
+    Foam, rinse and vacuum stay as they are.
+  */
+  const previousSection = previous.parentElement;
+  const section = previousSection.cloneNode(true);
+  previousSection.replaceWith(section);
+
+  const get = id => section.querySelector("#" + id);
+  const clamp = (value, min, max) =>
+    Math.max(min, Math.min(max, value));
+
+  const stage = get("d2y-polish-stage");
+  const base = get("d2y-polish-base");
+  const surface = get("d2y-polish-canvas");
+  const coating = get("d2y-coat-canvas");
+  const waterCanvas = get("d2y-water-canvas");
+  const tool = get("d2y-polish-tool");
+  const hint = get("d2y-polish-hint");
+  const status = get("d2y-polish-status");
+  const step = get("d2y-polish-step");
+  const progress = get("d2y-polish-progress");
+  const finish = get("d2y-polish-finish");
+  const next = get("d2y-apply-coat");
+  const water = get("d2y-test-water");
+  const reset = get("d2y-polish-reset");
+
+  tool.insertAdjacentHTML("beforeend", `
+    <svg
+      class="d2y-microfiber"
+      viewBox="0 0 160 190"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M25 33L116 24L140 91L45 117L18 80Z"
+        fill="#9edb35"
+        stroke="#e4ffad"
+        stroke-width="3"
+      />
+      <path
+        d="M45 117L140 91L129 112L46 136L18 96V80Z"
+        fill="#598c1e"
+      />
+      <path
+        d="M32 45L111 36M37 59L116 50M42 73L121 64M47 87L126 78"
+        stroke="#d2f79a"
+        stroke-width="3"
+        stroke-dasharray="2 4"
+      />
+      <path
+        d="M46 136L129 112"
+        stroke="#b9ee69"
+        stroke-width="3"
+        stroke-dasharray="3 4"
+      />
+    </svg>
+  `);
+
+  /*
+    Hood outline for the new outdoor images.
+    Coordinates scale with the image.
+  */
+  const hood = [
+    [.20,.225], [.35,.25], [.50,.255],
+    [.65,.25], [.80,.225], [.87,.34],
+    [.93,.50], [.97,.62], [.95,.70],
+    [.87,.79], [.80,.825], [.65,.84],
+    [.50,.845], [.35,.84], [.20,.825],
+    [.13,.79], [.05,.70], [.03,.62],
+    [.07,.50], [.13,.34]
+  ];
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  const before = new Image();
+
+  let ready = false;
+  let phase = "polish";
+  let pointer = null;
+  let last = null;
+  let polishStrokes = [];
+  let coatStrokes = [];
+  let buffStrokes = [];
+  let covered = new Set();
+  let surfaceContext;
+  let coatContext;
+  let waterContext;
+  let waterFrame = 0;
+  let waterRunning = false;
+  let resizeFrame = 0;
+
+  stage.dataset.phase = phase;
+  stage.classList.remove("is-ready", "has-started", "is-working");
+
+  progress.value = 0;
+
+  [finish, next, water, reset].forEach(button => {
+    button.disabled = true;
+  });
+
+  function inside(x, y) {
+    let result = false;
+
+    for (
+      let i = 0, j = hood.length - 1;
+      i < hood.length;
+      j = i++
+    ) {
+      const [xi, yi] = hood[i];
+      const [xj, yj] = hood[j];
+
+      if (
+        (yi > y) !== (yj > y) &&
+        x < (xj - xi) * (y - yi) / (yj - yi) + xi
+      ) {
+        result = !result;
+      }
+    }
+
+    return result;
+  }
+
+  const grid = [];
+
+  for (let y = 0; y < 36; y++) {
+    for (let x = 0; x < 48; x++) {
+      const p = {
+        x: (x + .5) / 48,
+        y: (y + .5) / 36
+      };
+
+      if (inside(p.x, p.y)) grid.push(p);
+    }
+  }
+
+  function sizeCanvas(canvas) {
+    const scale = Math.min(window.devicePixelRatio || 1, 2);
+
+    canvas.width = Math.round(stage.clientWidth * scale);
+    canvas.height = Math.round(stage.clientHeight * scale);
+
+    const context = canvas.getContext("2d");
+    context.setTransform(scale, 0, 0, scale, 0, 0);
+
+    return context;
+  }
+
+  function clipHood(context) {
+    context.beginPath();
+
+    hood.forEach(([x, y], index) => {
+      const px = x * stage.clientWidth;
+      const py = y * stage.clientHeight;
+
+      if (index === 0) context.moveTo(px, py);
+      else context.lineTo(px, py);
+    });
+
+    context.closePath();
+    context.clip();
+  }
+
+  function stroke(context, segment, erase) {
+    const width = stage.clientWidth;
+    const height = stage.clientHeight;
+
+    context.save();
+    clipHood(context);
+
+    if (erase) {
+      context.globalCompositeOperation = "destination-out";
+    } else {
+      const sheen = context.createLinearGradient(
+        0, 0, width, height
+      );
+
+      sheen.addColorStop(0, "rgba(127,224,255,.23)");
+      sheen.addColorStop(.45, "rgba(210,172,255,.26)");
+      sheen.addColorStop(1, "rgba(181,223,0,.20)");
+
+      context.fillStyle = sheen;
+      context.strokeStyle = sheen;
+    }
+
+    context.lineWidth = segment.size * width;
+    context.lineCap = "round";
+    context.lineJoin = "round";
+
+    context.beginPath();
+    context.moveTo(
+      segment.from.x * width,
+      segment.from.y * height
+    );
+    context.lineTo(
+      segment.to.x * width,
+      segment.to.y * height
+    );
+    context.stroke();
+
+    context.beginPath();
+    context.arc(
+      segment.to.x * width,
+      segment.to.y * height,
+      segment.size * width / 2,
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+
+    context.restore();
+  }
+
+  function render() {
+    if (!ready || !stage.clientWidth) return;
+
+    surfaceContext = sizeCanvas(surface);
+    coatContext = sizeCanvas(coating);
+    waterContext = sizeCanvas(waterCanvas);
+
+    if (phase === "polish") {
+      surfaceContext.drawImage(
+        before,
+        0,
+        0,
+        stage.clientWidth,
+        stage.clientHeight
+      );
+
+      polishStrokes.forEach(segment => {
+        stroke(surfaceContext, segment, true);
+      });
+    }
+
+    if (["coat", "coated", "buff"].includes(phase)) {
+      coatStrokes.forEach(segment => {
+        stroke(coatContext, segment, false);
+      });
+
+      buffStrokes.forEach(segment => {
+        stroke(coatContext, segment, true);
+      });
+    }
+  }
+
+  function updateUI() {
+    stage.dataset.phase = phase;
+
+    const brushing = ["polish", "coat", "buff"].includes(phase);
+
+    finish.disabled = !ready || !brushing;
+    reset.disabled = !ready;
+
+    next.disabled = !ready ||
+      !["polished", "coated"].includes(phase);
+
+    water.disabled = !ready ||
+      phase !== "sealed" ||
+      waterRunning;
+
+    const labels = {
+      polish: "Finish polishing",
+      coat: "Finish coating",
+      buff: "Finish buffing"
+    };
+
+    finish.textContent = labels[phase] || "Finish polishing";
+    next.textContent = phase === "coated" ? "Buff off" : "Apply coating";
+
+    const steps = {
+      polish: "01 / Polish the paint",
+      polished: "01 / Polishing complete",
+      coat: "02 / Apply the coating",
+      coated: "02 / Coating applied",
+      buff: "03 / Buff off the excess",
+      sealed: "04 / Test the water"
+    };
+
+    step.textContent = steps[phase];
+
+    const description = phase === "buff"
+      ? "Buffing coverage"
+      : phase === "coat"
+        ? "Coating coverage"
+        : "Polishing coverage";
+
+    progress.setAttribute("aria-label", description);
+
+    surface.setAttribute(
+      "aria-label",
+      brushing
+        ? description + ". Drag over the hood or use the Finish button below."
+        : "Step complete. Use the buttons below to continue."
+    );
+  }
+
+  function finishPhase() {
+    if (!["polish", "coat", "buff"].includes(phase)) return;
+
+    if (phase === "polish") {
+      phase = "polished";
+
+      status.textContent =
+        "Mirror finish revealed. Tap Apply coating to continue.";
+
+    } else if (phase === "coat") {
+      phase = "coated";
+
+      status.textContent =
+        "Coating applied. Tap Buff off to remove the excess with a microfiber.";
+
+    } else {
+      phase = "sealed";
+
+      status.textContent =
+        "Excess removed. Tap Test the water to see the beading effect.";
+    }
+
+    progress.value = 100;
+    last = null;
+
+    stage.classList.remove("is-working");
+    stage.classList.add("has-started");
+
+    render();
+    updateUI();
+  }
+
+  function markCoverage(segment) {
+    const aspect = stage.clientHeight / stage.clientWidth;
+
+    const ax = segment.from.x;
+    const ay = segment.from.y * aspect;
+    const bx = segment.to.x;
+    const by = segment.to.y * aspect;
+
+    const dx = bx - ax;
+    const dy = by - ay;
+    const length = dx * dx + dy * dy;
+
+    grid.forEach((p, index) => {
+      if (covered.has(index)) return;
+
+      const px = p.x;
+      const py = p.y * aspect;
+
+      const t = length
+        ? clamp(
+            ((px - ax) * dx + (py - ay) * dy) / length,
+            0,
+            1
+          )
+        : 0;
+
+      if (
+        Math.hypot(
+          px - (ax + t * dx),
+          py - (ay + t * dy)
+        ) <= segment.size / 2
+      ) {
+        covered.add(index);
+      }
+    });
+
+    progress.value = Math.round(
+      covered.size / grid.length * 100
+    );
+  }
+
+  function position(event) {
+    const box = surface.getBoundingClientRect();
+
+    return {
+      x: clamp((event.clientX - box.left) / box.width, 0, 1),
+      y: clamp((event.clientY - box.top) / box.height, 0, 1)
+    };
+  }
+
+  function moveTool(p) {
+    tool.style.left = p.x * 100 + "%";
+    tool.style.top = p.y * 100 + "%";
+  }
+
+  function paint(p) {
+    const toolWidth = tool.getBoundingClientRect().width;
+
+    const segment = {
+      from: last || p,
+      to: p,
+      size:
+        toolWidth *
+        (phase === "polish" ? .61 : .65) /
+        stage.clientWidth
+    };
+
+    if (phase === "polish") {
+      polishStrokes.push(segment);
+      stroke(surfaceContext, segment, true);
+
+    } else if (phase === "coat") {
+      coatStrokes.push(segment);
+      stroke(coatContext, segment, false);
+
+    } else if (phase === "buff") {
+      buffStrokes.push(segment);
+      stroke(coatContext, segment, true);
+    }
+
+    markCoverage(segment);
+    moveTool(p);
+    last = p;
+  }
+
+  function stop(event) {
+    if (
+      pointer === null ||
+      (event && event.pointerId !== pointer)
+    ) return;
+
+    const old = pointer;
+    pointer = null;
+    last = null;
+
+    stage.classList.remove("is-working");
+
+    if (surface.hasPointerCapture(old)) {
+      surface.releasePointerCapture(old);
+    }
+
+    if (progress.value >= 92) {
+      finishPhase();
+    } else if (["polish", "coat", "buff"].includes(phase)) {
+      status.textContent =
+        progress.value +
+        "% covered. Keep going, or use the Finish button.";
+    }
+  }
+
+  surface.addEventListener("pointerdown", event => {
+    if (
+      !ready ||
+      pointer !== null ||
+      !["polish", "coat", "buff"].includes(phase)
+    ) return;
+
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+
+    event.preventDefault();
+    pointer = event.pointerId;
+    surface.setPointerCapture(pointer);
+
+    stage.classList.add("is-working", "has-started");
+
+    last = null;
+    paint(position(event));
+  });
+
+  surface.addEventListener("pointermove", event => {
+    if (!ready || !["polish", "coat", "buff"].includes(phase)) return;
+
+    if (event.pointerId === pointer) {
+      event.preventDefault();
+      paint(position(event));
+
+    } else if (pointer === null && event.pointerType === "mouse") {
+      moveTool(position(event));
+    }
+  });
+
+  ["pointerup", "pointercancel", "lostpointercapture"].forEach(name => {
+    surface.addEventListener(name, stop);
+  });
+
+  finish.onclick = () => {
+    stop();
+    finishPhase();
+  };
+
+  next.onclick = () => {
+    if (phase === "polished") {
+      phase = "coat";
+
+      hint.textContent = "Spread the coating across the hood";
+      status.textContent =
+        "Move the applicator over the paint. The sheen shows your coverage.";
+
+    } else if (phase === "coated") {
+      phase = "buff";
+
+      hint.textContent = "Wipe away the excess with the microfiber";
+      status.textContent =
+        "Move the microfiber over the hood to reveal the clear finish.";
+
+    } else {
+      return;
+    }
+
+    covered = new Set();
+    progress.value = 0;
+    last = null;
+
+    stage.classList.remove("has-started");
+    moveTool({x: .5, y: .5});
+
+    render();
+    updateUI();
+  };
+
+  function stopWater() {
+    cancelAnimationFrame(waterFrame);
+    waterRunning = false;
+
+    if (waterContext) {
+      waterContext.clearRect(
+        0, 0, stage.clientWidth, stage.clientHeight
+      );
+    }
+
+    updateUI();
+  }
+
+  water.onclick = () => {
+    if (phase !== "sealed" || waterRunning) return;
+
+    waterRunning = true;
+    updateUI();
+
+    status.textContent =
+      "Water beads and rolls away. Tap Test the water to replay.";
+
+    const drops = Array.from({length: 110}, () => ({
+      x: .08 + Math.random() * .84,
+      y: .27 + Math.random() * .5,
+      radius: 1.5 + Math.random() * 3.5,
+      speed: .08 + Math.random() * .13
+    }));
+
+    const started = performance.now();
+
+    function frame(now) {
+      const elapsed = (now - started) / 1000;
+      const width = stage.clientWidth;
+      const height = stage.clientHeight;
+
+      waterContext.clearRect(0, 0, width, height);
+      waterContext.save();
+      clipHood(waterContext);
+
+      drops.forEach(drop => {
+        const x = (
+          drop.x +
+          Math.sin(elapsed * 2 + drop.y * 20) * .003
+        ) * width;
+
+        const y = (
+          drop.y +
+          (reducedMotion ? 0 : elapsed * drop.speed)
+        ) * height;
+
+        const radius = drop.radius *
+          clamp(width / 650, .65, 1.6);
+
+        const shine = waterContext.createRadialGradient(
+          x - radius * .3,
+          y - radius * .3,
+          0,
+          x,
+          y,
+          radius
+        );
+
+        shine.addColorStop(0, "rgba(255,255,255,.95)");
+        shine.addColorStop(.35, "rgba(190,226,244,.4)");
+        shine.addColorStop(1, "rgba(80,150,190,.2)");
+
+        waterContext.fillStyle = shine;
+        waterContext.strokeStyle = "rgba(230,248,255,.7)";
+        waterContext.lineWidth = .6;
+
+        waterContext.beginPath();
+        waterContext.ellipse(
+          x, y, radius, radius * 1.3,
+          0, 0, Math.PI * 2
+        );
+        waterContext.fill();
+        waterContext.stroke();
+      });
+
+      waterContext.restore();
+
+      if (reducedMotion) {
+        waterRunning = false;
+        updateUI();
+      } else if (elapsed < 5) {
+        waterFrame = requestAnimationFrame(frame);
+      } else {
+        stopWater();
+      }
+    }
+
+    waterFrame = requestAnimationFrame(frame);
+  };
+
+  reset.onclick = () => {
+    stop();
+    stopWater();
+
+    phase = "polish";
+    last = null;
+    polishStrokes = [];
+    coatStrokes = [];
+    buffStrokes = [];
+    covered = new Set();
+    progress.value = 0;
+
+    stage.classList.remove("has-started", "is-working");
+
+    hint.textContent = "Move the polisher over the hood";
+    status.textContent =
+      "Move the polisher over the hood to reveal the shine.";
+
+    moveTool({x: .5, y: .5});
+    render();
+    updateUI();
+  };
+
+  function loaded() {
+    if (
+      ready ||
+      !base.complete ||
+      !before.complete ||
+      !base.naturalWidth ||
+      !before.naturalWidth
+    ) return;
+
+    if (
+      !surface.getContext("2d") ||
+      !coating.getContext("2d") ||
+      !waterCanvas.getContext("2d")
+    ) return;
+
+    ready = true;
+    stage.classList.add("is-ready");
+
+    hint.textContent = "Move the polisher over the hood";
+
+    render();
+    updateUI();
+  }
+
+  function failed() {
+    hint.textContent = "Check the polishing image filenames";
+
+    status.textContent =
+      "Upload d2y-polish-before.png and d2y-polish-after.png beside gallery.html.";
+  }
+
+  base.addEventListener("load", loaded);
+  before.addEventListener("load", loaded);
+  base.addEventListener("error", failed);
+  before.addEventListener("error", failed);
+
+  before.src = "d2y-polish-before.png";
+  loaded();
+
+  function resize() {
+    cancelAnimationFrame(resizeFrame);
+
+    resizeFrame = requestAnimationFrame(() => {
+      if (waterRunning) stopWater();
+      render();
+    });
+  }
+
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(resize).observe(stage);
+  } else {
+    window.addEventListener("resize", resize);
+  }
+
+  window.addEventListener("blur", () => stop());
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stop();
+      stopWater();
+    }
+  });
+})();
+</script>
 </body>
 </html>
