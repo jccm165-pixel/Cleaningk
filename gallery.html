@@ -29,19 +29,25 @@ body {
   margin: 0 0 18px;
 }
 
-.d2y-transformation {
-  max-width: 1100px;
-  margin: 0 auto;
-  color: #fff;
+.d2y-gallery {
+  padding: 15px 20px 40px;
 }
 
-.d2y-transformation h2 {
+.d2y-gallery-inner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  min-width: 0;
+}
+
+.d2y-gallery h2 {
+  color: #fff;
   font-size: clamp(24px, 4vw, 38px);
   line-height: 1.2;
   margin: 0 0 10px;
 }
 
-.d2y-transformation h2 span {
+.d2y-gallery h2 span {
   color: #b5df00;
 }
 
@@ -52,9 +58,18 @@ body {
   margin: 0 0 18px;
 }
 
+.d2y-gallery-items {
+  display: grid;
+  gap: 32px;
+  min-width: 0;
+}
+
 .d2y-compare {
   --reveal: 50%;
   position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
   margin: 0;
   border-radius: 16px;
   overflow: hidden;
@@ -64,17 +79,22 @@ body {
 
 .d2y-compare img {
   display: block;
-  width: 100%;
   max-width: none;
-  height: auto;
   margin: 0;
+  padding: 0;
+  border: 0;
   border-radius: 0;
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
 }
 
-.d2y-compare .d2y-before-overlay {
+.d2y-base {
+  width: 100%;
+  height: auto;
+}
+
+.d2y-before-overlay {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -160,19 +180,54 @@ body {
   outline-offset: 4px;
 }
 
-.d2y-sr-only {
+/* Interior: use each half of the existing comparison photo. */
+.d2y-interior {
+  aspect-ratio: 4 / 3;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.d2y-interior-layer {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
+  inset: 0;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+}
+
+.d2y-interior-layer img {
+  position: absolute;
+  top: 0;
+  width: 200%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The right half of Cupra1.jpg is the clean interior. */
+.d2y-interior-clean img {
+  right: 0;
+}
+
+/* The left half is the dirty interior. */
+.d2y-interior-dirty {
+  clip-path: inset(0 calc(100% - var(--reveal)) 0 0);
+}
+
+.d2y-interior-dirty img {
+  left: 0;
+}
+
+.d2y-gallery-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border-radius: 16px;
 }
 
 @media (max-width: 600px) {
+  .d2y-gallery-items {
+    gap: 26px;
+  }
+
   .d2y-tag {
     top: 10px;
     font-size: 9px;
@@ -219,105 +274,149 @@ body {
   </div>
 </section>
 
-<!-- INTERACTIVE BEFORE AND AFTER -->
-
-<section style="padding:15px 20px 30px;">
-  <div class="d2y-transformation">
+<section class="d2y-gallery">
+  <div class="d2y-gallery-inner">
 
     <h2>See the <span>D2Y Difference.</span></h2>
 
-    <p class="d2y-instruction" id="d2y-compare-help">
-      Drag the slider to reveal the shine.
+    <p class="d2y-instruction" id="compare-help">
+      Drag the sliders to reveal the shine.
     </p>
 
-    <figure class="d2y-compare" id="d2y-compare">
+    <div class="d2y-gallery-items">
 
-      <!-- Clean image: visible on the right -->
-      <img
-        src="d2y-driveway-after.webp"
-        alt="Illustrative clean Volkswagen Golf on a Dublin-style driveway."
-        width="1672"
-        height="941"
-        fetchpriority="high"
-        draggable="false"
-      >
+      <!-- FIRST: GOLF COMPARISON -->
 
-      <!-- Dirty image: visible on the left -->
-      <img
-        class="d2y-before-overlay"
-        src="d2y-driveway-before.webp"
-        alt="The same illustrative Volkswagen Golf covered in road dirt."
-        width="1672"
-        height="941"
-        fetchpriority="high"
-        draggable="false"
-      >
+      <figure class="d2y-compare" data-compare>
 
-      <span class="d2y-tag d2y-tag-left" aria-hidden="true">
-        BEFORE
-      </span>
+        <img
+          class="d2y-base"
+          src="d2y-driveway-after.webp"
+          alt="Illustrative clean Volkswagen Golf on a Dublin-style driveway."
+          width="1672"
+          height="941"
+          fetchpriority="high"
+          draggable="false"
+        >
 
-      <span class="d2y-tag d2y-tag-right" aria-hidden="true">
-        AFTER
-      </span>
+        <img
+          class="d2y-before-overlay"
+          src="d2y-driveway-before.webp"
+          alt="The same illustrative Golf covered in road dirt."
+          width="1672"
+          height="941"
+          fetchpriority="high"
+          draggable="false"
+        >
 
-      <div class="d2y-divider" aria-hidden="true">
-        <span class="d2y-handle">
-          <svg
-            viewBox="0 0 28 28"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="m10 8-6 6 6 6M18 8l6 6-6 6M14 6v16"/>
-          </svg>
+        <span class="d2y-tag d2y-tag-left" aria-hidden="true">
+          BEFORE
         </span>
-      </div>
 
-      <label for="d2y-range" class="d2y-sr-only">
-        Compare before and after
-      </label>
+        <span class="d2y-tag d2y-tag-right" aria-hidden="true">
+          AFTER
+        </span>
 
-      <input
-        class="d2y-range"
-        id="d2y-range"
-        type="range"
-        min="0"
-        max="100"
-        value="50"
-        step="1"
-        aria-describedby="d2y-compare-help"
-        aria-valuetext="50% before, 50% after"
+        <div class="d2y-divider" aria-hidden="true">
+          <span class="d2y-handle">
+            <svg
+              viewBox="0 0 28 28"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m10 8-6 6 6 6M18 8l6 6-6 6M14 6v16"/>
+            </svg>
+          </span>
+        </div>
+
+        <input
+          class="d2y-range"
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          step="1"
+          aria-label="Compare the Golf before and after"
+          aria-describedby="compare-help"
+          aria-valuetext="50% before, 50% after"
+        >
+
+      </figure>
+
+      <!-- SECOND: INTERIOR COMPARISON -->
+
+      <figure class="d2y-compare d2y-interior" data-compare>
+
+        <div class="d2y-interior-layer d2y-interior-clean">
+          <img
+            src="Cupra1.jpg"
+            alt="Clean car interior."
+            loading="lazy"
+            draggable="false"
+          >
+        </div>
+
+        <div class="d2y-interior-layer d2y-interior-dirty">
+          <img
+            src="Cupra1.jpg"
+            alt="Car interior before cleaning."
+            loading="lazy"
+            draggable="false"
+          >
+        </div>
+
+        <span class="d2y-tag d2y-tag-left" aria-hidden="true">
+          BEFORE
+        </span>
+
+        <span class="d2y-tag d2y-tag-right" aria-hidden="true">
+          AFTER
+        </span>
+
+        <div class="d2y-divider" aria-hidden="true">
+          <span class="d2y-handle">
+            <svg
+              viewBox="0 0 28 28"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m10 8-6 6 6 6M18 8l6 6-6 6M14 6v16"/>
+            </svg>
+          </span>
+        </div>
+
+        <input
+          class="d2y-range"
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          step="1"
+          aria-label="Compare the interior before and after"
+          aria-describedby="compare-help"
+          aria-valuetext="50% before, 50% after"
+        >
+
+      </figure>
+
+      <!-- THIRD: CUPRA EXTERIOR PHOTO -->
+
+      <img
+        class="d2y-gallery-photo"
+        src="Cupra.jpg"
+        alt="CUPRA exterior before and after cleaning."
+        loading="lazy"
       >
 
-    </figure>
-
+    </div>
   </div>
 </section>
-
-<!-- GALLERY PHOTOS -->
-
-<section style="padding:15px 20px 40px;">
-  <div style="max-width:1100px; margin:0 auto; display:grid; gap:24px;">
-
-    <img
-      src="Cupra.jpg"
-      alt="Ejemplo ilustrativo de detailing"
-      style="display:block; width:100%; height:auto; border-radius:16px;"
-    >
-
-    <img
-      src="Cupra1.jpg"
-      alt="Ejemplo ilustrativo de limpieza"
-      style="display:block; width:100%; height:auto; border-radius:16px;"
-    >
-
-  </div>
-</section>
-
-<!-- VIDEO -->
 
 <section class="dark">
 
@@ -352,23 +451,24 @@ body {
 
 <script>
 (() => {
-  const comparison = document.getElementById("d2y-compare");
-  const slider = document.getElementById("d2y-range");
+  document.querySelectorAll("[data-compare]").forEach(comparison => {
+    const slider = comparison.querySelector(".d2y-range");
 
-  function updateComparison() {
-    const before = Number(slider.value);
-    const after = 100 - before;
+    function updateComparison() {
+      const before = Number(slider.value);
+      const after = 100 - before;
 
-    comparison.style.setProperty("--reveal", before + "%");
+      comparison.style.setProperty("--reveal", before + "%");
 
-    slider.setAttribute(
-      "aria-valuetext",
-      before + "% before, " + after + "% after"
-    );
-  }
+      slider.setAttribute(
+        "aria-valuetext",
+        before + "% before, " + after + "% after"
+      );
+    }
 
-  slider.addEventListener("input", updateComparison);
-  updateComparison();
+    slider.addEventListener("input", updateComparison);
+    updateComparison();
+  });
 })();
 </script>
 
