@@ -1,78 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gallery | Direct2You</title>
 <link rel="stylesheet" href="style.css">
- <style>
-  header {
-    position: relative !important;
-    top: auto !important;
+
+<style>
+header {
+  position: relative !important;
+  top: auto !important;
+}
+
+body {
+  padding-top: 0 !important;
+}
+
+.page-hero {
+  min-height: 0 !important;
+  height: auto !important;
+  margin-top: 0 !important;
+  padding: 30px 20px 20px !important;
+}
+
+.page-hero h1 {
+  font-size: clamp(32px, 7vw, 60px);
+  line-height: 1.1;
+  margin: 0 0 18px;
+}
+
+.d2y-transformation {
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #fff;
+}
+
+.d2y-transformation h2 {
+  font-size: clamp(24px, 4vw, 38px);
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
+
+.d2y-transformation h2 span {
+  color: #b5df00;
+}
+
+.d2y-instruction {
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+
+.d2y-compare {
+  --reveal: 50%;
+  position: relative;
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #191919;
+}
+
+.d2y-compare img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  border-radius: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.d2y-compare .d2y-after {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  clip-path: inset(0 calc(100% - var(--reveal)) 0 0);
+}
+
+.d2y-tag {
+  position: absolute;
+  top: 16px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font: 700 11px/1.2 Arial, sans-serif;
+  letter-spacing: 1.5px;
+  padding: 9px 12px;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.d2y-tag-after {
+  left: 16px;
+}
+
+.d2y-tag-before {
+  right: 16px;
+}
+
+.d2y-divider {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  left: var(--reveal);
+  width: 2px;
+  background: #b5df00;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.d2y-handle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid #b5df00;
+  border-radius: 50%;
+  background: #111;
+  color: #b5df00;
+  box-shadow: 0 3px 18px #0008;
+}
+
+.d2y-handle svg {
+  width: 28px;
+  height: 28px;
+}
+
+.d2y-compare .d2y-range {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  touch-action: pan-y;
+}
+
+.d2y-compare:focus-within {
+  outline: 3px solid #b5df00;
+  outline-offset: 4px;
+}
+
+.d2y-demo-note {
+  display: block;
+  color: #999;
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 10px 0 0;
+}
+
+.d2y-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 600px) {
+  .d2y-tag {
+    top: 10px;
+    font-size: 9px;
+    padding: 7px 9px;
   }
 
-  body {
-    padding-top: 0 !important;
+  .d2y-tag-after {
+    left: 10px;
   }
 
-  .page-hero {
-    min-height: 0 !important;
-    height: auto !important;
-    margin-top: 0 !important;
-    padding: 30px 20px 20px !important;
+  .d2y-tag-before {
+    right: 10px;
   }
 
-  .page-hero h1 {
-    font-size: clamp(32px, 7vw, 60px);
-    line-height: 1.1;
-    margin: 0 0 18px;
+  .d2y-handle {
+    width: 40px;
+    height: 40px;
   }
-</style> 
+}
+</style>
 </head>
+
 <body>
 
 <header>
-<a class="brand" href="index.html">Direct<span>2</span>You</a>
-<nav>
-<a href="index.html">Home</a><a href="services.html">Services</a><a href="about.html">Our Story</a><a href="why.html">Why Us</a><a class="active" href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
-</nav>
+  <a class="brand" href="index.html">
+    Direct<span>2</span>You
+  </a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">Our Story</a>
+    <a href="why.html">Why Us</a>
+    <a class="active" href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 </header>
 
-<section class="page-hero" style="min-height:0; height:auto; padding:35px 20px 20px;">
-<div>
-<div class="badge">Gallery</div>
-<h1>Care You <span>Can See.</span></h1>
-<p style="font-size:13px; color:#aaa;">
-</p>
-</div>
+<section class="page-hero">
+  <div>
+    <div class="badge">Gallery</div>
+    <h1>Care You <span>Can See.</span></h1>
+  </div>
 </section>
 
-<section style="padding:15px 20px 40px;">
-  <div style="max-width:1100px; margin:0 auto; display:grid; gap:24px;">
+<!-- INTERACTIVE BEFORE AND AFTER -->
 
-    <img src="Cupra.jpg"
-         alt="Ejemplo ilustrativo de detailing"
-         style="display:block; width:100%; height:auto; border-radius:16px;">
+<section style="padding:15px 20px 30px;">
+  <div class="d2y-transformation">
 
-    <img src="Cupra1.jpg"
-         alt="Ejemplo ilustrativo de limpieza"
-         style="display:block; width:100%; height:auto; border-radius:16px;">
+    <h2>See the <span>D2Y Difference.</span></h2>
+
+    <p class="d2y-instruction" id="d2y-compare-help">
+      Drag the slider to reveal the shine.
+    </p>
+
+    <figure class="d2y-compare" id="d2y-compare">
+
+      <img
+        src="d2y-driveway-before.webp"
+        alt="Illustrative dirty Volkswagen Golf on a Dublin-style driveway."
+        width="1672"
+        height="941"
+        fetchpriority="high"
+        draggable="false"
+      >
+
+      <img
+        class="d2y-after"
+        src="d2y-driveway-after.webp"
+        alt="The same illustrative Golf with glossy clean paint and spotless wheels."
+        width="1672"
+        height="941"
+        fetchpriority="high"
+        draggable="false"
+      >
+
+      <span class="d2y-tag d2y-tag-after" aria-hidden="true">
+        AFTER
+      </span>
+
+      <span class="d2y-tag d2y-tag-before" aria-hidden="true">
+        BEFORE
+      </span>
+
+      <div class="d2y-divider" aria-hidden="true">
+        <span class="d2y-handle">
+          <svg
+            viewBox="0 0 28 28"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m10 8-6 6 6 6M18 8l6 6-6 6M14 6v16"/>
+          </svg>
+        </span>
+      </div>
+
+      <label for="d2y-range" class="d2y-sr-only">
+        Reveal the clean car
+      </label>
+
+      <input
+        class="d2y-range"
+        id="d2y-range"
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+        step="1"
+        aria-describedby="d2y-compare-help"
+        aria-valuetext="50% clean car revealed"
+      >
+
+    </figure>
+
+    <small class="d2y-demo-note">
+      AI-generated visual demonstration.
+    </small>
 
   </div>
 </section>
 
-<section class="dark">
-<div class="section-title">
-<h2>Watch <span>Our Work</span></h2>
-<p>Detailing is all about transformation: dirty to clean, dull to fresh, ordinary to sharp.</p>
-</div>
-<div class="video-box">
-<video controls playsinline style="width:100%; max-height:550px; object-fit:contain; display:block;">
-  <source src="Hiphop%20.mp4" type="video/mp4">
-</video>
-</div>
+<!-- EXISTING GALLERY PHOTOS -->
+
+<section style="padding:15px 20px 40px;">
+  <div style="max-width:1100px; margin:0 auto; display:grid; gap:24px;">
+
+    <img
+      src="Cupra.jpg"
+      alt="Ejemplo ilustrativo de detailing"
+      style="display:block; width:100%; height:auto; border-radius:16px;"
+    >
+
+    <img
+      src="Cupra1.jpg"
+      alt="Ejemplo ilustrativo de limpieza"
+      style="display:block; width:100%; height:auto; border-radius:16px;"
+    >
+
+  </div>
 </section>
 
-<footer><div class="brand">Direct<span>2</span>You</div><p>© 2026 Direct2You Dublin.</p></footer>
-<a class="whatsapp-float" href="https://wa.me/353894439214">WhatsApp</a>
+<!-- EXISTING VIDEO -->
+
+<section class="dark">
+
+  <div class="section-title">
+    <h2>Watch <span>Our Work</span></h2>
+    <p>
+      Detailing is all about transformation: dirty to clean,
+      dull to fresh, ordinary to sharp.
+    </p>
+  </div>
+
+  <div class="video-box">
+    <video
+      controls
+      playsinline
+      style="width:100%; max-height:550px; object-fit:contain; display:block;"
+    >
+      <source src="Hiphop%20.mp4" type="video/mp4">
+    </video>
+  </div>
+
+</section>
+
+<footer>
+  <div class="brand">Direct<span>2</span>You</div>
+  <p>© 2026 Direct2You Dublin.</p>
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/353894439214">
+  WhatsApp
+</a>
+
+<script>
+(() => {
+  const comparison = document.getElementById("d2y-compare");
+  const slider = document.getElementById("d2y-range");
+
+  function updateComparison() {
+    comparison.style.setProperty("--reveal", slider.value + "%");
+
+    slider.setAttribute(
+      "aria-valuetext",
+      slider.value + "% clean car revealed"
+    );
+  }
+
+  slider.addEventListener("input", updateComparison);
+  updateComparison();
+})();
+</script>
+
 </body>
 </html>
