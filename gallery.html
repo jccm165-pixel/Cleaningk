@@ -71,9 +71,10 @@ body {
   border-radius: 0;
   pointer-events: none;
   user-select: none;
+  -webkit-user-select: none;
 }
 
-.d2y-compare .d2y-after {
+.d2y-compare .d2y-before-overlay {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -95,11 +96,11 @@ body {
   pointer-events: none;
 }
 
-.d2y-tag-after {
+.d2y-tag-left {
   left: 16px;
 }
 
-.d2y-tag-before {
+.d2y-tag-right {
   right: 16px;
 }
 
@@ -122,6 +123,7 @@ body {
   transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
+  box-sizing: border-box;
   width: 48px;
   height: 48px;
   border: 2px solid #b5df00;
@@ -141,6 +143,7 @@ body {
   z-index: 4;
   inset: 0;
   display: block;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   min-height: 0;
@@ -155,14 +158,6 @@ body {
 .d2y-compare:focus-within {
   outline: 3px solid #b5df00;
   outline-offset: 4px;
-}
-
-.d2y-demo-note {
-  display: block;
-  color: #999;
-  font-size: 11px;
-  line-height: 1.5;
-  margin: 10px 0 0;
 }
 
 .d2y-sr-only {
@@ -184,11 +179,11 @@ body {
     padding: 7px 9px;
   }
 
-  .d2y-tag-after {
+  .d2y-tag-left {
     left: 10px;
   }
 
-  .d2y-tag-before {
+  .d2y-tag-right {
     right: 10px;
   }
 
@@ -237,31 +232,33 @@ body {
 
     <figure class="d2y-compare" id="d2y-compare">
 
+      <!-- Clean image: visible on the right -->
       <img
-        src="d2y-driveway-before.webp"
-        alt="Illustrative dirty Volkswagen Golf on a Dublin-style driveway."
-        width="1672"
-        height="941"
-        fetchpriority="high"
-        draggable="false"
-      >
-
-      <img
-        class="d2y-after"
         src="d2y-driveway-after.webp"
-        alt="The same illustrative Golf with glossy clean paint and spotless wheels."
+        alt="Illustrative clean Volkswagen Golf on a Dublin-style driveway."
         width="1672"
         height="941"
         fetchpriority="high"
         draggable="false"
       >
 
-      <span class="d2y-tag d2y-tag-after" aria-hidden="true">
-        AFTER
+      <!-- Dirty image: visible on the left -->
+      <img
+        class="d2y-before-overlay"
+        src="d2y-driveway-before.webp"
+        alt="The same illustrative Volkswagen Golf covered in road dirt."
+        width="1672"
+        height="941"
+        fetchpriority="high"
+        draggable="false"
+      >
+
+      <span class="d2y-tag d2y-tag-left" aria-hidden="true">
+        BEFORE
       </span>
 
-      <span class="d2y-tag d2y-tag-before" aria-hidden="true">
-        BEFORE
+      <span class="d2y-tag d2y-tag-right" aria-hidden="true">
+        AFTER
       </span>
 
       <div class="d2y-divider" aria-hidden="true">
@@ -280,7 +277,7 @@ body {
       </div>
 
       <label for="d2y-range" class="d2y-sr-only">
-        Reveal the clean car
+        Compare before and after
       </label>
 
       <input
@@ -292,17 +289,15 @@ body {
         value="50"
         step="1"
         aria-describedby="d2y-compare-help"
-        aria-valuetext="50% clean car revealed"
+        aria-valuetext="50% before, 50% after"
       >
 
     </figure>
 
-
-
   </div>
 </section>
 
-<!-- EXISTING GALLERY PHOTOS -->
+<!-- GALLERY PHOTOS -->
 
 <section style="padding:15px 20px 40px;">
   <div style="max-width:1100px; margin:0 auto; display:grid; gap:24px;">
@@ -322,7 +317,7 @@ body {
   </div>
 </section>
 
-<!-- EXISTING VIDEO -->
+<!-- VIDEO -->
 
 <section class="dark">
 
@@ -361,11 +356,14 @@ body {
   const slider = document.getElementById("d2y-range");
 
   function updateComparison() {
-    comparison.style.setProperty("--reveal", slider.value + "%");
+    const before = Number(slider.value);
+    const after = 100 - before;
+
+    comparison.style.setProperty("--reveal", before + "%");
 
     slider.setAttribute(
       "aria-valuetext",
-      slider.value + "% clean car revealed"
+      before + "% before, " + after + "% after"
     );
   }
 
