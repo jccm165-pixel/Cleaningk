@@ -80,7 +80,9 @@ body {
 
 }
 
-.d2y-gallery h2 span {
+.d2y-gallery h2 span,
+
+.d2y-interior-heading span {
 
   color: #b5df00;
 
@@ -96,7 +98,7 @@ body {
 
 }
 
-/* WATER COMPARISON */
+/* WATER SLIDER */
 
 .d2y-compare {
 
@@ -166,46 +168,6 @@ body {
 
 }
 
-.d2y-tag {
-
-  position: absolute;
-
-  top: 14px;
-
-  z-index: 2;
-
-  background: #000b;
-
-  color: #fff;
-
-  font: 700 11px/1.2 Arial, sans-serif;
-
-  letter-spacing: 1.5px;
-
-  padding: 9px 12px;
-
-  border-radius: 6px;
-
-  pointer-events: none;
-
-  transition: opacity .2s;
-
-}
-
-.d2y-tag-left {
-
-  left: 14px;
-
-  opacity: 0;
-
-}
-
-.d2y-tag-right {
-
-  right: 14px;
-
-}
-
 .d2y-divider {
 
   position: absolute;
@@ -244,23 +206,21 @@ body {
 
   opacity: .55;
 
-  background:
+  background: linear-gradient(
 
-    linear-gradient(
+    90deg,
 
-      90deg,
+    transparent,
 
-      transparent,
+    #dffaff22 25%,
 
-      #dffaff22 25%,
+    #ffffff99 50%,
 
-      #ffffff99 50%,
+    #dffaff22 75%,
 
-      #dffaff22 75%,
+    transparent
 
-      transparent
-
-    );
+  );
 
   transition: opacity .2s, width .2s;
 
@@ -342,7 +302,7 @@ body {
 
   position: absolute;
 
-  left: var(--handle-position, 50%);
+  left: 50%;
 
   top: 50%;
 
@@ -428,12 +388,6 @@ body {
 
 }
 
-.d2y-instruction strong {
-
-  color: #b5df00;
-
-}
-
 /* INTERIOR VACUUM */
 
 .d2y-interior {
@@ -446,15 +400,9 @@ body {
 
   color: #fff;
 
-  font: 700 clamp(20px, 3vw, 28px)/1.2 Arial, sans-serif;
+  font: 700 clamp(24px, 4vw, 38px)/1.2 Arial, sans-serif;
 
-  margin: 0 0 12px;
-
-}
-
-.d2y-interior-heading span {
-
-  color: #b5df00;
+  margin: 0 0 22px;
 
 }
 
@@ -696,28 +644,6 @@ body {
 
   }
 
-  .d2y-tag {
-
-    top: 10px;
-
-    font-size: 9px;
-
-    padding: 7px 9px;
-
-  }
-
-  .d2y-tag-left {
-
-    left: 10px;
-
-  }
-
-  .d2y-tag-right {
-
-    right: 10px;
-
-  }
-
   .d2y-handle {
 
     width: 46px;
@@ -796,19 +722,17 @@ body {
 
   <div class="d2y-gallery-inner">
 
-    <h2 id="compare-help">
-
-      Slide to wash. <span>Swipe to vacuum.</span><br>
-
-      Reveal the difference.
-
-    </h2>
-
     <div class="d2y-gallery-items">
 
       <!-- GOLF: WASH FROM LEFT TO RIGHT -->
 
       <div>
+
+        <h2 id="compare-help">
+
+          Slide to wash. <span>Reveal the shine.</span>
+
+        </h2>
 
         <figure class="d2y-compare" id="d2y-compare">
 
@@ -836,7 +760,7 @@ body {
 
             src="d2y-driveway-before.webp"
 
-            alt="The same illustrative Golf covered in road dirt."
+            alt=""
 
             width="1672"
 
@@ -847,30 +771,6 @@ body {
             draggable="false"
 
           >
-
-          <span
-
-            class="d2y-tag d2y-tag-left"
-
-            aria-hidden="true"
-
-          >
-
-            AFTER
-
-          </span>
-
-          <span
-
-            class="d2y-tag d2y-tag-right"
-
-            aria-hidden="true"
-
-          >
-
-            BEFORE
-
-          </span>
 
           <div class="d2y-divider" aria-hidden="true">
 
@@ -966,8 +866,6 @@ body {
 
         <p class="d2y-instruction">
 
-          <strong>Slide to wash.</strong>
-
           Drag the water jet from left to right.
 
         </p>
@@ -980,7 +878,7 @@ body {
 
         <h3 class="d2y-interior-heading">
 
-          Your touch. <span>A fresh interior.</span>
+          Swipe to vacuum. <span>Feel the freshness.</span>
 
         </h3>
 
@@ -1174,8 +1072,6 @@ body {
 
         >
 
-          <strong>Swipe to vacuum.</strong>
-
           Move the nozzle over the interior to clean it.
 
         </p>
@@ -1272,10 +1168,6 @@ body {
 
   const handle = comparison.querySelector(".d2y-handle");
 
-  const afterTag = comparison.querySelector(".d2y-tag-left");
-
-  const beforeTag = comparison.querySelector(".d2y-tag-right");
-
   let waterTimer;
 
   function updateComparison() {
@@ -1292,15 +1184,11 @@ body {
 
     );
 
-    afterTag.style.opacity = washed > 15 ? "1" : "0";
-
-    beforeTag.style.opacity = washed < 85 ? "1" : "0";
-
     /*
 
-      Keep the circular handle fully visible at both edges,
+      Keep the circular handle visible at both edges.
 
-      while the water line reaches the exact image boundary.
+      The water line still reaches the image boundary.
 
     */
 
@@ -1720,7 +1608,7 @@ body {
 
     status.textContent =
 
-      "Swipe to vacuum. Move the nozzle over the interior to clean it.";
+      "Move the nozzle over the interior to clean it.";
 
     renderInterior();
 
