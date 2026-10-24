@@ -1,2249 +1,931 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>The D2Y Experience | Direct2You</title>
-
 <link rel="stylesheet" href="style.css">
 
 <style>
- /* Green foam only on the car */
-.d2y-foam-layer {
-  --car-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1672 941'%3E%3Cpath fill='white' d='M222 738 L226 646 L245 605 L258 555 Q268 514 296 490 Q365 425 505 398 Q612 300 724 252 Q821 218 1085 220 Q1208 214 1274 251 Q1328 285 1360 351 L1394 409 Q1421 453 1433 503 Q1445 540 1444 589 L1440 666 Q1427 724 1387 735 Q1335 745 1308 696 L1085 752 Q1077 811 1035 830 Q988 850 941 814 L915 786 L405 781 Q369 812 330 801 Q304 794 289 770 L249 760 Q227 755 222 738 Z'/%3E%3C/svg%3E");
+header{position:relative!important;top:auto!important}
+body{padding-top:0!important}
+.page-hero{min-height:0!important;height:auto!important;margin-top:0!important;padding:30px 20px 20px!important}
+.page-hero h1{font-size:clamp(32px,7vw,60px);line-height:1.1;margin:0 0 18px}
+.d2y-gallery{padding:15px 20px 40px}
+.d2y-gallery-inner{width:100%;max-width:1100px;min-width:0;margin:auto}
+.d2y-gallery-items{display:grid;gap:38px;min-width:0}
+.d2y-title{margin:0 0 22px;color:#fff;font:700 clamp(24px,4vw,38px)/1.2 Arial,sans-serif}
+.d2y-title span{color:#b5df00}
+.d2y-title-line{display:block}
+.d2y-instruction{margin:12px 0 0;color:#bbb;font:400 13px/1.6 Arial,sans-serif}
+.d2y-controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.d2y-button{appearance:none;min-height:44px;padding:10px 17px;border:1px solid #b5df0066;border-radius:24px;background:#151a0c;color:#b5df00;font:600 12px/1.3 Arial,sans-serif;cursor:pointer}
+.d2y-button:hover{background:#26320b}
+.d2y-button:disabled{opacity:.4;cursor:default}
+.d2y-button:focus-visible{outline:2px solid white;outline-offset:3px}
 
-  -webkit-mask-image: var(--car-mask);
-  mask-image: var(--car-mask);
+/* FOAM AND RINSE */
+.d2y-wash{--foam:0%;--rinse:0%;position:relative;width:100%;margin:0;overflow:hidden;border-radius:16px;isolation:isolate;background:#191919}
+.d2y-wash img{display:block;max-width:none;margin:0;padding:0;border:0;border-radius:0;pointer-events:none;user-select:none;-webkit-user-select:none}
+.d2y-dirty-car{width:100%;height:auto}
+.d2y-clean-car{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 calc(100% - var(--rinse)) 0 0)}
+.d2y-foam-layer{
+position:absolute;inset:0;pointer-events:none;
+clip-path:inset(0 calc(100% - var(--foam)) 0 var(--rinse));
+background:linear-gradient(135deg,#baff46d9,#74c719e8 35%,#a5e93fe0 65%,#d5ff87df);
+--car-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1672 941'%3E%3Cpath fill='white' d='M222 738 L226 646 L245 605 L258 555 Q268 514 296 490 Q365 425 505 398 Q612 300 724 252 Q821 218 1085 220 Q1208 214 1274 251 Q1328 285 1360 351 L1394 409 Q1421 453 1433 503 Q1445 540 1444 589 L1440 666 Q1427 724 1387 735 Q1335 745 1308 696 L1085 752 Q1077 811 1035 830 Q988 850 941 814 L915 786 L405 781 Q369 812 330 801 Q304 794 289 770 L249 760 Q227 755 222 738 Z'/%3E%3C/svg%3E");
+-webkit-mask-image:var(--car-mask);mask-image:var(--car-mask);
+-webkit-mask-size:100% 100%;mask-size:100% 100%;
+-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat
+}
+.d2y-foam-layer canvas{display:block;width:100%;height:100%}
+.d2y-track{position:absolute;top:0;bottom:0;z-index:3;width:2px;transform:translateX(-50%);pointer-events:none}
+.d2y-track-foam{left:var(--foam);color:#b5df00;background:currentColor;box-shadow:0 0 9px #b5df0055}
+.d2y-track-rinse{left:var(--rinse);color:#bcefff;background:currentColor;box-shadow:0 0 9px #bcefff55}
+.d2y-tool{appearance:none;position:absolute;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;width:66px;height:76px;padding:4px;border:2px solid currentColor;border-radius:16px;background:#101710f2;color:inherit;box-shadow:0 4px 18px #0009;pointer-events:auto;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.d2y-tool:active{cursor:grabbing}
+.d2y-tool:focus-visible{outline:3px solid white;outline-offset:3px}
+.d2y-tool svg{width:47px;height:47px;pointer-events:none}
+.d2y-tool-label{font:700 9px/1 Arial,sans-serif;letter-spacing:1px;pointer-events:none}
+#d2y-foam-tool{top:32%}
+#d2y-rinse-tool{top:72%}
+.d2y-tool[aria-disabled="true"]{opacity:.55;cursor:default}
+.d2y-spray{position:absolute;top:0;bottom:0;left:50%;width:50px;transform:translateX(-50%);opacity:0;overflow:hidden}
+.d2y-spray::before{content:"";position:absolute;inset:-100% 0;background-image:radial-gradient(ellipse,#fff 0 1px,transparent 3px),radial-gradient(ellipse,currentColor 0 2px,transparent 4px);background-size:15px 41px,23px 63px;background-position:0 0,8px 13px}
+.d2y-track.is-active .d2y-spray{opacity:.95}
+.d2y-track.is-active .d2y-spray::before{animation:d2y-spray-fall .5s linear infinite}
+@keyframes d2y-spray-fall{to{background-position:0 164px,8px 265px}}
 
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
+/* VACUUM AND POLISHING */
+.d2y-stage{position:relative;width:100%;overflow:hidden;border-radius:16px;background:#191919;isolation:isolate}
+.d2y-vacuum-stage{aspect-ratio:1.1}
+.d2y-stage img{display:block;width:100%;height:auto;margin:0;border:0;border-radius:0;pointer-events:none;user-select:none;-webkit-user-select:none}
+.d2y-stage .d2y-interior-fallback{height:100%;object-fit:contain}
+.d2y-stage canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
+.d2y-vacuum-stage canvas{opacity:0}
+.d2y-vacuum-stage.is-ready canvas{opacity:1}
+.d2y-vacuum-stage.is-ready .d2y-interior-fallback{visibility:hidden}
+.d2y-touch-canvas{z-index:2;touch-action:none;cursor:crosshair}
+.d2y-vacuum-tool{position:absolute;z-index:4;width:clamp(76px,15vw,120px);height:auto;left:50%;top:60%;transform:translate(-50%,-28%);pointer-events:none;filter:drop-shadow(3px 8px 5px #0009);opacity:0}
+.d2y-vacuum-stage.is-ready .d2y-vacuum-tool{opacity:1}
+.d2y-vacuum-stage.is-clean .d2y-vacuum-tool{opacity:0}
+.d2y-hint{position:absolute;z-index:5;bottom:16px;left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% - 30px);box-sizing:border-box;padding:10px 15px;border:1px solid #ffffff30;border-radius:30px;background:#000b;color:white;text-align:center;font:600 12px/1.4 Arial,sans-serif;pointer-events:none}
+.d2y-stage.has-started .d2y-hint{display:none}
+.d2y-polish-tool{position:absolute;z-index:4;left:50%;top:43%;width:clamp(82px,17vw,150px);height:auto;transform:translate(-50%,-32%);pointer-events:none;filter:drop-shadow(3px 8px 6px #000b);opacity:0}
+.d2y-polish-stage.is-ready .d2y-polish-tool{opacity:1}
+.d2y-polish-stage[data-phase="polished"] .d2y-polish-tool,
+.d2y-polish-stage[data-phase="sealed"] .d2y-polish-tool{opacity:0}
+.d2y-applicator{display:none}
+.d2y-polish-stage[data-phase="coat"] .d2y-polisher{display:none}
+.d2y-polish-stage[data-phase="coat"] .d2y-applicator{display:block}
+.d2y-pad{transform-box:fill-box;transform-origin:center}
+.d2y-polish-stage.is-working .d2y-pad{animation:d2y-pad-spin .22s linear infinite}
+@keyframes d2y-pad-spin{to{transform:rotate(360deg)}}
+#d2y-coat-canvas{z-index:3;pointer-events:none}
+#d2y-water-canvas{z-index:5;pointer-events:none}
+.d2y-step{margin:0 0 12px;color:#b5df00;font:700 11px/1.4 Arial,sans-serif;text-transform:uppercase;letter-spacing:1.5px}
+.d2y-progress{display:block;width:100%;height:5px;margin-top:16px;border:0;border-radius:10px;overflow:hidden;accent-color:#b5df00;background:#252525}
+.d2y-progress::-webkit-progress-bar{background:#252525}
+.d2y-progress::-webkit-progress-value{background:#b5df00}
+.d2y-progress::-moz-progress-bar{background:#b5df00}
+@media(max-width:600px){
+.d2y-gallery-items{gap:28px}
+.d2y-tool{width:54px;height:64px;border-radius:13px}
+.d2y-tool svg{width:37px;height:37px}
+.d2y-tool-label{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){
+.d2y-track.is-active .d2y-spray::before,
+.d2y-polish-stage.is-working .d2y-pad{animation:none}
+}
+</style>
+</head>
 
-  -webkit-mask-position: center;
-  mask-position: center;
+<body>
+<header>
+  <a class="brand" href="index.html">Direct<span>2</span>You</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">Our Story</a>
+    <a href="why.html">Why Us</a>
+    <a class="active" href="gallery.html">Experience</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
 
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-} 
+<section class="page-hero">
+  <div>
+    <div class="badge">Experience</div>
+    <h1>The D2Y <span>Experience.</span></h1>
+  </div>
+</section>
 
-header {
+<section class="d2y-gallery">
+<div class="d2y-gallery-inner">
+<div class="d2y-gallery-items">
 
-  position: relative !important;
+<!-- FOAM AND RINSE -->
+<div>
+  <h2 class="d2y-title" id="d2y-wash-heading">
+    Slide to foam.
+    <span class="d2y-title-line">Slide to rinse.</span>
+  </h2>
 
-  top: auto !important;
+  <figure class="d2y-wash" id="d2y-wash" aria-labelledby="d2y-wash-heading">
+    <img class="d2y-dirty-car" src="d2y-driveway-before.webp" alt="Illustrative Volkswagen Golf: apply green foam and rinse to reveal the shine." width="1672" height="941" fetchpriority="high" draggable="false">
+    <img class="d2y-clean-car" src="d2y-driveway-after.webp" alt="" width="1672" height="941" fetchpriority="high" draggable="false">
 
+    <div class="d2y-foam-layer" aria-hidden="true">
+      <canvas id="d2y-foam-texture"></canvas>
+    </div>
+
+    <div class="d2y-track d2y-track-foam" id="d2y-foam-track">
+      <span class="d2y-spray" aria-hidden="true"></span>
+      <button type="button" class="d2y-tool" id="d2y-foam-tool" role="slider" aria-label="Apply green foam" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-describedby="d2y-wash-help">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M10 17L33 22L30 31L8 26Z" fill="#b5df00" stroke="#e0ff94" stroke-width="1.5"/>
+          <path d="M12 27L8 41L15 43L20 29" fill="#454f52" stroke="#a8b5b9" stroke-width="2"/>
+          <path d="M33 23L43 26L41 32L31 29M28 31H40V36H28Z" fill="#c5d1d6"/>
+          <path d="M25 37Q34 33 43 37L45 57Q34 62 23 57Z" fill="#8cdb26" stroke="#e1ffb7" stroke-width="2"/>
+          <path d="M28 42H40M28 47H40" stroke="#cfff8a" stroke-width="2"/>
+          <path d="M46 27L59 20M46 29L61 30M45 32L58 39" stroke="#c4ff77" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="d2y-tool-label">FOAM ↔</span>
+      </button>
+    </div>
+
+    <div class="d2y-track d2y-track-rinse" id="d2y-rinse-track">
+      <span class="d2y-spray" aria-hidden="true"></span>
+      <button type="button" class="d2y-tool" id="d2y-rinse-tool" role="slider" aria-label="Rinse the foam" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-disabled="true" aria-describedby="d2y-wash-help">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M12 15L32 23L28 33L9 25Z" fill="#b6e7f9" stroke="#e5f9ff" stroke-width="1.5"/>
+          <path d="M14 28L8 44L16 47L23 31" fill="#424f55" stroke="#b8c7cc" stroke-width="2"/>
+          <path d="M32 24L43 28L40 35L29 31" fill="#9baeb8"/>
+          <path d="M46 28L59 20M46 31L62 32M44 35L58 44" stroke="#c0efff" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M12 46C5 57 21 62 29 54" stroke="#7f929b" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <span class="d2y-tool-label">RINSE ↔</span>
+      </button>
+    </div>
+  </figure>
+
+  <p class="d2y-instruction" id="d2y-wash-help">Drag the green foam gun to the right. Follow with the blue water gun. Move either one back to try again.</p>
+  <div class="d2y-controls">
+    <button class="d2y-button" type="button" id="d2y-wash-reset">↻ Wash again</button>
+  </div>
+  <p class="d2y-instruction" id="d2y-wash-status" aria-live="polite"></p>
+</div>
+
+<!-- INTERIOR VACUUM -->
+<div>
+  <h2 class="d2y-title">Swipe to vacuum. <span>Feel the freshness.</span></h2>
+
+  <div class="d2y-stage d2y-vacuum-stage" id="d2y-vacuum-stage">
+    <img class="d2y-interior-fallback" id="d2y-interior-source" src="Cupra1.jpg" alt="Car interior before and after cleaning." loading="lazy" draggable="false">
+    <canvas id="d2y-clean" aria-hidden="true"></canvas>
+    <canvas class="d2y-touch-canvas" id="d2y-dirty" role="img" aria-label="Drag to vacuum the interior, or use Show result below."></canvas>
+
+    <svg class="d2y-vacuum-tool" id="d2y-vacuum-tool" viewBox="0 0 120 170" fill="none" aria-hidden="true">
+      <path d="M60 93C60 124 108 115 106 170" stroke="#111" stroke-width="25"/>
+      <path d="M60 93C60 124 108 115 106 170" stroke="#444" stroke-width="18" stroke-dasharray="3 5"/>
+      <path d="M47 68H73V106H47Z" fill="#24292c" stroke="#7c8589" stroke-width="2"/>
+      <path d="M20 33Q60 22 100 33L88 67Q60 80 32 67Z" fill="#30383c" stroke="#a0aaae" stroke-width="2"/>
+      <path d="M23 34Q60 25 97 34L94 45Q60 37 26 45Z" fill="#0b0e10"/>
+      <path d="M34 52Q60 46 86 52" stroke="#b5df00" stroke-width="5" stroke-linecap="round"/>
+      <path d="M52 79H68" stroke="#b5df00" stroke-width="4"/>
+    </svg>
+
+    <div class="d2y-hint" id="d2y-vacuum-hint">Loading interior…</div>
+  </div>
+
+  <div class="d2y-controls">
+    <button class="d2y-button" type="button" id="d2y-reset" disabled>↻ Start again</button>
+    <button class="d2y-button" type="button" id="d2y-show-result" disabled>Show result</button>
+  </div>
+  <p class="d2y-instruction" id="d2y-vacuum-status" aria-live="polite">Move the nozzle over the interior to clean it.</p>
+</div>
+
+<!-- POLISHING AND COATING -->
+<div>
+  <h2 class="d2y-title">
+    Polish to perfection.
+    <span class="d2y-title-line">Seal the shine.</span>
+  </h2>
+
+  <p class="d2y-step" id="d2y-polish-step">01 / Polish the paint</p>
+
+  <div class="d2y-stage d2y-polish-stage" id="d2y-polish-stage" data-phase="polish">
+    <img id="d2y-polish-base" src="d2y-polish-after.png" alt="Illustrative black car hood for an interactive polishing and coating demonstration." width="1536" height="1024" loading="lazy" draggable="false">
+    <canvas class="d2y-touch-canvas" id="d2y-polish-canvas" role="img" aria-label="Drag the polisher over the hood, or use Finish polishing below."></canvas>
+    <canvas id="d2y-coat-canvas" aria-hidden="true"></canvas>
+    <canvas id="d2y-water-canvas" aria-hidden="true"></canvas>
+
+    <div class="d2y-polish-tool" id="d2y-polish-tool" aria-hidden="true">
+      <svg class="d2y-polisher" viewBox="0 0 160 190" fill="none">
+        <g class="d2y-pad">
+          <ellipse cx="80" cy="61" rx="52" ry="43" fill="#651f34" stroke="#e596ad" stroke-width="3"/>
+          <ellipse cx="80" cy="61" rx="41" ry="33" fill="#8c2e48"/>
+          <path d="M80 26V96M39 61H121M51 37L109 85M51 85L109 37" stroke="#c35e7c" stroke-width="3"/>
+        </g>
+        <path d="M48 45Q80 29 112 45L108 67Q80 79 52 67Z" fill="#252c30" stroke="#929da3" stroke-width="2"/>
+        <rect x="62" y="53" width="36" height="78" rx="15" fill="#b5df00" stroke="#e3ff89" stroke-width="2"/>
+        <path d="M68 86H92M68 94H92M68 102H92" stroke="#354115" stroke-width="4"/>
+        <rect x="66" y="121" width="28" height="27" rx="6" fill="#333c40"/>
+        <path d="M80 148C80 169 127 151 132 190" stroke="#30383c" stroke-width="8"/>
+        <path d="M48 47L28 49L24 72" stroke="#b7c2c5" stroke-width="8" stroke-linecap="round"/>
+      </svg>
+
+      <svg class="d2y-applicator" viewBox="0 0 160 190" fill="none">
+        <path d="M35 32L116 22L130 85L49 100Z" fill="#b5df00" stroke="#eeffbd" stroke-width="3"/>
+        <path d="M49 100L130 85L130 102L49 118Z" fill="#394a12"/>
+        <path d="M35 32L49 100V118L34 50Z" fill="#71951e"/>
+        <path d="M51 48L107 40M55 62L111 54M59 76L115 68" stroke="#dbff86" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <div class="d2y-hint" id="d2y-polish-hint">Loading polishing experience…</div>
+  </div>
+
+  <progress class="d2y-progress" id="d2y-polish-progress" max="100" value="0" aria-label="Polishing coverage"></progress>
+
+  <div class="d2y-controls">
+    <button class="d2y-button" type="button" id="d2y-polish-finish" disabled>Finish polishing</button>
+    <button class="d2y-button" type="button" id="d2y-apply-coat" disabled>Apply coating</button>
+    <button class="d2y-button" type="button" id="d2y-test-water" disabled>Test the water</button>
+    <button class="d2y-button" type="button" id="d2y-polish-reset" disabled>↻ Start again</button>
+  </div>
+
+  <p class="d2y-instruction" id="d2y-polish-status" aria-live="polite">Move the polisher over the hood to reveal the shine.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="dark">
+  <div class="section-title">
+    <h2>Watch <span>Our Work</span></h2>
+    <p>Detailing is all about transformation: dirty to clean, dull to fresh, ordinary to sharp.</p>
+  </div>
+  <div class="video-box">
+    <video controls playsinline style="width:100%;max-height:550px;object-fit:contain;display:block;">
+      <source src="Hiphop%20.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<footer>
+  <div class="brand">Direct<span>2</span>You</div>
+  <p>© 2026 Direct2You Dublin.</p>
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/353894439214">WhatsApp</a>
+
+<script>
+(() => {
+"use strict";
+
+const $ = id => document.getElementById(id);
+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function observeSize(element,callback) {
+  let frame;
+  const schedule = () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(callback);
+  };
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(schedule).observe(element);
+  } else {
+    window.addEventListener("resize",schedule);
+  }
+  schedule();
 }
 
-body {
-
-  padding-top: 0 !important;
-
+function setupCanvas(canvas,stage) {
+  const scale = Math.min(window.devicePixelRatio || 1,2);
+  canvas.width = Math.round(stage.clientWidth*scale);
+  canvas.height = Math.round(stage.clientHeight*scale);
+  const ctx = canvas.getContext("2d");
+  if (ctx) ctx.setTransform(scale,0,0,scale,0,0);
+  return ctx;
 }
 
-.page-hero {
-
-  min-height: 0 !important;
-
-  height: auto !important;
-
-  margin-top: 0 !important;
-
-  padding: 30px 20px 20px !important;
-
+function point(event,element) {
+  const box = element.getBoundingClientRect();
+  return {
+    x:clamp((event.clientX-box.left)/box.width,0,1),
+    y:clamp((event.clientY-box.top)/box.height,0,1)
+  };
 }
 
-.page-hero h1 {
-
-  font-size: clamp(32px, 7vw, 60px);
-
-  line-height: 1.1;
-
-  margin: 0 0 18px;
-
+function moveTool(tool,p) {
+  tool.style.left = p.x*100+"%";
+  tool.style.top = p.y*100+"%";
 }
 
-.d2y-gallery {
-
-  padding: 15px 20px 40px;
-
+function drawStroke(ctx,stage,stroke) {
+  const w = stage.clientWidth;
+  const h = stage.clientHeight;
+  ctx.lineWidth = stroke.size*w;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.beginPath();
+  ctx.moveTo(stroke.from.x*w,stroke.from.y*h);
+  ctx.lineTo(stroke.to.x*w,stroke.to.y*h);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(stroke.to.x*w,stroke.to.y*h,stroke.size*w/2,0,Math.PI*2);
+  ctx.fill();
 }
 
-.d2y-gallery-inner {
-
-  width: 100%;
-
-  max-width: 1100px;
-
-  min-width: 0;
-
-  margin: 0 auto;
-
-}
-
-.d2y-gallery-items {
-
-  display: grid;
-
-  gap: 36px;
-
-  min-width: 0;
-
-}
-
-.d2y-title {
-
-  margin: 0 0 22px;
-
-  color: #fff;
-
-  font: 700 clamp(24px, 4vw, 38px)/1.2 Arial, sans-serif;
-
-}
-
-.d2y-title span {
-
-  color: #b5df00;
-
-}
-
-.d2y-title .d2y-title-line {
-
-  display: block;
-
-}
-
-.d2y-instruction {
-
-  margin: 12px 0 0;
-
-  color: #bbb;
-
-  font: 400 13px/1.6 Arial, sans-serif;
-
-}
-
-.d2y-controls {
-
-  display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 10px;
-
-  margin-top: 14px;
-
-}
-
-.d2y-button {
-
-  appearance: none;
-
-  min-height: 44px;
-
-  padding: 10px 17px;
-
-  border: 1px solid #b5df0066;
-
-  border-radius: 24px;
-
-  background: #151a0c;
-
-  color: #b5df00;
-
-  font: 600 12px/1.3 Arial, sans-serif;
-
-  cursor: pointer;
-
-}
-
-.d2y-button:hover {
-
-  background: #26320b;
-
-}
-
-.d2y-button:disabled {
-
-  opacity: .45;
-
-  cursor: default;
-
-}
-
-.d2y-button:focus-visible {
-
-  outline: 2px solid #fff;
-
-  outline-offset: 3px;
-
-}
-
-/* EXTERIOR: TWO INDEPENDENT CONTROLS */
-
-.d2y-wash {
-
-  --foam: 0%;
-
-  --rinse: 0%;
-
-  position: relative;
-
-  width: 100%;
-
-  min-width: 0;
-
-  margin: 0;
-
-  overflow: hidden;
-
-  border-radius: 16px;
-
-  isolation: isolate;
-
-  background: #191919;
-
-}
-
-.d2y-wash img {
-
-  display: block;
-
-  max-width: none;
-
-  margin: 0;
-
-  padding: 0;
-
-  border: 0;
-
-  border-radius: 0;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-}
-
-.d2y-dirty-car {
-
-  width: 100%;
-
-  height: auto;
-
-}
-
-.d2y-clean-car {
-
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-  clip-path: inset(0 calc(100% - var(--rinse)) 0 0);
-
-}
-
-.d2y-foam-layer {
-
-  position: absolute;
-
-  inset: 0;
-
-  pointer-events: none;
-
-  clip-path: inset(
-
-    0
-
-    calc(100% - var(--foam))
-
-    0
-
-    var(--rinse)
-
-  );
-
-  background: linear-gradient(
-
-    135deg,
-
-    #baff46d9,
-
-    #74c719e8 35%,
-
-    #a5e93fe0 65%,
-
-    #d5ff87df
-
-  );
-
-}
-
-.d2y-foam-layer canvas {
-
-  display: block;
-
-  width: 100%;
-
-  height: 100%;
-
-}
-
-.d2y-track {
-
-  position: absolute;
-
-  top: 0;
-
-  bottom: 0;
-
-  z-index: 3;
-
-  width: 2px;
-
-  transform: translateX(-50%);
-
-  pointer-events: none;
-
-}
-
-.d2y-track-foam {
-
-  left: var(--foam);
-
-  color: #b5df00;
-
-  background: #b5df00;
-
-  box-shadow: 0 0 9px #b5df0055;
-
-}
-
-.d2y-track-rinse {
-
-  left: var(--rinse);
-
-  color: #bcefff;
-
-  background: #bcefff;
-
-  box-shadow: 0 0 9px #bcefff55;
-
-}
-
-.d2y-tool {
-
-  appearance: none;
-
-  position: absolute;
-
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  box-sizing: border-box;
-
-  width: 66px;
-
-  height: 76px;
-
-  padding: 4px;
-
-  border: 2px solid currentColor;
-
-  border-radius: 16px;
-
-  background: #101710f2;
-
-  color: inherit;
-
-  box-shadow: 0 4px 18px #0009;
-
-  pointer-events: auto;
-
-  touch-action: none;
-
-  cursor: grab;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-}
-
-.d2y-tool:active {
-
-  cursor: grabbing;
-
-}
-
-.d2y-tool:focus-visible {
-
-  outline: 3px solid #fff;
-
-  outline-offset: 3px;
-
-}
-
-.d2y-tool svg {
-
-  display: block;
-
-  width: 47px;
-
-  height: 47px;
-
-  pointer-events: none;
-
-}
-
-.d2y-tool-label {
-
-  font: 700 9px/1 Arial, sans-serif;
-
-  letter-spacing: 1px;
-
-  pointer-events: none;
-
-}
-
-#d2y-foam-tool {
-
-  top: 32%;
-
-}
-
-#d2y-rinse-tool {
-
-  top: 72%;
-
-}
-
-.d2y-tool[aria-disabled="true"] {
-
-  opacity: .55;
-
-  cursor: default;
-
-}
-
-.d2y-spray {
-
-  position: absolute;
-
-  top: 0;
-
-  bottom: 0;
-
-  left: 50%;
-
-  width: 50px;
-
-  transform: translateX(-50%);
-
-  opacity: 0;
-
-  overflow: hidden;
-
-  transition: opacity .15s;
-
-}
-
-.d2y-spray::before {
-
-  content: "";
-
-  position: absolute;
-
-  inset: -100% 0;
-
-  background-image:
-
-    radial-gradient(ellipse, #fff 0 1px, transparent 3px),
-
-    radial-gradient(ellipse, currentColor 0 2px, transparent 4px);
-
-  background-size: 15px 41px, 23px 63px;
-
-  background-position: 0 0, 8px 13px;
-
-}
-
-.d2y-track.is-active .d2y-spray {
-
-  opacity: .95;
-
-}
-
-.d2y-track.is-active .d2y-spray::before {
-
-  animation: d2y-spray-fall .5s linear infinite;
-
-}
-
-@keyframes d2y-spray-fall {
-
-  to {
-
-    background-position: 0 164px, 8px 265px;
-
+function bindBrush(canvas,stage,tool,allowed,paint,finished) {
+  let pointer = null;
+
+  function stop(event) {
+    if (pointer === null || (event && event.pointerId !== pointer)) return;
+    const old = pointer;
+    pointer = null;
+    stage.classList.remove("is-working");
+    if (canvas.hasPointerCapture(old)) canvas.releasePointerCapture(old);
+    finished();
   }
 
+  canvas.addEventListener("pointerdown",event => {
+    if (pointer !== null || !allowed()) return;
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    event.preventDefault();
+    pointer = event.pointerId;
+    canvas.setPointerCapture(pointer);
+    stage.classList.add("is-working","has-started");
+    const p = point(event,canvas);
+    moveTool(tool,p);
+    paint(p,true);
+  });
+
+  canvas.addEventListener("pointermove",event => {
+    if (!allowed()) return;
+    if (event.pointerId === pointer) {
+      event.preventDefault();
+      const p = point(event,canvas);
+      moveTool(tool,p);
+      paint(p,false);
+    } else if (pointer === null && event.pointerType === "mouse") {
+      moveTool(tool,point(event,canvas));
+    }
+  });
+
+  ["pointerup","pointercancel","lostpointercapture"].forEach(name => {
+    canvas.addEventListener(name,stop);
+  });
+
+  window.addEventListener("blur",() => stop());
+  return () => stop();
+}
+
+/* FOAM AND RINSE */
+
+function initWash() {
+  const stage = $("d2y-wash");
+  const foamTool = $("d2y-foam-tool");
+  const rinseTool = $("d2y-rinse-tool");
+  const foamTrack = $("d2y-foam-track");
+  const rinseTrack = $("d2y-rinse-track");
+  const texture = $("d2y-foam-texture");
+  const ctx = texture.getContext("2d");
+
+  let foam = 0, rinse = 0, drag = null;
+  let lastWidth = 0, lastHeight = 0;
+
+  function update() {
+    stage.style.setProperty("--foam",foam+"%");
+    stage.style.setProperty("--rinse",rinse+"%");
+    foamTool.setAttribute("aria-valuenow",String(foam));
+    foamTool.setAttribute("aria-valuetext",Math.round(foam)+"% foam pass");
+    rinseTool.setAttribute("aria-valuemax",String(foam));
+    rinseTool.setAttribute("aria-valuenow",String(rinse));
+    rinseTool.setAttribute("aria-disabled",String(foam===0));
+    rinseTool.setAttribute("aria-valuetext",foam===0 ? "Apply some foam first" : Math.round(rinse)+"% rinsed");
+
+    [[foamTool,foam],[rinseTool,rinse]].forEach(([tool,value]) => {
+      const w = stage.clientWidth;
+      const edge = tool.offsetWidth/2+4;
+      const x = w*value/100;
+      if (w) tool.style.left = "calc(50% + "+(clamp(x,edge,w-edge)-x)+"px)";
+    });
+  }
+
+  function change(kind,value) {
+    value = clamp(value,0,100);
+    if (kind === "foam") {
+      foam = value;
+      rinse = Math.min(rinse,foam);
+    } else {
+      rinse = Math.min(value,foam);
+    }
+    update();
+  }
+
+  function stop(event) {
+    if (!drag || (event && event.pointerId !== drag.id)) return;
+    const old = drag;
+    drag = null;
+    foamTrack.classList.remove("is-active");
+    rinseTrack.classList.remove("is-active");
+    if (old.tool.hasPointerCapture(old.id)) old.tool.releasePointerCapture(old.id);
+    $("d2y-wash-status").textContent = rinse>=99.9 ? "Freshly rinsed. Reveal the D2Y shine." : "";
+  }
+
+  [[foamTool,foamTrack,"foam"],[rinseTool,rinseTrack,"rinse"]].forEach(([tool,track,kind]) => {
+    tool.addEventListener("pointerdown",event => {
+      if (drag || (event.pointerType==="mouse" && event.button!==0) || (kind==="rinse" && foam===0)) return;
+      event.preventDefault();
+      const box = stage.getBoundingClientRect();
+      const value = kind==="foam" ? foam : rinse;
+      drag = {
+        id:event.pointerId,
+        tool,
+        offset:event.clientX-box.left-box.width*value/100
+      };
+      tool.setPointerCapture(event.pointerId);
+      track.classList.add("is-active");
+    });
+
+    tool.addEventListener("pointermove",event => {
+      if (!drag || drag.tool!==tool || drag.id!==event.pointerId) return;
+      event.preventDefault();
+      const box = stage.getBoundingClientRect();
+      change(kind,(event.clientX-box.left-drag.offset)/box.width*100);
+    });
+
+    ["pointerup","pointercancel","lostpointercapture"].forEach(name => tool.addEventListener(name,stop));
+
+    tool.addEventListener("keydown",event => {
+      let value = kind==="foam" ? foam : rinse;
+      const step = event.shiftKey ? 10 : 2;
+      if (event.key==="ArrowRight" || event.key==="ArrowUp") value+=step;
+      else if (event.key==="ArrowLeft" || event.key==="ArrowDown") value-=step;
+      else if (event.key==="Home") value=0;
+      else if (event.key==="End") value=kind==="foam" ? 100 : foam;
+      else return;
+      event.preventDefault();
+      change(kind,value);
+    });
+  });
+
+  $("d2y-wash-reset").onclick = () => {
+    stop();
+    foam=0;
+    rinse=0;
+    update();
+    $("d2y-wash-status").textContent="";
+  };
+
+  window.addEventListener("blur",() => stop());
+
+  function renderTexture() {
+    update();
+    if (!ctx) return;
+    const w = Math.min(1400,Math.round(stage.clientWidth*1.5));
+    const h = Math.round(w*stage.clientHeight/Math.max(1,stage.clientWidth));
+    if (!w || !h || (w===lastWidth && h===lastHeight)) return;
+    lastWidth=w;
+    lastHeight=h;
+    texture.width=w;
+    texture.height=h;
+
+    let seed=165;
+    const random=() => {
+      seed=seed*16807%2147483647;
+      return (seed-1)/2147483646;
+    };
+
+    for (let i=0;i<180;i++) {
+      const x=random()*w,y=random()*h,r=12+random()*w*.05;
+      const g=ctx.createRadialGradient(x,y,0,x,y,r);
+      g.addColorStop(0,"rgba(235,255,202,.45)");
+      g.addColorStop(1,"rgba(188,255,100,0)");
+      ctx.fillStyle=g;
+      ctx.fillRect(x-r,y-r,r*2,r*2);
+    }
+
+    for (let i=0;i<Math.min(4200,w*h/150);i++) {
+      ctx.beginPath();
+      ctx.arc(random()*w,random()*h,.7+random()*4,0,Math.PI*2);
+      ctx.fillStyle="rgba(224,255,181,"+(.08+random()*.28)+")";
+      ctx.fill();
+      ctx.strokeStyle="rgba(246,255,226,.4)";
+      ctx.lineWidth=.6;
+      ctx.stroke();
+    }
+  }
+
+  observeSize(stage,renderTexture);
+  update();
 }
 
 /* INTERIOR VACUUM */
 
-.d2y-interior {
-
-  min-width: 0;
-
-}
-
-.d2y-vacuum-stage {
-
-  position: relative;
-
-  width: 100%;
-
-  aspect-ratio: 1.1;
-
-  overflow: hidden;
-
-  border-radius: 16px;
-
-  background: #191919;
-
-  isolation: isolate;
-
-}
-
-.d2y-interior-fallback {
-
-  display: block;
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: contain;
-
-}
-
-.d2y-vacuum-stage canvas {
-
-  position: absolute;
-
-  inset: 0;
-
-  display: block;
-
-  width: 100%;
-
-  height: 100%;
-
-  opacity: 0;
-
-}
-
-.d2y-vacuum-stage.is-ready canvas {
-
-  opacity: 1;
-
-}
-
-.d2y-vacuum-stage.is-ready .d2y-interior-fallback {
-
-  visibility: hidden;
-
-}
-
-#d2y-dirty {
-
-  z-index: 1;
-
-  touch-action: none;
-
-  cursor: crosshair;
-
-}
-
-.d2y-vacuum-tool {
-
-  position: absolute;
-
-  z-index: 3;
-
-  width: clamp(76px, 15vw, 120px);
-
-  height: auto;
-
-  left: 50%;
-
-  top: 60%;
-
-  transform: translate(-50%, -28%);
-
-  pointer-events: none;
-
-  filter: drop-shadow(3px 8px 5px #0009);
-
-  opacity: 0;
-
-}
-
-.d2y-vacuum-stage.is-ready .d2y-vacuum-tool {
-
-  opacity: 1;
-
-}
-
-.d2y-vacuum-stage.is-clean .d2y-vacuum-tool {
-
-  opacity: 0;
-
-}
-
-.d2y-vacuum-stage.is-working .d2y-vacuum-tool {
-
-  filter:
-
-    drop-shadow(0 0 7px #b5df0070)
-
-    drop-shadow(3px 8px 5px #0009);
-
-}
-
-.d2y-vacuum-hint {
-
-  position: absolute;
-
-  z-index: 2;
-
-  bottom: 16px;
-
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  width: max-content;
-
-  max-width: calc(100% - 32px);
-
-  box-sizing: border-box;
-
-  padding: 10px 15px;
-
-  border: 1px solid #ffffff30;
-
-  border-radius: 30px;
-
-  background: #000b;
-
-  color: #fff;
-
-  text-align: center;
-
-  font: 600 12px/1.4 Arial, sans-serif;
-
-  pointer-events: none;
-
-  transition: opacity .2s;
-
-}
-
-.d2y-vacuum-stage.has-started .d2y-vacuum-hint {
-
-  opacity: 0;
-
-}
-
-.d2y-gallery-photo {
-
-  display: block;
-
-  width: 100%;
-
-  max-width: 100%;
-
-  height: auto;
-
-  margin: 0;
-
-  border-radius: 16px;
-
-}
-
-@media (max-width: 600px) {
-
-  .d2y-gallery-items {
-
-    gap: 28px;
-
+function initVacuum() {
+  const stage=$("d2y-vacuum-stage");
+  const source=$("d2y-interior-source");
+  const clean=$("d2y-clean");
+  const dirty=$("d2y-dirty");
+  const tool=$("d2y-vacuum-tool");
+  const hint=$("d2y-vacuum-hint");
+  const status=$("d2y-vacuum-status");
+
+  let ctx,ready=false,complete=false,strokes=[],last=null;
+
+  function erase(stroke) {
+    ctx.save();
+    ctx.globalCompositeOperation="destination-out";
+    drawStroke(ctx,stage,stroke);
+    ctx.restore();
   }
 
-  .d2y-tool {
-
-    width: 54px;
-
-    height: 64px;
-
-    border-radius: 13px;
-
+  function render() {
+    if (!ready || !stage.clientWidth) return;
+    const cleanCtx=setupCanvas(clean,stage);
+    ctx=setupCanvas(dirty,stage);
+    const half=source.naturalWidth/2;
+    const trim=Math.max(2,source.naturalWidth*.004);
+    const w=stage.clientWidth,h=stage.clientHeight;
+    cleanCtx.drawImage(source,half+trim,0,half-trim,source.naturalHeight,0,0,w,h);
+    if (!complete) {
+      ctx.drawImage(source,0,0,half-trim,source.naturalHeight,0,0,w,h);
+      strokes.forEach(erase);
+    }
   }
 
-  .d2y-tool svg {
+  const stop=bindBrush(dirty,stage,tool,() => ready&&!complete,(p,start) => {
+    if (start) last=null;
+    const stroke={
+      from:last||p,
+      to:p,
+      size:tool.getBoundingClientRect().width*.62/stage.clientWidth
+    };
+    strokes.push(stroke);
+    erase(stroke);
+    last=p;
+  },() => {last=null;});
 
-    width: 37px;
+  $("d2y-reset").onclick=() => {
+    stop();
+    complete=false;
+    strokes=[];
+    last=null;
+    stage.classList.remove("has-started","is-clean");
+    moveTool(tool,{x:.5,y:.6});
+    $("d2y-show-result").disabled=false;
+    status.textContent="Move the nozzle over the interior to clean it.";
+    render();
+  };
 
-    height: 37px;
+  $("d2y-show-result").onclick=() => {
+    stop();
+    complete=true;
+    stage.classList.add("has-started","is-clean");
+    $("d2y-show-result").disabled=true;
+    status.textContent="Fresh, clean and ready. Tap Start again to try it yourself.";
+    render();
+  };
 
+  function loaded() {
+    if (ready || !source.naturalWidth) return;
+    if (!clean.getContext("2d") || !dirty.getContext("2d")) return;
+    ready=true;
+    stage.style.aspectRatio=(source.naturalWidth/2-Math.max(2,source.naturalWidth*.004))+" / "+source.naturalHeight;
+    render();
+    stage.classList.add("is-ready");
+    hint.textContent="Drag your finger or mouse to vacuum";
+    $("d2y-reset").disabled=false;
+    $("d2y-show-result").disabled=false;
   }
 
-  .d2y-tool-label {
-
-    font-size: 8px;
-
-  }
-
+  source.addEventListener("load",loaded);
+  source.addEventListener("error",() => {
+    hint.textContent="Check that Cupra1.jpg has been uploaded.";
+  });
+  if (source.complete) loaded();
+  observeSize(stage,render);
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* POLISHING AND COATING */
 
-  .d2y-track.is-active .d2y-spray::before {
+function initPolish() {
+  const stage=$("d2y-polish-stage");
+  const base=$("d2y-polish-base");
+  const surface=$("d2y-polish-canvas");
+  const coatCanvas=$("d2y-coat-canvas");
+  const waterCanvas=$("d2y-water-canvas");
+  const tool=$("d2y-polish-tool");
+  const hint=$("d2y-polish-hint");
+  const status=$("d2y-polish-status");
+  const finish=$("d2y-polish-finish");
+  const apply=$("d2y-apply-coat");
+  const water=$("d2y-test-water");
+  const reset=$("d2y-polish-reset");
+  const progress=$("d2y-polish-progress");
+  const step=$("d2y-polish-step");
+  const before=new Image();
 
-    animation: none;
+  let ready=false,phase="polish",last=null;
+  let polishStrokes=[],coatStrokes=[];
+  let surfaceCtx,coatCtx,waterCtx;
+  let waterFrame=0,waterActive=false;
 
+  const hood=[
+    [.17,.142],[.5,.157],[.83,.142],[.86,.26],
+    [.89,.40],[.91,.54],[.90,.59],[.86,.655],
+    [.82,.704],[.77,.72],[.65,.735],[.5,.738],
+    [.35,.735],[.23,.72],[.18,.704],[.14,.655],
+    [.10,.59],[.09,.54],[.11,.40],[.14,.26]
+  ];
+
+  function inside(x,y) {
+    let result=false;
+    for (let i=0,j=hood.length-1;i<hood.length;j=i++) {
+      const [xi,yi]=hood[i],[xj,yj]=hood[j];
+      if ((yi>y)!==(yj>y) && x<(xj-xi)*(y-yi)/(yj-yi)+xi) result=!result;
+    }
+    return result;
   }
 
-}
-
-</style>
-
-</head>
-
-<body>
-
-<header>
-
-  <a class="brand" href="index.html">
-
-    Direct<span>2</span>You
-
-  </a>
-
-  <nav>
-
-    <a href="index.html">Home</a>
-
-    <a href="services.html">Services</a>
-
-    <a href="about.html">Our Story</a>
-
-    <a href="why.html">Why Us</a>
-
-    <a class="active" href="gallery.html">Experience</a>
-
-    <a href="contact.html">Contact</a>
-
-  </nav>
-
-</header>
-
-<section class="page-hero">
-
-  <div>
-
-    <div class="badge">Experience</div>
-
-    <h1>The D2Y <span>Experience.</span></h1>
-
-  </div>
-
-</section>
-
-<section class="d2y-gallery">
-
-  <div class="d2y-gallery-inner">
-
-    <div class="d2y-gallery-items">
-
-      <!-- EXTERIOR: FOAM AND RINSE -->
-
-      <div>
-
-        <h2 class="d2y-title" id="d2y-wash-heading">
-
-          Slide to foam.
-
-          <span class="d2y-title-line">Slide to rinse.</span>
-
-        </h2>
-
-        <figure
-
-          class="d2y-wash"
-
-          id="d2y-wash"
-
-          aria-labelledby="d2y-wash-heading"
-
-        >
-
-          <img
-
-            class="d2y-dirty-car"
-
-            src="d2y-driveway-before.webp"
-
-            alt="Illustrative Volkswagen Golf: apply green foam and rinse to reveal the clean car."
-
-            width="1672"
-
-            height="941"
-
-            fetchpriority="high"
-
-            draggable="false"
-
-          >
-
-          <img
-
-            class="d2y-clean-car"
-
-            src="d2y-driveway-after.webp"
-
-            alt=""
-
-            width="1672"
-
-            height="941"
-
-            fetchpriority="high"
-
-            draggable="false"
-
-          >
-
-          <div class="d2y-foam-layer" aria-hidden="true">
-
-            <canvas id="d2y-foam-texture"></canvas>
-
-          </div>
-
-          <div
-
-            class="d2y-track d2y-track-foam"
-
-            id="d2y-foam-track"
-
-          >
-
-            <span class="d2y-spray" aria-hidden="true"></span>
-
-            <button
-
-              type="button"
-
-              class="d2y-tool"
-
-              id="d2y-foam-tool"
-
-              role="slider"
-
-              aria-label="Apply green foam"
-
-              aria-orientation="horizontal"
-
-              aria-valuemin="0"
-
-              aria-valuemax="100"
-
-              aria-valuenow="0"
-
-              aria-valuetext="0% covered with foam"
-
-              aria-describedby="d2y-wash-help"
-
-            >
-
-              <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-
-                <path
-
-                  d="M10 17L33 22L30 31L8 26Z"
-
-                  fill="#b5df00"
-
-                  stroke="#e0ff94"
-
-                  stroke-width="1.5"
-
-                />
-
-                <path
-
-                  d="M12 27L8 41L15 43L20 29"
-
-                  fill="#454f52"
-
-                  stroke="#a8b5b9"
-
-                  stroke-width="2"
-
-                />
-
-                <path
-
-                  d="M33 23L43 26L41 32L31 29"
-
-                  fill="#c5d1d6"
-
-                />
-
-                <path
-
-                  d="M28 31H40V36H28Z"
-
-                  fill="#c5d1d6"
-
-                />
-
-                <path
-
-                  d="M25 37Q34 33 43 37L45 57Q34 62 23 57Z"
-
-                  fill="#8cdb26"
-
-                  stroke="#e1ffb7"
-
-                  stroke-width="2"
-
-                />
-
-                <path
-
-                  d="M28 42H40M28 47H40"
-
-                  stroke="#cfff8a"
-
-                  stroke-width="2"
-
-                />
-
-                <path
-
-                  d="M46 27L59 20M46 29L61 30M45 32L58 39"
-
-                  stroke="#c4ff77"
-
-                  stroke-width="2"
-
-                  stroke-linecap="round"
-
-                />
-
-              </svg>
-
-              <span class="d2y-tool-label">FOAM ↔</span>
-
-            </button>
-
-          </div>
-
-          <div
-
-            class="d2y-track d2y-track-rinse"
-
-            id="d2y-rinse-track"
-
-          >
-
-            <span class="d2y-spray" aria-hidden="true"></span>
-
-            <button
-
-              type="button"
-
-              class="d2y-tool"
-
-              id="d2y-rinse-tool"
-
-              role="slider"
-
-              aria-label="Rinse the foam"
-
-              aria-orientation="horizontal"
-
-              aria-valuemin="0"
-
-              aria-valuemax="0"
-
-              aria-valuenow="0"
-
-              aria-valuetext="Apply some foam first"
-
-              aria-disabled="true"
-
-              aria-describedby="d2y-wash-help"
-
-            >
-
-              <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-
-                <path
-
-                  d="M12 15L32 23L28 33L9 25Z"
-
-                  fill="#b6e7f9"
-
-                  stroke="#e5f9ff"
-
-                  stroke-width="1.5"
-
-                />
-
-                <path
-
-                  d="M14 28L8 44L16 47L23 31"
-
-                  fill="#424f55"
-
-                  stroke="#b8c7cc"
-
-                  stroke-width="2"
-
-                />
-
-                <path
-
-                  d="M32 24L43 28L40 35L29 31"
-
-                  fill="#9baeb8"
-
-                />
-
-                <path
-
-                  d="M46 28L59 20M46 31L62 32M44 35L58 44"
-
-                  stroke="#c0efff"
-
-                  stroke-width="2.5"
-
-                  stroke-linecap="round"
-
-                />
-
-                <path
-
-                  d="M12 46C5 57 21 62 29 54"
-
-                  stroke="#7f929b"
-
-                  stroke-width="4"
-
-                  stroke-linecap="round"
-
-                />
-
-              </svg>
-
-              <span class="d2y-tool-label">RINSE ↔</span>
-
-            </button>
-
-          </div>
-
-        </figure>
-
-        <p class="d2y-instruction" id="d2y-wash-help">
-
-          Drag the green foam gun to the right.
-
-          Follow with the blue water gun to reveal the shine.
-
-          Move either one back to try again.
-
-        </p>
-
-        <div class="d2y-controls">
-
-          <button class="d2y-button" type="button" id="d2y-wash-reset">
-
-            ↻ Wash again
-
-          </button>
-
-        </div>
-
-        <p
-
-          class="d2y-instruction"
-
-          id="d2y-wash-status"
-
-          aria-live="polite"
-
-        ></p>
-
-      </div>
-
-      <!-- INTERIOR VACUUM -->
-
-      <div class="d2y-interior">
-
-        <h2 class="d2y-title">
-
-          Swipe to vacuum. <span>Feel the freshness.</span>
-
-        </h2>
-
-        <div class="d2y-vacuum-stage" id="d2y-vacuum-stage">
-
-          <img
-
-            class="d2y-interior-fallback"
-
-            id="d2y-interior-source"
-
-            src="Cupra1.jpg"
-
-            alt="Car interior before and after cleaning."
-
-            loading="lazy"
-
-            draggable="false"
-
-          >
-
-          <canvas id="d2y-clean" aria-hidden="true"></canvas>
-
-          <canvas
-
-            id="d2y-dirty"
-
-            role="img"
-
-            aria-label="Drag your finger or mouse to vacuum the interior. Use Show result to see the clean interior without dragging."
-
-          ></canvas>
-
-          <svg
-
-            class="d2y-vacuum-tool"
-
-            id="d2y-vacuum-tool"
-
-            viewBox="0 0 120 170"
-
-            fill="none"
-
-            aria-hidden="true"
-
-          >
-
-            <path
-
-              d="M60 93C60 124 108 115 106 170"
-
-              stroke="#111"
-
-              stroke-width="25"
-
-            />
-
-            <path
-
-              d="M60 93C60 124 108 115 106 170"
-
-              stroke="#444"
-
-              stroke-width="18"
-
-              stroke-dasharray="3 5"
-
-            />
-
-            <path
-
-              d="M47 68H73V106H47Z"
-
-              fill="#24292c"
-
-              stroke="#7c8589"
-
-              stroke-width="2"
-
-            />
-
-            <path
-
-              d="M20 33Q60 22 100 33L88 67Q60 80 32 67Z"
-
-              fill="#30383c"
-
-              stroke="#a0aaae"
-
-              stroke-width="2"
-
-            />
-
-            <path
-
-              d="M23 34Q60 25 97 34L94 45Q60 37 26 45Z"
-
-              fill="#0b0e10"
-
-            />
-
-            <path
-
-              d="M34 52Q60 46 86 52"
-
-              stroke="#b5df00"
-
-              stroke-width="5"
-
-              stroke-linecap="round"
-
-            />
-
-            <path
-
-              d="M52 79H68"
-
-              stroke="#b5df00"
-
-              stroke-width="4"
-
-            />
-
-          </svg>
-
-          <div class="d2y-vacuum-hint" id="d2y-vacuum-hint">
-
-            Loading interior…
-
-          </div>
-
-        </div>
-
-        <div class="d2y-controls">
-
-          <button
-
-            type="button"
-
-            class="d2y-button"
-
-            id="d2y-reset"
-
-            disabled
-
-          >
-
-            ↻ Start again
-
-          </button>
-
-          <button
-
-            type="button"
-
-            class="d2y-button"
-
-            id="d2y-show-result"
-
-            disabled
-
-          >
-
-            Show result
-
-          </button>
-
-        </div>
-
-        <p
-
-          class="d2y-instruction"
-
-          id="d2y-vacuum-status"
-
-          aria-live="polite"
-
-        >
-
-          Move the nozzle over the interior to clean it.
-
-        </p>
-
-      </div>
-
-      <!-- CUPRA EXTERIOR -->
-
-      <img
-
-        class="d2y-gallery-photo"
-
-        src="Cupra.jpg"
-
-        alt="CUPRA exterior before and after cleaning."
-
-        loading="lazy"
-
-      >
-
-    </div>
-
-  </div>
-
-</section>
-
-<section class="dark">
-
-  <div class="section-title">
-
-    <h2>Watch <span>Our Work</span></h2>
-
-    <p>
-
-      Detailing is all about transformation: dirty to clean,
-
-      dull to fresh, ordinary to sharp.
-
-    </p>
-
-  </div>
-
-  <div class="video-box">
-
-    <video
-
-      controls
-
-      playsinline
-
-      style="width:100%; max-height:550px; object-fit:contain; display:block;"
-
-    >
-
-      <source src="Hiphop%20.mp4" type="video/mp4">
-
-    </video>
-
-  </div>
-
-</section>
-
-<footer>
-
-  <div class="brand">Direct<span>2</span>You</div>
-
-  <p>© 2026 Direct2You Dublin.</p>
-
-</footer>
-
-<a class="whatsapp-float" href="https://wa.me/353894439214">
-
-  WhatsApp
-
-</a>
-
-<script>
-
-(() => {
-
-  "use strict";
-
-  const clamp = (value, min, max) =>
-
-    Math.max(min, Math.min(max, value));
-
-  /* EXTERIOR: FOAM AND RINSE */
-
-  const washStage = document.getElementById("d2y-wash");
-
-  const foamTool = document.getElementById("d2y-foam-tool");
-
-  const rinseTool = document.getElementById("d2y-rinse-tool");
-
-  const foamTrack = document.getElementById("d2y-foam-track");
-
-  const rinseTrack = document.getElementById("d2y-rinse-track");
-
-  const washReset = document.getElementById("d2y-wash-reset");
-
-  const washStatus = document.getElementById("d2y-wash-status");
-
-  const foamCanvas = document.getElementById("d2y-foam-texture");
-
-  const foamContext = foamCanvas.getContext("2d");
-
-  let foam = 0;
-
-  let rinse = 0;
-
-  let washDrag = null;
-
-  let foamWidth = 0;
-
-  let foamHeight = 0;
-
-  let exteriorFrame = 0;
-
-  function positionHandle(tool, value) {
-
-    const width = washStage.clientWidth;
-
-    if (!width) return;
-
-    const margin = tool.offsetWidth / 2 + 4;
-
-    const lineX = width * value / 100;
-
-    const toolX = clamp(lineX, margin, width - margin);
-
-    tool.style.left =
-
-      "calc(50% + " + (toolX - lineX) + "px)";
-
+  const grid=[];
+  for (let y=0;y<32;y++) {
+    for (let x=0;x<48;x++) {
+      const p={x:(x+.5)/48,y:(y+.5)/32};
+      if (inside(p.x,p.y)) grid.push(p);
+    }
   }
 
-  function updateWash() {
+  let coverage=new Set();
 
-    washStage.style.setProperty("--foam", foam + "%");
-
-    washStage.style.setProperty("--rinse", rinse + "%");
-
-    foamTool.setAttribute("aria-valuenow", String(Math.round(foam)));
-
-    foamTool.setAttribute(
-
-      "aria-valuetext",
-
-      Math.round(foam) + "% foam pass"
-
-    );
-
-    rinseTool.setAttribute("aria-valuemax", String(foam));
-
-    rinseTool.setAttribute("aria-valuenow", String(Math.round(rinse)));
-
-    rinseTool.setAttribute(
-
-      "aria-disabled",
-
-      foam === 0 ? "true" : "false"
-
-    );
-
-    rinseTool.setAttribute(
-
-      "aria-valuetext",
-
-      foam === 0
-
-        ? "Apply some foam first"
-
-        : Math.round(rinse) + "% rinsed"
-
-    );
-
-    positionHandle(foamTool, foam);
-
-    positionHandle(rinseTool, rinse);
-
+  function clipHood(ctx) {
+    ctx.beginPath();
+    hood.forEach(([x,y],i) => {
+      if (i===0) ctx.moveTo(x*stage.clientWidth,y*stage.clientHeight);
+      else ctx.lineTo(x*stage.clientWidth,y*stage.clientHeight);
+    });
+    ctx.closePath();
+    ctx.clip();
   }
 
-  function announceWash() {
-
-    washStatus.textContent =
-
-      rinse >= 99.9
-
-        ? "Freshly rinsed. Reveal the D2Y shine."
-
-        : "";
-
-  }
-
-  function changeWash(kind, value) {
-
-    value = clamp(value, 0, 100);
-
-    if (kind === "foam") {
-
-      foam = value;
-
-      /* Moving foam back also keeps water behind it. */
-
-      rinse = Math.min(rinse, foam);
-
+  function paintStroke(ctx,stroke,erase) {
+    ctx.save();
+    clipHood(ctx);
+    if (erase) {
+      ctx.globalCompositeOperation="destination-out";
     } else {
-
-      /* Water cannot pass the foam gun. */
-
-      rinse = Math.min(value, foam);
-
+      const g=ctx.createLinearGradient(0,0,stage.clientWidth,stage.clientHeight);
+      g.addColorStop(0,"rgba(121,220,255,.15)");
+      g.addColorStop(.5,"rgba(195,163,255,.16)");
+      g.addColorStop(1,"rgba(181,223,0,.14)");
+      ctx.strokeStyle=g;
+      ctx.fillStyle=g;
     }
-
-    updateWash();
-
+    drawStroke(ctx,stage,stroke);
+    ctx.restore();
   }
 
-  function pointToWash(event, drag) {
-
-    const bounds = washStage.getBoundingClientRect();
-
-    return (
-
-      (event.clientX - bounds.left - drag.offset) /
-
-      bounds.width
-
-    ) * 100;
-
-  }
-
-  function stopWash(event) {
-
-    if (!washDrag) return;
-
-    if (event && event.pointerId !== washDrag.id) return;
-
-    const drag = washDrag;
-
-    washDrag = null;
-
-    foamTrack.classList.remove("is-active");
-
-    rinseTrack.classList.remove("is-active");
-
-    if (drag.tool.hasPointerCapture(drag.id)) {
-
-      drag.tool.releasePointerCapture(drag.id);
-
+  function render() {
+    if (!ready || !stage.clientWidth) return;
+    surfaceCtx=setupCanvas(surface,stage);
+    coatCtx=setupCanvas(coatCanvas,stage);
+    waterCtx=setupCanvas(waterCanvas,stage);
+    if (phase==="polish") {
+      surfaceCtx.drawImage(before,0,0,stage.clientWidth,stage.clientHeight);
+      polishStrokes.forEach(stroke => paintStroke(surfaceCtx,stroke,true));
     }
-
-    announceWash();
-
+    if (phase==="coat") {
+      coatStrokes.forEach(stroke => paintStroke(coatCtx,stroke,false));
+    }
   }
 
-  function setupWashTool(tool, track, kind) {
+  function markCoverage(stroke) {
+    const aspect=stage.clientHeight/stage.clientWidth;
+    const ax=stroke.from.x,ay=stroke.from.y*aspect;
+    const bx=stroke.to.x,by=stroke.to.y*aspect;
+    const dx=bx-ax,dy=by-ay;
+    const length=dx*dx+dy*dy;
+    const radius=stroke.size/2;
 
-    tool.addEventListener("pointerdown", event => {
-
-      if (washDrag) return;
-
-      if (event.pointerType === "mouse" && event.button !== 0) return;
-
-      if (kind === "rinse" && foam === 0) return;
-
-      event.preventDefault();
-
-      const bounds = washStage.getBoundingClientRect();
-
-      const value = kind === "foam" ? foam : rinse;
-
-      washDrag = {
-
-        id: event.pointerId,
-
-        kind,
-
-        tool,
-
-        offset:
-
-          event.clientX -
-
-          bounds.left -
-
-          bounds.width * value / 100
-
-      };
-
-      tool.setPointerCapture(event.pointerId);
-
-      track.classList.add("is-active");
-
+    grid.forEach((p,index) => {
+      if (coverage.has(index)) return;
+      const px=p.x,py=p.y*aspect;
+      const t=length ? clamp(((px-ax)*dx+(py-ay)*dy)/length,0,1) : 0;
+      if (Math.hypot(px-(ax+t*dx),py-(ay+t*dy))<=radius) coverage.add(index);
     });
 
-    tool.addEventListener("pointermove", event => {
+    progress.value=Math.round(coverage.size/grid.length*100);
+  }
 
-      if (
+  function updateUI() {
+    stage.dataset.phase=phase;
+    finish.disabled=!ready || (phase!=="polish" && phase!=="coat");
+    finish.textContent=phase==="coat" ? "Finish coating" : "Finish polishing";
+    apply.disabled=!ready || phase!=="polished";
+    water.disabled=!ready || phase!=="sealed" || waterActive;
+    reset.disabled=!ready;
+    progress.setAttribute("aria-label",phase==="coat" || phase==="sealed" ? "Coating coverage" : "Polishing coverage");
 
-        !washDrag ||
+    if (phase==="polish") step.textContent="01 / Polish the paint";
+    if (phase==="polished") step.textContent="01 / Polishing complete";
+    if (phase==="coat") step.textContent="02 / Apply the coating";
+    if (phase==="sealed") step.textContent="03 / Test the water";
 
-        washDrag.tool !== tool ||
+    surface.setAttribute("aria-label",phase==="coat"
+      ? "Drag the applicator across the hood, or use Finish coating below."
+      : "Drag the polisher across the hood, or use Finish polishing below.");
+  }
 
-        washDrag.id !== event.pointerId
+  function finishPhase() {
+    if (phase!=="polish" && phase!=="coat") return;
+    const wasPolish=phase==="polish";
+    phase=wasPolish ? "polished" : "sealed";
+    stage.classList.remove("is-working");
+    stage.classList.add("has-started");
+    progress.value=100;
+    last=null;
+    status.textContent=wasPolish
+      ? "Polished to perfection. Tap Apply coating to protect the shine."
+      : "Coating applied. Tap Test the water to see the beading effect.";
+    render();
+    updateUI();
+  }
 
-      ) return;
+  const stop=bindBrush(
+    surface,stage,tool,
+    () => ready && (phase==="polish" || phase==="coat"),
+    (p,start) => {
+      if (start) last=null;
+      const size=tool.getBoundingClientRect().width*(phase==="polish" ? .61 : .52)/stage.clientWidth;
+      const stroke={from:last||p,to:p,size};
 
-      event.preventDefault();
-
-      changeWash(kind, pointToWash(event, washDrag));
-
-    });
-
-    tool.addEventListener("pointerup", stopWash);
-
-    tool.addEventListener("pointercancel", stopWash);
-
-    tool.addEventListener("lostpointercapture", stopWash);
-
-    tool.addEventListener("keydown", event => {
-
-      let value = kind === "foam" ? foam : rinse;
-
-      const step = event.shiftKey ? 10 : 2;
-
-      switch (event.key) {
-
-        case "ArrowRight":
-
-        case "ArrowUp":
-
-          value += step;
-
-          break;
-
-        case "ArrowLeft":
-
-        case "ArrowDown":
-
-          value -= step;
-
-          break;
-
-        case "Home":
-
-          value = 0;
-
-          break;
-
-        case "End":
-
-          value = kind === "foam" ? 100 : foam;
-
-          break;
-
-        default:
-
-          return;
-
+      if (phase==="polish") {
+        polishStrokes.push(stroke);
+        paintStroke(surfaceCtx,stroke,true);
+      } else {
+        coatStrokes.push(stroke);
+        paintStroke(coatCtx,stroke,false);
       }
 
-      event.preventDefault();
+      markCoverage(stroke);
+      last=p;
+    },
+    () => {
+      last=null;
+      if (progress.value>=92) {
+        finishPhase();
+      } else if (phase==="polish" || phase==="coat") {
+        status.textContent=(phase==="polish" ? "Polishing" : "Coating")+
+          " coverage: "+progress.value+"%. Keep going, or tap "+
+          (phase==="polish" ? "Finish polishing." : "Finish coating.");
+      }
+    }
+  );
 
-      changeWash(kind, value);
+  finish.onclick=() => {
+    stop();
+    finishPhase();
+  };
 
-      announceWash();
+  apply.onclick=() => {
+    if (phase!=="polished") return;
+    phase="coat";
+    coverage=new Set();
+    progress.value=0;
+    last=null;
+    coatStrokes=[];
+    stage.classList.remove("has-started");
+    hint.textContent="Spread the coating across the hood";
+    moveTool(tool,{x:.5,y:.43});
+    status.textContent="Move the applicator over the hood. A subtle sheen shows where you have applied the coating.";
+    render();
+    updateUI();
+  };
 
-    });
-
+  function stopWater() {
+    cancelAnimationFrame(waterFrame);
+    waterActive=false;
+    if (waterCtx) waterCtx.clearRect(0,0,stage.clientWidth,stage.clientHeight);
+    updateUI();
   }
 
-  setupWashTool(foamTool, foamTrack, "foam");
+  water.onclick=() => {
+    if (phase!=="sealed" || waterActive) return;
+    waterActive=true;
+    updateUI();
+    status.textContent="Water beads and rolls away. Tap Test the water to replay.";
 
-  setupWashTool(rinseTool, rinseTrack, "rinse");
+    const drops=Array.from({length:100},() => ({
+      x:.15+Math.random()*.7,
+      y:.18+Math.random()*.5,
+      radius:1.5+Math.random()*3.5,
+      speed:.08+Math.random()*.13
+    }));
 
-  washReset.addEventListener("click", () => {
+    const started=performance.now();
 
-    stopWash();
+    function frame(now) {
+      const elapsed=(now-started)/1000;
+      const w=stage.clientWidth,h=stage.clientHeight;
+      waterCtx.clearRect(0,0,w,h);
+      waterCtx.save();
+      clipHood(waterCtx);
 
-    foam = 0;
+      drops.forEach(drop => {
+        const x=(drop.x+Math.sin(elapsed*2+drop.y*20)*.003)*w;
+        const y=(drop.y+(reducedMotion ? 0 : elapsed*drop.speed))*h;
+        const r=drop.radius*clamp(w/650,.65,1.6);
+        const g=waterCtx.createRadialGradient(x-r*.3,y-r*.3,0,x,y,r);
+        g.addColorStop(0,"rgba(255,255,255,.95)");
+        g.addColorStop(.35,"rgba(190,226,244,.4)");
+        g.addColorStop(1,"rgba(80,150,190,.2)");
+        waterCtx.fillStyle=g;
+        waterCtx.strokeStyle="rgba(230,248,255,.7)";
+        waterCtx.lineWidth=.6;
+        waterCtx.beginPath();
+        waterCtx.ellipse(x,y,r,r*1.3,0,0,Math.PI*2);
+        waterCtx.fill();
+        waterCtx.stroke();
+      });
 
-    rinse = 0;
+      waterCtx.restore();
 
-    washStatus.textContent = "";
+      if (reducedMotion) {
+        waterActive=false;
+        updateUI();
+        return;
+      }
 
-    updateWash();
-
-  });
-
-  /* Procedural green foam texture. No extra image needed. */
-
-  function drawFoamTexture() {
-
-    if (!foamContext) return;
-
-    const width = Math.min(1400, Math.round(washStage.clientWidth * 1.5));
-
-    const height = Math.round(
-
-      width * washStage.clientHeight / Math.max(1, washStage.clientWidth)
-
-    );
-
-    if (!width || !height) return;
-
-    if (width === foamWidth && height === foamHeight) return;
-
-    foamWidth = width;
-
-    foamHeight = height;
-
-    foamCanvas.width = width;
-
-    foamCanvas.height = height;
-
-    let seed = 165;
-
-    function random() {
-
-      seed = (seed * 16807) % 2147483647;
-
-      return (seed - 1) / 2147483646;
-
+      if (elapsed<5) waterFrame=requestAnimationFrame(frame);
+      else stopWater();
     }
 
-    /* Soft clusters of foam. */
-
-    for (let i = 0; i < 180; i++) {
-
-      const x = random() * width;
-
-      const y = random() * height;
-
-      const radius = 12 + random() * width * .05;
-
-      const gradient = foamContext.createRadialGradient(
-
-        x, y, 0, x, y, radius
-
-      );
-
-      gradient.addColorStop(0, "rgba(235,255,202,.45)");
-
-      gradient.addColorStop(.55, "rgba(188,255,100,.2)");
-
-      gradient.addColorStop(1, "rgba(188,255,100,0)");
-
-      foamContext.fillStyle = gradient;
-
-      foamContext.fillRect(
-
-        x - radius,
-
-        y - radius,
-
-        radius * 2,
-
-        radius * 2
-
-      );
-
-    }
-
-    /* Small bubbles across the foam. */
-
-    const bubbleCount = Math.min(
-
-      4200,
-
-      Math.round(width * height / 150)
-
-    );
-
-    for (let i = 0; i < bubbleCount; i++) {
-
-      const x = random() * width;
-
-      const y = random() * height;
-
-      const radius = .7 + random() * 4;
-
-      foamContext.beginPath();
-
-      foamContext.arc(x, y, radius, 0, Math.PI * 2);
-
-      foamContext.fillStyle =
-
-        "rgba(224,255,181," + (.08 + random() * .28) + ")";
-
-      foamContext.fill();
-
-      foamContext.strokeStyle = "rgba(246,255,226,.4)";
-
-      foamContext.lineWidth = .6;
-
-      foamContext.stroke();
-
-    }
-
-  }
-
-  function resizeExterior() {
-
-    cancelAnimationFrame(exteriorFrame);
-
-    exteriorFrame = requestAnimationFrame(() => {
-
-      updateWash();
-
-      drawFoamTexture();
-
-    });
-
-  }
-
-  washStage.querySelectorAll("img").forEach(image => {
-
-    image.addEventListener("load", resizeExterior);
-
-  });
-
-  if ("ResizeObserver" in window) {
-
-    new ResizeObserver(resizeExterior).observe(washStage);
-
-  } else {
-
-    window.addEventListener("resize", resizeExterior);
-
-  }
-
-  updateWash();
-
-  resizeExterior();
-
-  /* INTERIOR VACUUM */
-
-  const stage = document.getElementById("d2y-vacuum-stage");
-
-  const source = document.getElementById("d2y-interior-source");
-
-  const cleanCanvas = document.getElementById("d2y-clean");
-
-  const dirtyCanvas = document.getElementById("d2y-dirty");
-
-  const tool = document.getElementById("d2y-vacuum-tool");
-
-  const hint = document.getElementById("d2y-vacuum-hint");
-
-  const resetButton = document.getElementById("d2y-reset");
-
-  const resultButton = document.getElementById("d2y-show-result");
-
-  const status = document.getElementById("d2y-vacuum-status");
-
-  const cleanContext = cleanCanvas.getContext("2d");
-
-  const dirtyContext = dirtyCanvas.getContext("2d");
-
-  let ready = false;
-
-  let activePointer = null;
-
-  let lastPoint = null;
-
-  let strokes = [];
-
-  let complete = false;
-
-  let resizeFrame = 0;
-
-  /*
-
-    Cupra1.jpg:
-
-    Left half = dirty interior.
-
-    Right half = clean interior.
-
-  */
-
-  function drawHalf(context, rightHalf) {
-
-    const half = source.naturalWidth / 2;
-
-    const trim = Math.max(2, source.naturalWidth * .004);
-
-    const startX = rightHalf ? half + trim : 0;
-
-    context.drawImage(
-
-      source,
-
-      startX,
-
-      0,
-
-      half - trim,
-
-      source.naturalHeight,
-
-      0,
-
-      0,
-
-      stage.clientWidth,
-
-      stage.clientHeight
-
-    );
-
-  }
-
-  function eraseSegment(segment) {
-
-    const width = stage.clientWidth;
-
-    const height = stage.clientHeight;
-
-    dirtyContext.save();
-
-    dirtyContext.globalCompositeOperation = "destination-out";
-
-    dirtyContext.lineCap = "round";
-
-    dirtyContext.lineJoin = "round";
-
-    dirtyContext.lineWidth = segment.size * width;
-
-    dirtyContext.beginPath();
-
-    dirtyContext.moveTo(
-
-      segment.from.x * width,
-
-      segment.from.y * height
-
-    );
-
-    dirtyContext.lineTo(
-
-      segment.to.x * width,
-
-      segment.to.y * height
-
-    );
-
-    dirtyContext.stroke();
-
-    dirtyContext.beginPath();
-
-    dirtyContext.arc(
-
-      segment.to.x * width,
-
-      segment.to.y * height,
-
-      segment.size * width / 2,
-
-      0,
-
-      Math.PI * 2
-
-    );
-
-    dirtyContext.fill();
-
-    dirtyContext.restore();
-
-  }
-
-  function renderInterior() {
-
-    if (!ready || !stage.clientWidth) return;
-
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-
-    const width = stage.clientWidth;
-
-    const height = stage.clientHeight;
-
-    [cleanCanvas, dirtyCanvas].forEach(canvas => {
-
-      canvas.width = Math.round(width * ratio);
-
-      canvas.height = Math.round(height * ratio);
-
-    });
-
-    cleanContext.setTransform(ratio, 0, 0, ratio, 0, 0);
-
-    dirtyContext.setTransform(ratio, 0, 0, ratio, 0, 0);
-
-    drawHalf(cleanContext, true);
-
-    if (!complete) {
-
-      drawHalf(dirtyContext, false);
-
-      strokes.forEach(eraseSegment);
-
-    }
-
-  }
-
-  function pointerPosition(event) {
-
-    const bounds = dirtyCanvas.getBoundingClientRect();
-
-    return {
-
-      x: clamp((event.clientX - bounds.left) / bounds.width, 0, 1),
-
-      y: clamp((event.clientY - bounds.top) / bounds.height, 0, 1)
-
-    };
-
-  }
-
-  function moveTool(point) {
-
-    tool.style.left = point.x * 100 + "%";
-
-    tool.style.top = point.y * 100 + "%";
-
-  }
-
-  function cleanAt(point) {
-
-    const nozzleWidth = tool.getBoundingClientRect().width;
-
-    const segment = {
-
-      from: lastPoint || point,
-
-      to: point,
-
-      size: nozzleWidth * .62 / stage.clientWidth
-
-    };
-
-    strokes.push(segment);
-
-    eraseSegment(segment);
-
-    lastPoint = point;
-
-    moveTool(point);
-
-  }
-
-  function stopVacuum(event) {
-
-    if (activePointer === null) return;
-
-    if (event && event.pointerId !== activePointer) return;
-
-    const pointer = activePointer;
-
-    activePointer = null;
-
-    lastPoint = null;
-
-    stage.classList.remove("is-working");
-
-    if (dirtyCanvas.hasPointerCapture(pointer)) {
-
-      dirtyCanvas.releasePointerCapture(pointer);
-
-    }
-
-  }
-
-  dirtyCanvas.addEventListener("pointerdown", event => {
-
-    if (!ready || complete || activePointer !== null) return;
-
-    if (event.pointerType === "mouse" && event.button !== 0) return;
-
-    event.preventDefault();
-
-    activePointer = event.pointerId;
-
-    dirtyCanvas.setPointerCapture(event.pointerId);
-
-    stage.classList.add("is-working", "has-started");
-
-    lastPoint = null;
-
-    cleanAt(pointerPosition(event));
-
-  });
-
-  dirtyCanvas.addEventListener("pointermove", event => {
-
-    if (!ready || complete) return;
-
-    if (event.pointerId === activePointer) {
-
-      event.preventDefault();
-
-      cleanAt(pointerPosition(event));
-
-    } else if (
-
-      activePointer === null &&
-
-      event.pointerType === "mouse"
-
-    ) {
-
-      moveTool(pointerPosition(event));
-
-    }
-
-  });
-
-  dirtyCanvas.addEventListener("pointerup", stopVacuum);
-
-  dirtyCanvas.addEventListener("pointercancel", stopVacuum);
-
-  dirtyCanvas.addEventListener("lostpointercapture", stopVacuum);
-
-  window.addEventListener("blur", () => {
-
-    stopWash();
-
-    stopVacuum();
-
-  });
-
-  resetButton.addEventListener("click", () => {
-
-    stopVacuum();
-
-    complete = false;
-
-    strokes = [];
-
-    lastPoint = null;
-
-    stage.classList.remove("has-started", "is-clean");
-
-    tool.style.left = "50%";
-
-    tool.style.top = "60%";
-
-    resultButton.disabled = false;
-
-    status.textContent =
-
-      "Move the nozzle over the interior to clean it.";
-
-    renderInterior();
-
-  });
-
-  resultButton.addEventListener("click", () => {
-
-    stopVacuum();
-
-    complete = true;
-
-    stage.classList.add("has-started", "is-clean");
-
-    resultButton.disabled = true;
-
-    status.textContent =
-
-      "Fresh, clean and ready. Tap Start again to try it yourself.";
-
-    renderInterior();
-
-  });
-
-  function initialiseInterior() {
-
-    if (ready || !source.naturalWidth) return;
-
-    if (!cleanContext || !dirtyContext) {
-
-      hint.textContent = "Interior before and after";
-
-      return;
-
-    }
-
-    ready = true;
-
-    const halfWidth = source.naturalWidth / 2;
-
-    const trim = Math.max(2, source.naturalWidth * .004);
-
-    stage.style.aspectRatio =
-
-      (halfWidth - trim) + " / " + source.naturalHeight;
-
-    renderInterior();
-
+    waterFrame=requestAnimationFrame(frame);
+  };
+
+  reset.onclick=() => {
+    stop();
+    stopWater();
+    phase="polish";
+    polishStrokes=[];
+    coatStrokes=[];
+    coverage=new Set();
+    last=null;
+    progress.value=0;
+    stage.classList.remove("has-started","is-working");
+    hint.textContent="Move the polisher over the hood";
+    status.textContent="Move the polisher over the hood to reveal the shine.";
+    moveTool(tool,{x:.5,y:.43});
+    render();
+    updateUI();
+  };
+
+  function loaded() {
+    if (ready || !base.naturalWidth || !before.naturalWidth) return;
+    if (!surface.getContext("2d") || !coatCanvas.getContext("2d") || !waterCanvas.getContext("2d")) return;
+    ready=true;
     stage.classList.add("is-ready");
-
-    hint.textContent = "Drag your finger or mouse to vacuum";
-
-    resetButton.disabled = false;
-
-    resultButton.disabled = false;
-
+    hint.textContent="Move the polisher over the hood";
+    render();
+    updateUI();
   }
 
-  source.addEventListener("load", initialiseInterior);
+  function failed() {
+    hint.textContent="Check the two polishing image filenames.";
+    status.textContent="Upload d2y-polish-before.png and d2y-polish-after.png beside gallery.html.";
+  }
 
-  source.addEventListener("error", () => {
+  base.addEventListener("load",loaded);
+  before.addEventListener("load",loaded);
+  base.addEventListener("error",failed);
+  before.addEventListener("error",failed);
+  before.src="d2y-polish-before.png";
+  loaded();
 
-    hint.textContent = "Interior image could not load";
-
-    status.textContent =
-
-      "Check that Cupra1.jpg is in the same folder as this page.";
-
+  observeSize(stage,() => {
+    if (waterActive) stopWater();
+    render();
   });
 
-  if (source.complete && source.naturalWidth) {
+  document.addEventListener("visibilitychange",() => {
+    if (document.hidden) {
+      stop();
+      stopWater();
+    }
+  });
+}
 
-    initialiseInterior();
-
-  }
-
-  function resizeInterior() {
-
-    cancelAnimationFrame(resizeFrame);
-
-    resizeFrame = requestAnimationFrame(renderInterior);
-
-  }
-
-  if ("ResizeObserver" in window) {
-
-    new ResizeObserver(resizeInterior).observe(stage);
-
-  } else {
-
-    window.addEventListener("resize", resizeInterior);
-
-  }
+initWash();
+initVacuum();
+initPolish();
 
 })();
-
 </script>
-
 </body>
-
 </html>
