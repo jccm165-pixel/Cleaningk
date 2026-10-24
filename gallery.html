@@ -1,976 +1,1823 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gallery | Direct2You</title>
+
+<title>The D2Y Experience | Direct2You</title>
+
 <link rel="stylesheet" href="style.css">
 
 <style>
+
 header {
+
   position: relative !important;
+
   top: auto !important;
+
 }
 
 body {
+
   padding-top: 0 !important;
+
 }
 
 .page-hero {
+
   min-height: 0 !important;
+
   height: auto !important;
+
   margin-top: 0 !important;
+
   padding: 30px 20px 20px !important;
+
 }
 
 .page-hero h1 {
+
   font-size: clamp(32px, 7vw, 60px);
+
   line-height: 1.1;
+
   margin: 0 0 18px;
+
 }
 
 .d2y-gallery {
+
   padding: 15px 20px 40px;
+
 }
 
 .d2y-gallery-inner {
+
   width: 100%;
+
   max-width: 1100px;
+
   margin: 0 auto;
+
   min-width: 0;
+
 }
 
 .d2y-gallery h2 {
+
   color: #fff;
+
   font-size: clamp(24px, 4vw, 38px);
+
   line-height: 1.2;
+
   margin: 0 0 22px;
+
 }
 
 .d2y-gallery h2 span {
+
   color: #b5df00;
+
 }
 
 .d2y-gallery-items {
+
   display: grid;
+
   gap: 32px;
+
   min-width: 0;
+
 }
 
+/* WATER COMPARISON */
+
 .d2y-compare {
-  --reveal: 50%;
+
+  --reveal: 0%;
+
   position: relative;
+
   width: 100%;
+
   min-width: 0;
+
   margin: 0;
+
   border-radius: 16px;
+
   overflow: hidden;
+
   isolation: isolate;
+
   background: #191919;
+
 }
 
 .d2y-compare img {
+
   display: block;
+
   max-width: none;
+
   margin: 0;
+
   padding: 0;
+
   border: 0;
+
   border-radius: 0;
+
   pointer-events: none;
+
   user-select: none;
+
   -webkit-user-select: none;
+
 }
 
 .d2y-base {
+
   width: 100%;
+
   height: auto;
+
 }
 
 .d2y-before-overlay {
+
   position: absolute;
+
   inset: 0;
+
   width: 100%;
+
   height: 100%;
+
   object-fit: cover;
-  clip-path: inset(0 calc(100% - var(--reveal)) 0 0);
+
+  clip-path: inset(0 0 0 var(--reveal));
+
 }
 
 .d2y-tag {
+
   position: absolute;
+
   top: 14px;
+
   z-index: 2;
+
   background: #000b;
+
   color: #fff;
+
   font: 700 11px/1.2 Arial, sans-serif;
+
   letter-spacing: 1.5px;
+
   padding: 9px 12px;
+
   border-radius: 6px;
+
   pointer-events: none;
+
+  transition: opacity .2s;
+
 }
 
-.d2y-tag-left { left: 14px; }
-.d2y-tag-right { right: 14px; }
+.d2y-tag-left {
+
+  left: 14px;
+
+  opacity: 0;
+
+}
+
+.d2y-tag-right {
+
+  right: 14px;
+
+}
 
 .d2y-divider {
+
   position: absolute;
+
   z-index: 3;
+
   inset: 0 auto 0 var(--reveal);
+
   width: 2px;
+
   transform: translateX(-50%);
+
   background: #d6f6ff;
+
   box-shadow: 0 0 10px #a8eaff;
+
   pointer-events: none;
+
 }
 
-/* Water follows the slider. */
 .d2y-water {
+
   position: absolute;
+
   top: 0;
+
   bottom: 0;
+
   left: 50%;
+
   width: 56px;
+
   transform: translateX(-50%);
+
   overflow: hidden;
+
   opacity: .55;
+
   background:
+
     linear-gradient(
+
       90deg,
+
       transparent,
+
       #dffaff22 25%,
+
       #ffffff99 50%,
+
       #dffaff22 75%,
+
       transparent
+
     );
+
   transition: opacity .2s, width .2s;
+
 }
 
 .d2y-water::before,
+
 .d2y-water::after {
+
   content: "";
+
   position: absolute;
+
   inset: -100% 0;
+
   background-image:
+
     radial-gradient(ellipse, #fff 0 1px, transparent 2.5px),
+
     radial-gradient(ellipse, #c7f4ff 0 1.5px, transparent 3px),
-    linear-gradient(105deg, transparent 45%, #ffffff66 50%, transparent 55%);
+
+    linear-gradient(
+
+      105deg,
+
+      transparent 45%,
+
+      #ffffff66 50%,
+
+      transparent 55%
+
+    );
+
   background-size: 13px 39px, 23px 61px, 17px 90px;
+
   background-position: 0 0, 9px 17px, 3px 0;
+
 }
 
 .d2y-water::after {
+
   transform: scaleX(-1);
+
   opacity: .65;
+
 }
 
 .d2y-compare.is-washing .d2y-water {
+
   opacity: 1;
+
   width: 82px;
+
 }
 
 .d2y-compare.is-washing .d2y-water::before {
+
   animation: d2y-rain .42s linear infinite;
+
 }
 
 .d2y-compare.is-washing .d2y-water::after {
+
   animation: d2y-rain .65s linear infinite reverse;
+
 }
 
 @keyframes d2y-rain {
-  to { background-position: 0 156px, 9px 244px, 3px 180px; }
+
+  to {
+
+    background-position: 0 156px, 9px 244px, 3px 180px;
+
+  }
+
 }
 
 .d2y-handle {
+
   position: absolute;
-  left: 50%;
+
+  left: var(--handle-position, 50%);
+
   top: 50%;
+
   transform: translate(-50%, -50%);
+
   display: grid;
+
   place-items: center;
+
   box-sizing: border-box;
+
   width: 56px;
+
   height: 56px;
+
   border: 2px solid #b5df00;
+
   border-radius: 50%;
+
   background: #101810;
+
   color: #b5df00;
+
   box-shadow: 0 3px 18px #0008;
+
 }
 
 .d2y-handle svg {
+
   width: 37px;
+
   height: 37px;
+
 }
 
 .d2y-compare .d2y-range {
+
   position: absolute;
+
   z-index: 4;
+
   inset: 0;
+
   display: block;
+
   box-sizing: border-box;
+
   width: 100%;
+
   height: 100%;
+
   min-height: 0;
+
   margin: 0;
+
   padding: 0;
+
   border: 0;
+
   opacity: 0;
+
   cursor: ew-resize;
+
   touch-action: pan-y;
+
 }
 
 .d2y-compare:focus-within {
+
   outline: 3px solid #b5df00;
+
   outline-offset: 4px;
+
 }
 
 .d2y-instruction {
+
   margin: 10px 0 0;
+
   color: #bbb;
+
   font: 400 13px/1.5 Arial, sans-serif;
+
 }
 
 .d2y-instruction strong {
+
   color: #b5df00;
+
 }
 
-/* Interior cleaning interaction. */
+/* INTERIOR VACUUM */
+
 .d2y-interior {
+
   min-width: 0;
+
 }
 
 .d2y-interior-heading {
+
   color: #fff;
+
   font: 700 clamp(20px, 3vw, 28px)/1.2 Arial, sans-serif;
+
   margin: 0 0 12px;
+
 }
 
 .d2y-interior-heading span {
+
   color: #b5df00;
+
 }
 
 .d2y-vacuum-stage {
+
   position: relative;
+
   width: 100%;
+
   aspect-ratio: 1.1;
+
   overflow: hidden;
+
   border-radius: 16px;
+
   background: #191919;
+
   isolation: isolate;
+
 }
 
-/* Original image remains visible if canvas cannot load. */
 .d2y-interior-fallback {
+
   display: block;
+
   width: 100%;
+
   height: 100%;
+
   object-fit: contain;
+
 }
 
 .d2y-vacuum-stage canvas {
+
   position: absolute;
+
   inset: 0;
+
   display: block;
+
   width: 100%;
+
   height: 100%;
+
   opacity: 0;
+
 }
 
 .d2y-vacuum-stage.is-ready canvas {
+
   opacity: 1;
+
 }
 
 .d2y-vacuum-stage.is-ready .d2y-interior-fallback {
+
   visibility: hidden;
+
 }
 
 #d2y-dirty {
+
   z-index: 1;
+
   touch-action: none;
+
   cursor: crosshair;
+
 }
 
 .d2y-vacuum-tool {
+
   position: absolute;
+
   z-index: 3;
+
   width: clamp(76px, 15vw, 120px);
+
   height: auto;
+
   left: 50%;
+
   top: 60%;
+
   transform: translate(-50%, -28%);
+
   pointer-events: none;
+
   filter: drop-shadow(3px 8px 5px #0009);
+
   opacity: 0;
+
 }
 
 .d2y-vacuum-stage.is-ready .d2y-vacuum-tool {
+
   opacity: 1;
+
 }
 
 .d2y-vacuum-stage.is-clean .d2y-vacuum-tool {
+
   opacity: 0;
+
 }
 
 .d2y-vacuum-stage.is-working .d2y-vacuum-tool {
-  filter: drop-shadow(0 0 7px #b5df0070)
-          drop-shadow(3px 8px 5px #0009);
+
+  filter:
+
+    drop-shadow(0 0 7px #b5df0070)
+
+    drop-shadow(3px 8px 5px #0009);
+
 }
 
 .d2y-vacuum-hint {
+
   position: absolute;
+
   z-index: 2;
+
   bottom: 16px;
+
   left: 50%;
+
   transform: translateX(-50%);
+
   width: max-content;
+
   max-width: calc(100% - 32px);
+
   box-sizing: border-box;
+
   padding: 10px 15px;
+
   border: 1px solid #ffffff30;
+
   border-radius: 30px;
+
   background: #000b;
+
   color: #fff;
+
   text-align: center;
+
   font: 600 12px/1.4 Arial, sans-serif;
+
   pointer-events: none;
+
   transition: opacity .2s;
+
 }
 
 .d2y-vacuum-stage.has-started .d2y-vacuum-hint {
+
   opacity: 0;
+
 }
 
 .d2y-vacuum-controls {
+
   display: flex;
+
   flex-wrap: wrap;
+
   gap: 10px;
+
   margin-top: 12px;
+
 }
 
 .d2y-vacuum-controls button {
+
   appearance: none;
+
   min-height: 44px;
+
   padding: 10px 16px;
+
   border: 1px solid #b5df0066;
+
   border-radius: 24px;
+
   background: #151a0c;
+
   color: #b5df00;
+
   font: 600 12px/1.3 Arial, sans-serif;
+
   cursor: pointer;
+
 }
 
 .d2y-vacuum-controls button:hover {
+
   background: #26320b;
+
 }
 
 .d2y-vacuum-controls button:disabled {
+
   opacity: .45;
+
   cursor: default;
+
 }
 
 .d2y-vacuum-controls button:focus-visible {
+
   outline: 2px solid #fff;
+
   outline-offset: 3px;
+
 }
 
 .d2y-gallery-photo {
+
   display: block;
+
   width: 100%;
+
   max-width: 100%;
+
   height: auto;
+
   margin: 0;
+
   border-radius: 16px;
+
 }
 
 @media (max-width: 600px) {
-  .d2y-gallery-items { gap: 26px; }
 
-  .d2y-tag {
-    top: 10px;
-    font-size: 9px;
-    padding: 7px 9px;
+  .d2y-gallery-items {
+
+    gap: 26px;
+
   }
 
-  .d2y-tag-left { left: 10px; }
-  .d2y-tag-right { right: 10px; }
+  .d2y-tag {
+
+    top: 10px;
+
+    font-size: 9px;
+
+    padding: 7px 9px;
+
+  }
+
+  .d2y-tag-left {
+
+    left: 10px;
+
+  }
+
+  .d2y-tag-right {
+
+    right: 10px;
+
+  }
 
   .d2y-handle {
+
     width: 46px;
+
     height: 46px;
+
   }
 
   .d2y-handle svg {
+
     width: 31px;
+
     height: 31px;
+
   }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .d2y-compare.is-washing .d2y-water::before,
+
   .d2y-compare.is-washing .d2y-water::after {
+
     animation: none;
+
   }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
+
   <a class="brand" href="index.html">
+
     Direct<span>2</span>You
+
   </a>
 
   <nav>
+
     <a href="index.html">Home</a>
+
     <a href="services.html">Services</a>
+
     <a href="about.html">Our Story</a>
+
     <a href="why.html">Why Us</a>
-    <a class="active" href="gallery.html">Gallery</a>
+
+    <a class="active" href="gallery.html">Experience</a>
+
     <a href="contact.html">Contact</a>
+
   </nav>
+
 </header>
 
 <section class="page-hero">
+
   <div>
-    <div class="badge">Gallery</div>
-    <h1>Care You <span>Can See.</span></h1>
+
+    <div class="badge">Experience</div>
+
+    <h1>The D2Y <span>Experience.</span></h1>
+
   </div>
+
 </section>
 
 <section class="d2y-gallery">
+
   <div class="d2y-gallery-inner">
 
     <h2 id="compare-help">
-      Drag the slider <span>to reveal the shine.</span>
+
+      Slide to wash. <span>Swipe to vacuum.</span><br>
+
+      Reveal the difference.
+
     </h2>
 
     <div class="d2y-gallery-items">
 
-      <!-- GOLF: WATER SLIDER -->
+      <!-- GOLF: WASH FROM LEFT TO RIGHT -->
 
       <div>
+
         <figure class="d2y-compare" id="d2y-compare">
 
           <img
+
             class="d2y-base"
+
             src="d2y-driveway-after.webp"
+
             alt="Illustrative clean Volkswagen Golf on a Dublin-style driveway."
+
             width="1672"
+
             height="941"
+
             fetchpriority="high"
+
             draggable="false"
+
           >
 
           <img
+
             class="d2y-before-overlay"
+
             src="d2y-driveway-before.webp"
+
             alt="The same illustrative Golf covered in road dirt."
+
             width="1672"
+
             height="941"
+
             fetchpriority="high"
+
             draggable="false"
+
           >
 
-          <span class="d2y-tag d2y-tag-left" aria-hidden="true">
-            BEFORE
+          <span
+
+            class="d2y-tag d2y-tag-left"
+
+            aria-hidden="true"
+
+          >
+
+            AFTER
+
           </span>
 
-          <span class="d2y-tag d2y-tag-right" aria-hidden="true">
-            AFTER
+          <span
+
+            class="d2y-tag d2y-tag-right"
+
+            aria-hidden="true"
+
+          >
+
+            BEFORE
+
           </span>
 
           <div class="d2y-divider" aria-hidden="true">
+
             <span class="d2y-water"></span>
 
             <span class="d2y-handle">
+
               <svg viewBox="0 0 48 48" fill="none">
+
                 <path
+
                   d="M10 12L22 17L19 24L7 19Z"
+
                   fill="#b5df00"
+
                 />
+
                 <path
+
                   d="M10 20L6 31L11 33L15 23"
+
                   fill="#60696c"
+
                   stroke="#d8e1e3"
+
                   stroke-width="1.4"
+
                 />
+
                 <path
+
                   d="M22 18L28 20L26 25L20 23"
+
                   fill="#d7e4e8"
+
                 />
+
                 <path
+
                   d="M29 21L42 16M29 23L44 24M28 25L40 33"
+
                   stroke="#bcefff"
+
                   stroke-width="2"
+
                   stroke-linecap="round"
+
                 />
+
                 <path
+
                   d="M10 33C6 40 18 42 22 38"
+
                   stroke="#8b9496"
+
                   stroke-width="3"
+
                   stroke-linecap="round"
+
                 />
+
               </svg>
+
             </span>
+
           </div>
 
           <input
+
             class="d2y-range"
+
             id="d2y-range"
+
             type="range"
+
             min="0"
+
             max="100"
-            value="50"
+
+            value="0"
+
             step="0.1"
-            aria-label="Wash the Golf: move left to reveal the clean car"
+
+            aria-label="Wash the Golf: move right to reveal the clean car"
+
             aria-describedby="compare-help"
-            aria-valuetext="50% before, 50% after"
+
+            aria-valuetext="0% washed"
+
           >
+
         </figure>
 
         <p class="d2y-instruction">
-          <strong>Wash it yourself.</strong>
-          Drag the water jet left to reveal the shine.
+
+          <strong>Slide to wash.</strong>
+
+          Drag the water jet from left to right.
+
         </p>
+
       </div>
 
       <!-- INTERIOR: VACUUM WITH YOUR FINGER -->
 
       <div class="d2y-interior">
+
         <h3 class="d2y-interior-heading">
+
           Your touch. <span>A fresh interior.</span>
+
         </h3>
 
-        <div class="d2y-vacuum-stage" id="d2y-vacuum-stage">
+        <div
+
+          class="d2y-vacuum-stage"
+
+          id="d2y-vacuum-stage"
+
+        >
 
           <img
+
             class="d2y-interior-fallback"
+
             id="d2y-interior-source"
+
             src="Cupra1.jpg"
+
             alt="Car interior before and after cleaning."
+
             loading="lazy"
+
             draggable="false"
+
           >
 
           <canvas
+
             id="d2y-clean"
+
             aria-hidden="true"
+
           ></canvas>
 
           <canvas
+
             id="d2y-dirty"
+
             role="img"
-            aria-label="Interactive interior cleaning. Drag your finger or mouse to vacuum. Use the Show result button to see the clean interior without dragging."
+
+            aria-label="Interactive interior cleaning. Drag your finger or mouse to vacuum. Use Show result to view the clean interior without dragging."
+
           ></canvas>
 
-          <!-- The mouth of the nozzle matches the cleaning point. -->
           <svg
+
             class="d2y-vacuum-tool"
+
             id="d2y-vacuum-tool"
+
             viewBox="0 0 120 170"
+
             fill="none"
+
             aria-hidden="true"
+
           >
+
             <path
+
               d="M60 93C60 124 108 115 106 170"
+
               stroke="#111"
+
               stroke-width="25"
+
             />
+
             <path
+
               d="M60 93C60 124 108 115 106 170"
+
               stroke="#444"
+
               stroke-width="18"
+
               stroke-dasharray="3 5"
+
             />
+
             <path
+
               d="M47 68H73V106H47Z"
+
               fill="#24292c"
+
               stroke="#7c8589"
+
               stroke-width="2"
+
             />
+
             <path
+
               d="M20 33Q60 22 100 33L88 67Q60 80 32 67Z"
+
               fill="#30383c"
+
               stroke="#a0aaae"
+
               stroke-width="2"
+
             />
+
             <path
+
               d="M23 34Q60 25 97 34L94 45Q60 37 26 45Z"
+
               fill="#0b0e10"
+
             />
+
             <path
+
               d="M34 52Q60 46 86 52"
+
               stroke="#b5df00"
+
               stroke-width="5"
+
               stroke-linecap="round"
+
             />
+
             <path
+
               d="M52 79H68"
+
               stroke="#b5df00"
+
               stroke-width="4"
+
             />
+
           </svg>
 
-          <div class="d2y-vacuum-hint" id="d2y-vacuum-hint">
+          <div
+
+            class="d2y-vacuum-hint"
+
+            id="d2y-vacuum-hint"
+
+          >
+
             Loading interior…
+
           </div>
+
         </div>
 
         <div class="d2y-vacuum-controls">
-          <button type="button" id="d2y-reset" disabled>
+
+          <button
+
+            type="button"
+
+            id="d2y-reset"
+
+            disabled
+
+          >
+
             ↻ Start again
+
           </button>
 
-          <button type="button" id="d2y-show-result" disabled>
+          <button
+
+            type="button"
+
+            id="d2y-show-result"
+
+            disabled
+
+          >
+
             Show result
+
           </button>
+
         </div>
 
-        <p class="d2y-instruction" id="d2y-vacuum-status" aria-live="polite">
-          <strong>Try it yourself.</strong>
+        <p
+
+          class="d2y-instruction"
+
+          id="d2y-vacuum-status"
+
+          aria-live="polite"
+
+        >
+
+          <strong>Swipe to vacuum.</strong>
+
           Move the nozzle over the interior to clean it.
+
         </p>
+
       </div>
 
       <!-- CUPRA EXTERIOR -->
 
       <img
+
         class="d2y-gallery-photo"
+
         src="Cupra.jpg"
+
         alt="CUPRA exterior before and after cleaning."
+
         loading="lazy"
+
       >
 
     </div>
+
   </div>
+
 </section>
 
 <section class="dark">
+
   <div class="section-title">
+
     <h2>Watch <span>Our Work</span></h2>
+
     <p>
+
       Detailing is all about transformation: dirty to clean,
+
       dull to fresh, ordinary to sharp.
+
     </p>
+
   </div>
 
   <div class="video-box">
+
     <video
+
       controls
+
       playsinline
+
       style="width:100%; max-height:550px; object-fit:contain; display:block;"
+
     >
+
       <source src="Hiphop%20.mp4" type="video/mp4">
+
     </video>
+
   </div>
+
 </section>
 
 <footer>
+
   <div class="brand">Direct<span>2</span>You</div>
+
   <p>© 2026 Direct2You Dublin.</p>
+
 </footer>
 
-<a class="whatsapp-float" href="https://wa.me/353894439214">
+<a
+
+  class="whatsapp-float"
+
+  href="https://wa.me/353894439214"
+
+>
+
   WhatsApp
+
 </a>
 
 <script>
+
 (() => {
+
   "use strict";
 
   /* WATER SLIDER */
 
   const comparison = document.getElementById("d2y-compare");
+
   const slider = document.getElementById("d2y-range");
+
+  const handle = comparison.querySelector(".d2y-handle");
+
+  const afterTag = comparison.querySelector(".d2y-tag-left");
+
+  const beforeTag = comparison.querySelector(".d2y-tag-right");
+
   let waterTimer;
 
   function updateComparison() {
-    const before = Number(slider.value);
-    const after = 100 - before;
 
-    comparison.style.setProperty("--reveal", before + "%");
+    const washed = Number(slider.value);
+
+    comparison.style.setProperty("--reveal", washed + "%");
 
     slider.setAttribute(
+
       "aria-valuetext",
-      Math.round(before) + "% before, " +
-      Math.round(after) + "% after"
+
+      Math.round(washed) + "% washed"
+
     );
+
+    afterTag.style.opacity = washed > 15 ? "1" : "0";
+
+    beforeTag.style.opacity = washed < 85 ? "1" : "0";
+
+    /*
+
+      Keep the circular handle fully visible at both edges,
+
+      while the water line reaches the exact image boundary.
+
+    */
+
+    const width = comparison.clientWidth;
+
+    if (width) {
+
+      const halfHandle = handle.offsetWidth / 2 + 3;
+
+      const lineX = width * washed / 100;
+
+      const handleX = Math.max(
+
+        halfHandle,
+
+        Math.min(width - halfHandle, lineX)
+
+      );
+
+      handle.style.left =
+
+        "calc(50% + " + (handleX - lineX) + "px)";
+
+    }
+
   }
 
   function showWater() {
+
     comparison.classList.add("is-washing");
+
     clearTimeout(waterTimer);
+
     waterTimer = setTimeout(() => {
+
       comparison.classList.remove("is-washing");
+
     }, 350);
+
   }
 
   slider.addEventListener("input", () => {
+
     updateComparison();
+
     showWater();
+
   });
 
   slider.addEventListener("pointerdown", showWater);
+
+  window.addEventListener("resize", updateComparison);
+
   updateComparison();
 
   /* INTERIOR VACUUM */
 
   const stage = document.getElementById("d2y-vacuum-stage");
+
   const source = document.getElementById("d2y-interior-source");
+
   const cleanCanvas = document.getElementById("d2y-clean");
+
   const dirtyCanvas = document.getElementById("d2y-dirty");
+
   const tool = document.getElementById("d2y-vacuum-tool");
+
   const hint = document.getElementById("d2y-vacuum-hint");
+
   const resetButton = document.getElementById("d2y-reset");
+
   const resultButton = document.getElementById("d2y-show-result");
+
   const status = document.getElementById("d2y-vacuum-status");
 
   const cleanContext = cleanCanvas.getContext("2d");
+
   const dirtyContext = dirtyCanvas.getContext("2d");
 
   let ready = false;
+
   let activePointer = null;
+
   let lastPoint = null;
+
   let strokes = [];
+
   let complete = false;
+
   let resizeFrame = 0;
 
   /*
-    Cupra1.jpg contains:
-    LEFT = dirty interior
-    RIGHT = clean interior
 
-    A narrow strip near the middle is omitted to avoid
-    showing the original white divider.
+    Cupra1.jpg:
+
+    LEFT HALF = dirty interior
+
+    RIGHT HALF = clean interior
+
+    Omit a narrow strip at the centre to remove
+
+    the original dividing line.
+
   */
+
   function drawHalf(context, rightHalf) {
+
     const half = source.naturalWidth / 2;
+
     const trim = Math.max(2, source.naturalWidth * 0.004);
+
     const startX = rightHalf ? half + trim : 0;
+
     const cropWidth = half - trim;
 
     context.drawImage(
+
       source,
-      startX, 0,
-      cropWidth, source.naturalHeight,
-      0, 0,
-      stage.clientWidth, stage.clientHeight
+
+      startX,
+
+      0,
+
+      cropWidth,
+
+      source.naturalHeight,
+
+      0,
+
+      0,
+
+      stage.clientWidth,
+
+      stage.clientHeight
+
     );
+
   }
 
   function eraseSegment(segment) {
+
     const width = stage.clientWidth;
+
     const height = stage.clientHeight;
 
     dirtyContext.save();
+
     dirtyContext.globalCompositeOperation = "destination-out";
+
     dirtyContext.lineCap = "round";
+
     dirtyContext.lineJoin = "round";
+
     dirtyContext.lineWidth = segment.size * width;
 
     dirtyContext.beginPath();
+
     dirtyContext.moveTo(
+
       segment.from.x * width,
+
       segment.from.y * height
+
     );
+
     dirtyContext.lineTo(
+
       segment.to.x * width,
+
       segment.to.y * height
+
     );
+
     dirtyContext.stroke();
 
-    /* A tap also cleans a circular area. */
     dirtyContext.beginPath();
+
     dirtyContext.arc(
+
       segment.to.x * width,
+
       segment.to.y * height,
+
       segment.size * width / 2,
+
       0,
+
       Math.PI * 2
+
     );
+
     dirtyContext.fill();
+
     dirtyContext.restore();
+
   }
 
   function renderInterior() {
+
     if (!ready || !stage.clientWidth) return;
 
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
     const width = stage.clientWidth;
+
     const height = stage.clientHeight;
 
     [cleanCanvas, dirtyCanvas].forEach(canvas => {
+
       canvas.width = Math.round(width * ratio);
+
       canvas.height = Math.round(height * ratio);
+
     });
 
     cleanContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+
     dirtyContext.setTransform(ratio, 0, 0, ratio, 0, 0);
 
     drawHalf(cleanContext, true);
 
     if (!complete) {
+
       drawHalf(dirtyContext, false);
+
       strokes.forEach(eraseSegment);
+
     }
+
   }
 
   function pointerPosition(event) {
+
     const bounds = dirtyCanvas.getBoundingClientRect();
 
     return {
-      x: Math.max(0, Math.min(1,
-        (event.clientX - bounds.left) / bounds.width
-      )),
-      y: Math.max(0, Math.min(1,
-        (event.clientY - bounds.top) / bounds.height
-      ))
+
+      x: Math.max(
+
+        0,
+
+        Math.min(
+
+          1,
+
+          (event.clientX - bounds.left) / bounds.width
+
+        )
+
+      ),
+
+      y: Math.max(
+
+        0,
+
+        Math.min(
+
+          1,
+
+          (event.clientY - bounds.top) / bounds.height
+
+        )
+
+      )
+
     };
+
   }
 
   function moveTool(point) {
+
     tool.style.left = (point.x * 100) + "%";
+
     tool.style.top = (point.y * 100) + "%";
+
   }
 
   function cleanAt(point) {
+
     const nozzleWidth = tool.getBoundingClientRect().width;
 
     const segment = {
+
       from: lastPoint || point,
+
       to: point,
+
       size: nozzleWidth * 0.62 / stage.clientWidth
+
     };
 
     strokes.push(segment);
+
     eraseSegment(segment);
+
     lastPoint = point;
+
     moveTool(point);
+
   }
 
   function stopVacuum(event) {
+
     if (activePointer === null) return;
-    if (event && event.pointerId !== activePointer) return;
+
+    if (event && event.pointerId !== activePointer) {
+
+      return;
+
+    }
 
     const pointer = activePointer;
+
     activePointer = null;
+
     lastPoint = null;
+
     stage.classList.remove("is-working");
 
     if (dirtyCanvas.hasPointerCapture(pointer)) {
+
       dirtyCanvas.releasePointerCapture(pointer);
+
     }
+
   }
 
   dirtyCanvas.addEventListener("pointerdown", event => {
-    if (!ready || complete || activePointer !== null) return;
-    if (event.pointerType === "mouse" && event.button !== 0) return;
+
+    if (!ready || complete || activePointer !== null) {
+
+      return;
+
+    }
+
+    if (
+
+      event.pointerType === "mouse" &&
+
+      event.button !== 0
+
+    ) {
+
+      return;
+
+    }
 
     event.preventDefault();
+
     activePointer = event.pointerId;
+
     dirtyCanvas.setPointerCapture(event.pointerId);
 
     stage.classList.add("is-working", "has-started");
+
     lastPoint = null;
+
     cleanAt(pointerPosition(event));
+
   });
 
   dirtyCanvas.addEventListener("pointermove", event => {
+
     if (!ready || complete) return;
 
     if (event.pointerId === activePointer) {
+
       event.preventDefault();
+
       cleanAt(pointerPosition(event));
+
     } else if (
+
       activePointer === null &&
+
       event.pointerType === "mouse"
+
     ) {
+
       moveTool(pointerPosition(event));
+
     }
+
   });
 
   dirtyCanvas.addEventListener("pointerup", stopVacuum);
+
   dirtyCanvas.addEventListener("pointercancel", stopVacuum);
-  dirtyCanvas.addEventListener("lostpointercapture", stopVacuum);
+
+  dirtyCanvas.addEventListener(
+
+    "lostpointercapture",
+
+    stopVacuum
+
+  );
+
   window.addEventListener("blur", () => stopVacuum());
 
   resetButton.addEventListener("click", () => {
+
     stopVacuum();
+
     complete = false;
+
     strokes = [];
+
     lastPoint = null;
 
     stage.classList.remove("has-started", "is-clean");
+
     tool.style.left = "50%";
+
     tool.style.top = "60%";
 
     resultButton.disabled = false;
+
     status.textContent =
-      "Move the nozzle over the interior to clean it.";
+
+      "Swipe to vacuum. Move the nozzle over the interior to clean it.";
 
     renderInterior();
+
   });
 
   resultButton.addEventListener("click", () => {
+
     stopVacuum();
+
     complete = true;
+
     stage.classList.add("has-started", "is-clean");
+
     resultButton.disabled = true;
 
     status.textContent =
+
       "Fresh, clean and ready. Tap Start again to try it yourself.";
 
     renderInterior();
+
   });
 
   function initialiseInterior() {
+
     if (ready || !source.naturalWidth) return;
 
     if (!cleanContext || !dirtyContext) {
+
       hint.textContent = "Interior before and after";
+
       return;
+
     }
 
     ready = true;
 
     const halfWidth = source.naturalWidth / 2;
+
     const trim = Math.max(2, source.naturalWidth * 0.004);
 
     stage.style.aspectRatio =
+
       (halfWidth - trim) + " / " + source.naturalHeight;
 
     renderInterior();
+
     stage.classList.add("is-ready");
 
     hint.textContent = "Drag your finger to vacuum";
+
     resetButton.disabled = false;
+
     resultButton.disabled = false;
+
   }
 
   source.addEventListener("load", initialiseInterior);
 
   source.addEventListener("error", () => {
+
     hint.textContent = "Interior image could not load";
+
     status.textContent =
+
       "Check that Cupra1.jpg is in the same folder as this page.";
+
   });
 
   if (source.complete && source.naturalWidth) {
+
     initialiseInterior();
+
   }
 
   function scheduleResize() {
+
     cancelAnimationFrame(resizeFrame);
+
     resizeFrame = requestAnimationFrame(renderInterior);
+
   }
 
   if ("ResizeObserver" in window) {
+
     new ResizeObserver(scheduleResize).observe(stage);
+
   } else {
+
     window.addEventListener("resize", scheduleResize);
+
   }
+
 })();
+
 </script>
 
 </body>
+
 </html>
