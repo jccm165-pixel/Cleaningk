@@ -13,6 +13,22 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
+ /* Green foam only on the car */
+.d2y-foam-layer {
+  --car-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1672 941'%3E%3Cpath fill='white' d='M222 738 L226 646 L245 605 L258 555 Q268 514 296 490 Q365 425 505 398 Q612 300 724 252 Q821 218 1085 220 Q1208 214 1274 251 Q1328 285 1360 351 L1394 409 Q1421 453 1433 503 Q1445 540 1444 589 L1440 666 Q1427 724 1387 735 Q1335 745 1308 696 L1085 752 Q1077 811 1035 830 Q988 850 941 814 L915 786 L405 781 Q369 812 330 801 Q304 794 289 770 L249 760 Q227 755 222 738 Z'/%3E%3C/svg%3E");
+
+  -webkit-mask-image: var(--car-mask);
+  mask-image: var(--car-mask);
+
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+
+  -webkit-mask-position: center;
+  mask-position: center;
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+} 
 
 header {
 
