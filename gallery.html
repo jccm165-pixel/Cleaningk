@@ -2041,5 +2041,563 @@ initPolish();
 })();
 </script>
 
+<style>
+.d2y-sound-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 22px;
+}
+
+.d2y-sound-toggle {
+  appearance: none;
+  min-height: 44px;
+  padding: 11px 17px;
+  border: 1px solid #b5df0060;
+  border-radius: 30px;
+  background: #12180c;
+  color: #b5df00;
+  font: 700 12px/1.3 Arial, sans-serif;
+  cursor: pointer;
+}
+
+.d2y-sound-toggle[aria-pressed="true"] {
+  background: #b5df00;
+  color: #101500;
+}
+
+.d2y-sound-toggle:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
+</style>
+
+<script>
+(() => {
+  "use strict";
+
+  /* Turn off the previous sound system, if present. */
+  const previousButton =
+    document.getElementById("d2y-sound-toggle");
+
+  if (
+    previousButton &&
+    previousButton.getAttribute("aria-pressed") === "true"
+  ) {
+    previousButton.click();
+  }
+
+  if (window.d2yToolAudioCleanup) {
+    window.d2yToolAudioCleanup();
+  }
+
+  document.querySelectorAll(".d2y-sound-bar").forEach(bar => {
+    bar.remove();
+  });
+
+  const gallery =
+    document.querySelector(".d2y-gallery-inner");
+
+  if (!gallery) return;
+
+  const bar = document.createElement("div");
+  bar.className = "d2y-sound-bar";
+
+  const button = document.createElement("button");
+  button.id = "d2y-sound-toggle";
+  button.className = "d2y-sound-toggle";
+  button.type = "button";
+  button.textContent = "🔇 Sound off";
+  button.setAttribute("aria-pressed", "false");
+  button.setAttribute("aria-label", "Turn tool sounds on");
+
+  bar.appendChild(button);
+  gallery.prepend(bar);
+
+  let audio;
+  let master;
+  let whiteBuffer;
+  let pinkBuffer;
+  let enabled = false;
+  let activeVoice = null;
+  let activePointer = null;
+  let activeKind = null;
+  let movementTimer;
+  let disposed = false;
+
+  const listeners = [];
+
+  function listen(target, name, callback, options) {
+    target.addEventListener(name, callback, options);
+    listeners.push(() => {
+      target.removeEventListener(name, callback, options);
+    });
+  }
+
+  function createAudio() {
+    const AudioEngine =
+      window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioEngine) {
+      throw new Error("Audio unavailable");
+    }
+
+    audio = new AudioEngine();
+
+    /*
+      A limiter keeps the mixed sounds controlled.
+      The page starts silent.
+    */
+    master = audio.createGain();
+    master.gain.value = 0.55;
+
+    const limiter = audio.createDynamicsCompressor();
+    limiter.threshold.value = -12;
+    limiter.knee.value = 15;
+    limiter.ratio.value = 8;
+    limiter.attack.value = 0.005;
+    limiter.release.value = 0.15;
+
+    master.connect(limiter);
+    limiter.connect(audio.destination);
+
+    const length = Math.round(audio.sampleRate * 3);
+
+    whiteBuffer = audio.createBuffer(
+      1, length, audio.sampleRate
+    );
+
+    pinkBuffer = audio.createBuffer(
+      1, length, audio.sampleRate
+    );
+
+    const white = whiteBuffer.getChannelData(0);
+    const pink = pinkBuffer.getChannelData(0);
+
+    let b0 = 0;
+    let b1 = 0;
+    let b2 = 0;
+
+    for (let i = 0; i < length; i++) {
+      const sample = Math.random() * 2 - 1;
+
+      white[i] = sample;
+
+      b0 = 0.99765 * b0 + sample * 0.099046;
+      b1 = 0.963 * b1 + sample * 0.2965164;
+      b2 = 0.57 * b2 + sample * 1.0526913;
+
+      pink[i] = (b0 + b1 + b2 + sample * 0.1848) * 0.12;
+    }
+  }
+
+  function createVoice(kind) {
+    const nodes = [];
+    const sources = [];
+
+    const output = audio.createGain();
+    output.gain.value = 0;
+    output.connect(master);
+    nodes.push(output);
+
+    function gain(value, destination = output) {
+      const node = audio.createGain();
+      node.gain.value = value;
+      node.connect(destination);
+      nodes.push(node);
+      return node;
+    }
+
+    function filter(type, frequency, q, destination) {
+      const node = audio.createBiquadFilter();
+      node.type = type;
+      node.frequency.value = frequency;
+      node.Q.value = q;
+      node.connect(destination);
+      nodes.push(node);
+      return node;
+    }
+
+    function noise(buffer, volume, type, frequency, q = 0.7) {
+      const level = gain(volume);
+      const tone = filter(type, frequency, q, level);
+
+      const source = audio.createBufferSource();
+      source.buffer = buffer;
+      source.loop = true;
+      source.connect(tone);
+      source.start(0, Math.random());
+
+      sources.push(source);
+      nodes.push(source);
+
+      return { level, tone };
+    }
+
+    function oscillator(type, frequency, volume, lowpass) {
+      const level = gain(volume);
+      let destination = level;
+
+      if (lowpass) {
+        destination = filter(
+          "lowpass", lowpass, 0.7, level
+        );
+      }
+
+      const source = audio.createOscillator();
+      source.type = type;
+      source.frequency.value = frequency;
+      source.connect(destination);
+      source.start();
+
+      sources.push(source);
+      nodes.push(source);
+
+      return { source, level };
+    }
+
+    function modulate(parameter, frequency, depth, type = "sine") {
+      const amount = audio.createGain();
+      amount.gain.value = depth;
+      amount.connect(parameter);
+
+      const source = audio.createOscillator();
+      source.type = type;
+      source.frequency.value = frequency;
+      source.connect(amount);
+      source.start();
+
+      sources.push(source);
+      nodes.push(source, amount);
+    }
+
+    if (kind === "foam") {
+      /*
+        Soft, low spray with a bubbling pulse.
+        Very little high-frequency hiss.
+      */
+      const spray = noise(
+        pinkBuffer, 0.38, "lowpass", 1150
+      );
+
+      modulate(spray.level.gain, 9, 0.12);
+
+      const bubbles = oscillator(
+        "sine", 145, 0.025, 600
+      );
+
+      modulate(bubbles.source.frequency, 13, 65);
+      modulate(bubbles.level.gain, 7, 0.018);
+    }
+
+    if (kind === "rinse") {
+      /*
+        Bright pressure-water hiss plus
+        irregular-sounding low splashes.
+      */
+      const jet = noise(
+        whiteBuffer, 0.19, "highpass", 2300
+      );
+
+      modulate(jet.level.gain, 31, 0.035);
+
+      const splash = noise(
+        pinkBuffer, 0.30, "bandpass", 460, 0.8
+      );
+
+      modulate(splash.level.gain, 6.7, 0.18);
+      modulate(splash.tone.frequency, 4.3, 150);
+    }
+
+    if (kind === "vacuum") {
+      /*
+        Higher-pitched electric motor,
+        suction and a distinct whistling harmonic.
+      */
+      noise(pinkBuffer, 0.22, "lowpass", 1900);
+
+      const motor = oscillator(
+        "sawtooth", 185, 0.055, 1800
+      );
+
+      modulate(motor.source.frequency, 2.2, 5);
+
+      const whistle = oscillator(
+        "sine", 880, 0.035
+      );
+
+      modulate(whistle.source.frequency, 3, 18);
+
+      noise(whiteBuffer, 0.065, "bandpass", 3200, 1.2);
+    }
+
+    if (kind === "polish") {
+      /*
+        Low mechanical buzz with a fast,
+        rhythmic orbital vibration.
+      */
+      const motor = oscillator(
+        "sawtooth", 86, 0.095, 650
+      );
+
+      modulate(motor.level.gain, 24, 0.045);
+      modulate(motor.source.frequency, 24, 5);
+
+      const pad = noise(
+        pinkBuffer, 0.30, "bandpass", 370, 0.7
+      );
+
+      modulate(pad.level.gain, 24, 0.15);
+
+      oscillator("sine", 172, 0.035, 500);
+    }
+
+    if (kind === "coat") {
+      /*
+        Quiet applicator movement.
+      */
+      const wipe = noise(
+        pinkBuffer, 0.10, "bandpass", 950, 0.7
+      );
+
+      modulate(wipe.level.gain, 4, 0.035);
+    }
+
+    if (kind === "buff") {
+      /*
+        Dry microfiber friction:
+        airy, textured and without a motor tone.
+      */
+      const cloth = noise(
+        whiteBuffer, 0.095, "bandpass", 2600, 0.65
+      );
+
+      modulate(cloth.level.gain, 8, 0.045);
+      modulate(cloth.tone.frequency, 5, 450);
+
+      noise(pinkBuffer, 0.12, "highpass", 750);
+    }
+
+    const now = audio.currentTime;
+    output.gain.setValueAtTime(0, now);
+    output.gain.linearRampToValueAtTime(1, now + 0.06);
+
+    let stopped = false;
+
+    return {
+      kind,
+      stop() {
+        if (stopped) return;
+        stopped = true;
+
+        const time = audio.currentTime;
+
+        output.gain.cancelScheduledValues(time);
+        output.gain.setValueAtTime(output.gain.value, time);
+        output.gain.linearRampToValueAtTime(0, time + 0.07);
+
+        sources.forEach(source => {
+          try {
+            source.stop(time + 0.09);
+          } catch {}
+        });
+
+        setTimeout(() => {
+          nodes.forEach(node => {
+            try {
+              node.disconnect();
+            } catch {}
+          });
+        }, 180);
+      }
+    };
+  }
+
+  function silence() {
+    clearTimeout(movementTimer);
+
+    if (activeVoice) {
+      activeVoice.stop();
+      activeVoice = null;
+    }
+  }
+
+  function play(kind) {
+    if (
+      !enabled ||
+      !audio ||
+      audio.state !== "running" ||
+      !kind
+    ) return;
+
+    if (!activeVoice || activeVoice.kind !== kind) {
+      silence();
+      activeVoice = createVoice(kind);
+    }
+
+    clearTimeout(movementTimer);
+    movementTimer = setTimeout(silence, 190);
+  }
+
+  function toolKind(target) {
+    if (!(target instanceof Element)) return null;
+
+    if (target.closest("#d2y-foam-tool")) {
+      return "foam";
+    }
+
+    if (target.closest("#d2y-rinse-tool")) {
+      const tool = document.getElementById("d2y-rinse-tool");
+
+      return tool?.getAttribute("aria-disabled") === "true"
+        ? null
+        : "rinse";
+    }
+
+    if (target.id === "d2y-dirty") {
+      const stage = target.closest(".d2y-vacuum-stage");
+
+      return stage?.classList.contains("is-ready") &&
+        !stage.classList.contains("is-clean")
+          ? "vacuum"
+          : null;
+    }
+
+    if (target.id === "d2y-polish-canvas") {
+      const stage = target.closest(".d2y-polish-stage");
+
+      if (!stage?.classList.contains("is-ready")) return null;
+
+      return ["polish", "coat", "buff"].includes(stage.dataset.phase)
+        ? stage.dataset.phase
+        : null;
+    }
+
+    return null;
+  }
+
+  function stopPointer(event) {
+    if (
+      event &&
+      activePointer !== null &&
+      event.pointerId !== activePointer
+    ) return;
+
+    activePointer = null;
+    activeKind = null;
+    silence();
+  }
+
+  listen(button, "click", async () => {
+    button.disabled = true;
+
+    try {
+      if (!audio) createAudio();
+
+      if (enabled) {
+        enabled = false;
+        stopPointer();
+        await audio.suspend();
+      } else {
+        await audio.resume();
+        if (disposed) return;
+        enabled = audio.state === "running";
+      }
+
+      button.textContent = enabled
+        ? "🔊 Sound on"
+        : "🔇 Sound off";
+
+      button.setAttribute("aria-pressed", String(enabled));
+
+      button.setAttribute(
+        "aria-label",
+        enabled ? "Turn tool sounds off" : "Turn tool sounds on"
+      );
+    } catch {
+      enabled = false;
+      silence();
+      button.textContent = "Sound unavailable";
+      button.setAttribute("aria-pressed", "false");
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  listen(document, "pointerdown", event => {
+    if (!enabled || activePointer !== null) return;
+
+    if (
+      event.pointerType === "mouse" &&
+      event.button !== 0
+    ) return;
+
+    const kind = toolKind(event.target);
+    if (!kind) return;
+
+    activePointer = event.pointerId;
+    activeKind = kind;
+
+    if (audio.state !== "running") {
+      audio.resume().catch(() => {});
+    }
+  }, true);
+
+  listen(document, "pointermove", event => {
+    if (event.pointerId !== activePointer) return;
+
+    const kind = toolKind(event.target);
+
+    if (!kind || kind !== activeKind) {
+      silence();
+      return;
+    }
+
+    play(kind);
+  }, true);
+
+  ["pointerup", "pointercancel", "lostpointercapture"].forEach(name => {
+    listen(document, name, stopPointer, true);
+  });
+
+  listen(document, "keydown", event => {
+    if (
+      !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)
+    ) return;
+
+    const kind = toolKind(event.target);
+
+    if (kind === "foam" || kind === "rinse") {
+      play(kind);
+    }
+  });
+
+  listen(window, "blur", () => stopPointer());
+
+  listen(document, "visibilitychange", () => {
+    if (document.hidden) {
+      stopPointer();
+
+      if (audio) {
+        audio.suspend().catch(() => {});
+      }
+    }
+  });
+
+  window.d2yToolAudioCleanup = () => {
+    disposed = true;
+    enabled = false;
+    stopPointer();
+
+    listeners.forEach(remove => remove());
+
+    if (audio) {
+      audio.close().catch(() => {});
+    }
+
+    bar.remove();
+  };
+})();
+</script>
+
 </body>
 </html>
