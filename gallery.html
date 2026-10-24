@@ -1646,5 +1646,91 @@ initPolish();
   });
 })();
 </script>
+<style>
+.d2y-booking-invite {
+  margin-top: 28px;
+  padding: 28px 20px;
+  border: 1px solid #b5df0045;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #172008, #0b0d08);
+  text-align: center;
+}
+
+.d2y-booking-invite[hidden] {
+  display: none !important;
+}
+
+.d2y-booking-invite h3 {
+  margin: 0 0 12px;
+  color: #fff;
+  font: 700 clamp(22px, 4vw, 32px)/1.2 Arial, sans-serif;
+}
+
+.d2y-booking-invite p {
+  margin: 0 0 24px;
+  color: #b5df00;
+  font: 500 clamp(16px, 3vw, 20px)/1.5 Arial, sans-serif;
+}
+
+.d2y-booking-link {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 16px 24px;
+  border: 0;
+  border-radius: 30px;
+  background: #b5df00;
+  color: #101500 !important;
+  text-decoration: none;
+  font: 800 15px/1.4 Arial, sans-serif;
+  box-shadow: 0 5px 24px #b5df0025;
+}
+
+.d2y-booking-link:hover {
+  background: #d1f65a;
+}
+
+.d2y-booking-link:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+</style>
+
+<script>
+(() => {
+  const stage = document.getElementById("d2y-polish-stage");
+  if (!stage) return;
+
+  let invite = document.getElementById("d2y-booking-invite");
+
+  if (!invite) {
+    invite = document.createElement("div");
+    invite.id = "d2y-booking-invite";
+    stage.parentElement.appendChild(invite);
+  }
+
+  invite.className = "d2y-booking-invite";
+
+  invite.innerHTML = `
+    <h3>You’ve seen the difference.</h3>
+    <p>Now imagine it on your car.</p>
+    <a class="d2y-booking-link" href="services.html">
+      View Services &amp; Prices
+    </a>
+  `;
+
+  function updateInvite() {
+    invite.hidden = stage.dataset.phase !== "sealed";
+  }
+
+  new MutationObserver(updateInvite).observe(stage, {
+    attributes: true,
+    attributeFilter: ["data-phase"]
+  });
+
+  updateInvite();
+})();
+</script>
+
 </body>
 </html>
