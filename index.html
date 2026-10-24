@@ -170,7 +170,8 @@ margin:0 auto !important;
 padding:0 !important;
 text-align:center !important;
 }
-} 
+}
+
 /* ===== VIDEO FIX FINAL ===== */
 
 .video-hero{
@@ -203,6 +204,7 @@ text-align:center !important;
   position: relative;
   z-index: 2;
 }
+
 /* ===== PREMIUM EFFECT ===== */
 
 .bg-video{
@@ -227,6 +229,7 @@ text-align:center !important;
     transform:translateY(0);
   }
 }
+
 /* D2Y - MOBILE VERSION */
 @media screen and (max-width: 768px) {
 
@@ -295,7 +298,9 @@ text-align:center !important;
     padding: 18px 12px !important;
     margin-top: 25px !important;
   }
-}/* D2Y - VIDEO BACKGROUND ON MOBILE */
+}
+
+/* D2Y - VIDEO BACKGROUND ON MOBILE */
 @media screen and (max-width: 768px) {
 
   .video-hero .bg-video {
@@ -304,7 +309,9 @@ text-align:center !important;
     height: 100% !important;
   }
 
-}/* D2Y - VIDEOS PARA COMPUTADORA Y MOVIL */
+}
+
+/* D2Y - VIDEOS PARA COMPUTADORA Y MOVIL */
 
 #desktop-video {
   display: block;
@@ -328,7 +335,9 @@ text-align:center !important;
     object-position: center center !important;
   }
 
-}/* Ocultar barra de desplazamiento solo en HOME */
+}
+
+/* Ocultar barra de desplazamiento solo en HOME */
 
 html {
   scrollbar-width: none;
@@ -338,7 +347,8 @@ html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none;
   width: 0;
-}</style>
+}
+</style>
 </head>
 
 <body>
@@ -346,61 +356,63 @@ body::-webkit-scrollbar {
 <header>
   <div class="brand">Direct<span>2</span>You</div>
   <nav>
-  <a href="index.html">Home</a>
-  <a href="services.html">Services</a>
-  <a href="about.html">Our Story</a>
-  <a href="why.html">Why Us</a>
-  <a href="gallery.html">Gallery</a>
-  <a href="contact.html">Contact</a>
-</nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">Our Story</a>
+    <a href="why.html">Why Us</a>
+    <a href="gallery.html">Experience</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 </header>
 
 <section class="hero video-hero">
 
   <!-- VIDEO BACKGROUND -->
   <!-- VIDEO PARA COMPUTADORA -->
-<video autoplay muted loop playsinline class="bg-video" id="desktop-video">
-  <source src="D53B00A5-3E65-463F-8845-0B1E1368568A.mov">
-</video>
+  <video autoplay muted loop playsinline class="bg-video" id="desktop-video">
+    <source src="D53B00A5-3E65-463F-8845-0B1E1368568A.mov">
+  </video>
 
-<!-- VIDEO PARA IPHONE -->
-<video autoplay muted loop playsinline class="bg-video" id="mobile-video">
-  <source src="d2y-mobile.MP4" type="video/mp4">
-</video>
+  <!-- VIDEO PARA IPHONE -->
+  <video autoplay muted loop playsinline class="bg-video" id="mobile-video">
+    <source src="d2y-mobile.MP4" type="video/mp4">
+  </video>
 
-  <!-- OVERLAY (para que el texto se vea bien) -->
+  <!-- OVERLAY -->
   <div class="overlay"></div>
 
   <div class="hero-content">
-    <div class="badge" style="color:white; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px;">Mobile Valeting &amp; Detailing Dublin</div>
+    <div class="badge" style="color:white; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px;">
+      Mobile Valeting &amp; Detailing Dublin
+    </div>
 
     <h1>D<span>2</span>Y</h1>
 
     <h2 style="color:white; font-size:27px; font-weight:900; margin:20px 0;">
-  Your Car Deserves the Best!<br>
-</h2>
+      Your Car Deserves the Best!<br>
+    </h2>
 
-<p style="color:white; font-size:19px; font-weight:800; margin:18px 0;">
-  Premium car care, delivered to your doorstep.
-</p>
+    <p style="color:white; font-size:19px; font-weight:800; margin:18px 0;">
+      Premium car care, delivered to your doorstep.
+    </p>
 
-
-<p style="color:white; font-size:13px; font-weight:800; margin-top:20px; line-height:1.8;">
-  ✓ We Come to You &nbsp; ✓ Attention to Detail<br>
-  ✓ Easy Online Booking
-</p>
+    <p style="color:white; font-size:13px; font-weight:800; margin-top:20px; line-height:1.8;">
+      ✓ We Come to You &nbsp; ✓ Attention to Detail<br>
+      ✓ Easy Online Booking
+    </p>
 
     <a class="btn main-cta pulse" href="services.html">
-  View Services &amp; Prices
-</a>
-
+      View Services &amp; Prices
+    </a>
   </div>
 
 </section>
+
 <footer>
   <div class="brand">Direct<span>2</span>You</div>
   <p>© 2026 Direct2You Mobile Valeting & Detailing. Dublin, Ireland.</p>
 </footer>
+
 <script>
 function iniciarVideo() {
   const movil = window.matchMedia("(max-width: 768px)").matches;
@@ -423,5 +435,6 @@ document.addEventListener("visibilitychange", () => {
   if (!document.hidden) iniciarVideo();
 });
 </script>
+
 </body>
 </html>
