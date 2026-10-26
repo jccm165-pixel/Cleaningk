@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <style>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Choose Us | Direct2You</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
 @media (min-width: 769px) {
   header {
     position: relative !important;
@@ -11,130 +17,116 @@
     padding-top: 40px !important;
   }
 }
-</style>
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Why Choose Us | Direct2You</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
 
-<header>
-<a class="brand" href="index.html">Direct<span>2</span>You</a>
-<nav>
-<a href="index.html">Home</a><a href="services.html">Services</a><a href="about.html">Our Story</a><a class="active" href="why.html">Why Us</a><a href="gallery.html">Explore</a><a href="contact.html">Contact</a>
-</nav>
-</header>
+.why-content {
+  background: #080808;
+  color: #fff;
+  padding: 45px 20px 0;
+}
 
-<style>
+.why-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.why-content h1 {
+  font-size: clamp(30px, 5vw, 60px);
+  line-height: 1.12;
+  margin: 0 0 18px;
+}
+
+.why-content h1 span {
+  color: #a8ed32;
+}
+
+.why-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
+.why-copy {
+  max-width: 1000px;
+  margin: 30px auto 0;
+}
+
+.why-copy p {
+  font-size: 20px;
+  line-height: 1.65;
+  margin: 0 0 22px;
+  color: #e6e6e6;
+}
+
+.why-copy .why-intro {
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.why-reason {
+  border-top: 1px solid #333;
+  padding: 24px 0;
+}
+
+.why-reason h2 {
+  color: #a8ed32;
+  font-size: 20px;
+  line-height: 1.35;
+  margin: 0 0 10px;
+}
+
+.why-reason p {
+  margin: 0;
+}
+
+.why-action {
+  text-align: center;
+  padding-top: 24px;
+}
+
+.why-action a {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  background: #a8ed32;
+  color: #080808;
+  padding: 18px 26px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  header {
+    position: relative !important;
+    top: auto !important;
+  }
+
+  body {
+    padding-top: 0 !important;
+  }
+
   .why-content {
-    background: #080808;
-    color: #fff;
-padding: 45px 20px 0;
-  }
-
-  .why-wrap {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  .why-content h1 {
-    font-size: clamp(30px, 5vw, 60px);
-    line-height: 1.12;
-    margin: 0 0 18px;
-  }
-
-  .why-content h1 span {
-    color: #a8ed32;
-  }
-
-  .why-photo {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 14px;
-  }
-
-  .why-copy {
-max-width: 1000px;
-    margin: 30px auto 0;
+    padding: 30px 20px 0;
   }
 
   .why-copy p {
-   font-size: 20px;
-    line-height: 1.65;
-    margin: 0 0 22px;
-    color: #e6e6e6;
+    font-size: 16px;
   }
 
   .why-copy .why-intro {
-    font-size: 22px;
-    font-weight: 600;
-    color: #fff;
-  }
-
-  .why-reason {
-    border-top: 1px solid #333;
-    padding: 24px 0;
-  }
-
-  .why-reason h2 {
-    color: #a8ed32;
     font-size: 20px;
-    line-height: 1.35;
-    margin: 0 0 10px;
-  }
-
-  .why-reason p {
-    margin: 0;
-  }
-
-  .why-action {
-    text-align: center;
-    padding-top: 24px;
   }
 
   .why-action a {
-    display: inline-block;
-    box-sizing: border-box;
-    max-width: 100%;
-    background: #a8ed32;
-    color: #080808;
-    padding: 18px 26px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 800;
-    text-decoration: none;
+    display: block;
+    width: 100%;
   }
+}
 
-  @media (max-width: 700px) {
-    header {
-      position: relative !important;
-      top: auto !important;
-    }
-
-    body {
-      padding-top: 0 !important;
-    }
-
-    .why-content {
-padding: 30px 20px 0;
-    }
-
-    .why-copy p {
-      font-size: 16px;
-    }
-
-    .why-copy .why-intro {
-      font-size: 20px;
-    }
-
-    .why-action a {
-      display: block;
-      width: 100%;
-    }
-  }
-  .why-wrap {
+.why-wrap {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
@@ -144,9 +136,9 @@ padding: 30px 20px 0;
 .why-wrap img {
   display: block;
   width: 100%;
-max-width: 1000px;
+  max-width: 1000px;
   height: auto;
-max-height: none;
+  max-height: none;
   object-fit: contain;
   margin: 24px auto;
 }
@@ -158,16 +150,31 @@ max-height: none;
   }
 }
 </style>
+</head>
+
+<body>
+
+<header>
+  <a class="brand" href="index.html">Direct<span>2</span>You</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">Our Story</a>
+    <a class="active" href="why.html">Why Us</a>
+    <a href="gallery.html">Explore</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
 
 <main class="why-content">
   <div class="why-wrap">
 
     <h1>
-  THAT FRESH<br>
-  CAR FEELING.<br>
-  <span>WITHOUT<br>
-  LEAVING HOME.</span>
-</h1>
+      THAT FRESH<br>
+      CAR FEELING<br>
+      <span>WITHOUT<br>
+      LEAVING HOME</span>
+    </h1>
 
     <img
       class="why-photo"
@@ -178,8 +185,9 @@ max-height: none;
     <div class="why-copy">
 
       <p class="why-intro">
-        A cleaner interior. A beautiful shine.
-        A car you look forward to driving again.
+        A cleaner interior<br>
+        A beautiful shine<br>
+        A car you look forward to driving again
       </p>
 
       <p>
@@ -188,7 +196,7 @@ max-height: none;
       </p>
 
       <div class="why-reason">
-        <h2>YOUR CAR. MY FULL ATTENTION.</h2>
+        <h2>YOUR CAR MY FULL ATTENTION</h2>
         <p>
           Personal service from the first message
           to the finishing touches.
@@ -196,7 +204,7 @@ max-height: none;
       </div>
 
       <div class="why-reason">
-        <h2>LESS HASSLE. MORE TIME FOR YOU.</h2>
+        <h2>LESS HASSLE MORE TIME FOR YOU</h2>
         <p>
           Mobile detailing at your home or a suitable
           workplace location in Dublin.
@@ -204,7 +212,7 @@ max-height: none;
       </div>
 
       <div class="why-action">
-        <p><strong>FIND YOUR CAR’S NEXT TREATMENT.</strong></p>
+        <p><strong>FIND YOUR CAR’S NEXT TREATMENT</strong></p>
         <a href="services.html">
           VIEW SERVICES &amp; PRICES →
         </a>
@@ -213,20 +221,26 @@ max-height: none;
     </div>
   </div>
 </main>
+
 <section class="dark" style="padding-top:20px; padding-bottom:30px; margin-top:0;">
-<div class="section-title">
-<h2>
-  ANYWHERE IN DUBLIN.<br>
-<span>AT YOUR DOORSTEP.</span>
-</h2>
-<p>
-  At home or at a suitable workplace location,
-  wherever you are in Dublin, I bring the care to your car.
-</p>
-</div>
+  <div class="section-title">
+    <h2>
+      ANYWHERE IN DUBLIN<br>
+      <span>AT YOUR DOORSTEP</span>
+    </h2>
+    <p>
+      At home or at a suitable workplace location,
+      wherever you are in Dublin, I bring the care to your car.
+    </p>
+  </div>
 </section>
 
-<footer><div class="brand">Direct<span>2</span>You</div><p>© 2026 Direct2You Dublin.</p></footer>
+<footer>
+  <div class="brand">Direct<span>2</span>You</div>
+  <p>© 2026 Direct2You Dublin.</p>
+</footer>
+
 <a class="whatsapp-float" href="https://wa.me/353894439214">WhatsApp</a>
+
 </body>
 </html>
