@@ -40,7 +40,6 @@ position:relative;
 overflow:hidden;
 }
 
-/* ✅ FIX VIDEO */
 .video-hero{
 position:relative;
 overflow:hidden;
@@ -86,137 +85,134 @@ section{padding:95px 8%}
 .section-title span{color:var(--green)}
 .section-title p{color:var(--soft)}
 
-@media (max-width: 600px){
-.hero{
-min-height:100vh !important;
-padding:80px 16px !important;
-overflow:hidden !important;
-}
+@media (max-width:600px){
+  .hero{
+    min-height:100vh !important;
+    padding:80px 16px !important;
+    overflow:hidden !important;
+  }
 
-.hero-content{
-width:100% !important;
-max-width:360px !important;
-margin:0 auto !important;
-text-align:center !important;
-}
+  .hero-content{
+    width:100% !important;
+    max-width:360px !important;
+    margin:0 auto !important;
+    text-align:center !important;
+  }
 
-.hero h1{
-font-size:40px !important;
-line-height:1 !important;
-max-width:100% !important;
-word-break:break-word !important;
-}
+  .hero h1{
+    font-size:40px !important;
+    line-height:1 !important;
+    max-width:100% !important;
+    word-break:break-word !important;
+  }
 
-.hero p{
-max-width:100% !important;
-font-size:17px !important;
-}
+  .hero p{
+    max-width:100% !important;
+    font-size:17px !important;
+  }
 
-.cta,
-.buttons{
-width:100% !important;
-flex-direction:column !important;
-align-items:center !important;
-}
+  .cta,
+  .buttons{
+    width:100% !important;
+    flex-direction:column !important;
+    align-items:center !important;
+  }
 
-.cta a,
-.buttons a,
-.btn{
-width:100% !important;
-max-width:320px !important;
-margin-left:auto !important;
-margin-right:auto !important;
+  .cta a,
+  .buttons a,
+  .btn{
+    width:100% !important;
+    max-width:320px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
 }
-}
-
-/* RESTO DE TU CSS IGUAL... (no lo toqué) */
 
 @media(max-width:768px){
-header{flex-direction:column;gap:10px;padding:12px 4%}
-.brand{font-size:24px}
-nav{gap:8px}
-nav a{font-size:10px;padding:7px 9px}
-.hero{padding:155px 6% 70px}
-.hero h1{font-size:48px}
-.hero p{font-size:16px}
-.btn-outline{margin-left:0;margin-top:12px}
-section{padding:75px 6%}
-.section-title h2{font-size:32px}
+  header{flex-direction:column;gap:10px;padding:12px 4%}
+  .brand{font-size:24px}
+  nav{gap:8px}
+  nav a{font-size:10px;padding:7px 9px}
+  .hero{padding:155px 6% 70px}
+  .hero h1{font-size:48px}
+  .hero p{font-size:16px}
+  .btn-outline{margin-left:0;margin-top:12px}
+  section{padding:75px 6%}
+  .section-title h2{font-size:32px}
 
-/* FINAL IPHONE FIX */
-html, body{
-width:100% !important;
-max-width:100% !important;
-overflow-x:hidden !important;
+  html,body{
+    width:100% !important;
+    max-width:100% !important;
+    overflow-x:hidden !important;
+  }
+
+  .hero,
+  .video-hero{
+    width:100% !important;
+    min-height:100vh !important;
+    padding:35px 16px 120px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+    background-position:center center !important;
+    overflow:hidden !important;
+  }
+
+  .hero-content{
+    width:100% !important;
+    max-width:330px !important;
+    margin:0 auto !important;
+    padding:0 !important;
+    text-align:center !important;
+  }
 }
 
-.hero,
+/* VIDEO */
+
 .video-hero{
-width:100% !important;
-min-height:100vh !important;
-padding:35px 16px 120px !important;
-display:flex !important;
-align-items:center !important;
-justify-content:center !important;
-text-align:center !important;
-background-position:center center !important;
-overflow:hidden !important;
-}
-
-.hero-content{
-width:100% !important;
-max-width:330px !important;
-margin:0 auto !important;
-padding:0 !important;
-text-align:center !important;
-}
-}
-
-/* ===== VIDEO FIX FINAL ===== */
-
-.video-hero{
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
+  position:relative;
+  height:100vh;
+  overflow:hidden;
 }
 
 .bg-video{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
 }
 
 .overlay{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.45);
-  z-index: 1;
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.45);
+  z-index:1;
 }
 
 .hero-content{
-  position: relative;
-  z-index: 2;
+  position:relative;
+  z-index:2;
 }
 
-/* ===== PREMIUM EFFECT ===== */
+/* PREMIUM EFFECT */
 
 .bg-video{
-  filter: brightness(0.7) contrast(1.1);
+  filter:brightness(0.7) contrast(1.1);
 }
 
 .overlay{
-  background: rgba(0,0,0,0.55);
+  background:rgba(0,0,0,0.55);
 }
 
 .hero-content{
-  animation: fadeUp 1s ease forwards;
+  animation:fadeUp 1s ease forwards;
 }
 
 @keyframes fadeUp{
@@ -230,123 +226,111 @@ text-align:center !important;
   }
 }
 
-/* D2Y - MOBILE VERSION */
-@media screen and (max-width: 768px) {
+/* MOBILE VERSION */
 
-  /* Menú */
-  header {
-    padding: 10px 3% !important;
+@media screen and (max-width:768px){
+  header{
+    padding:10px 3% !important;
   }
 
-  header .brand {
-    font-size: 23px !important;
+  header .brand{
+    font-size:23px !important;
   }
 
-  header nav {
-    gap: 6px !important;
-    justify-content: center !important;
+  header nav{
+    gap:6px !important;
+    justify-content:center !important;
   }
 
-  header nav a {
-    font-size: 10px !important;
-    padding: 7px 9px !important;
+  header nav a{
+    font-size:10px !important;
+    padding:7px 9px !important;
   }
 
-  /* Portada */
-  .hero.video-hero {
-    height: auto !important;
-    min-height: 100svh !important;
-    padding: 220px 20px 60px !important;
-    display: flex !important;
-    align-items: flex-start !important;
-    justify-content: center !important;
+  .hero.video-hero{
+    height:auto !important;
+    min-height:100svh !important;
+    padding:220px 20px 60px !important;
+    display:flex !important;
+    align-items:flex-start !important;
+    justify-content:center !important;
   }
 
-  /* Texto */
-  .hero-content {
-    width: 100% !important;
-    max-width: 100% !important;
-    text-align: center !important;
+  .hero-content{
+    width:100% !important;
+    max-width:100% !important;
+    text-align:center !important;
   }
 
-  /* D2Y */
-  .hero-content h1 {
-    font-size: 50px !important;
-    line-height: 1.1 !important;
-    margin: 10px 0 15px !important;
+  .hero-content h1{
+    font-size:50px !important;
+    line-height:1.1 !important;
+    margin:10px 0 15px !important;
   }
 
-  /* Eslogan */
-  .hero-content h2 {
-    font-size: 25px !important;
-    line-height: 1.25 !important;
-    margin: 15px 0 !important;
+  .hero-content h2{
+    font-size:25px !important;
+    line-height:1.25 !important;
+    margin:15px 0 !important;
   }
 
-  /* Descripciones */
-  .hero-content p {
-    font-size: 15px !important;
-    line-height: 1.5 !important;
-    margin: 15px 0 !important;
+  .hero-content p{
+    font-size:15px !important;
+    line-height:1.5 !important;
+    margin:15px 0 !important;
   }
 
-  /* Botón verde */
-  .hero-content .main-cta {
-    display: block !important;
-    width: 100% !important;
-    font-size: 17px !important;
-    padding: 18px 12px !important;
-    margin-top: 25px !important;
+  .hero-content .main-cta{
+    display:block !important;
+    width:100% !important;
+    font-size:17px !important;
+    padding:18px 12px !important;
+    margin-top:25px !important;
   }
 }
 
-/* D2Y - VIDEO BACKGROUND ON MOBILE */
-@media screen and (max-width: 768px) {
+@media screen and (max-width:768px){
+  .video-hero .bg-video{
+    object-fit:contain !important;
+    width:100% !important;
+    height:100% !important;
+  }
+}
 
-  .video-hero .bg-video {
-    object-fit: contain !important;
-    width: 100% !important;
-    height: 100% !important;
+/* VIDEOS PARA COMPUTADORA Y MÓVIL */
+
+#desktop-video{
+  display:block;
+}
+
+#mobile-video{
+  display:none;
+}
+
+@media screen and (max-width:768px){
+  #desktop-video{
+    display:none !important;
   }
 
-}
-
-/* D2Y - VIDEOS PARA COMPUTADORA Y MOVIL */
-
-#desktop-video {
-  display: block;
-}
-
-#mobile-video {
-  display: none;
-}
-
-@media screen and (max-width: 768px) {
-
-  #desktop-video {
-    display: none !important;
+  #mobile-video{
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center center !important;
   }
-
-  #mobile-video {
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-  }
-
 }
 
-/* Ocultar barra de desplazamiento solo en HOME */
+/* OCULTAR BARRA DE DESPLAZAMIENTO EN HOME */
 
-html {
-  scrollbar-width: none;
+html{
+  scrollbar-width:none;
 }
 
 html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none;
-  width: 0;
+body::-webkit-scrollbar{
+  display:none;
+  width:0;
 }
 </style>
 </head>
@@ -367,7 +351,6 @@ body::-webkit-scrollbar {
 
 <section class="hero video-hero">
 
-  <!-- VIDEO BACKGROUND -->
   <!-- VIDEO PARA COMPUTADORA -->
   <video autoplay muted loop playsinline class="bg-video" id="desktop-video">
     <source src="D53B00A5-3E65-463F-8845-0B1E1368568A.mov">
@@ -378,7 +361,6 @@ body::-webkit-scrollbar {
     <source src="d2y-mobile.MP4" type="video/mp4">
   </video>
 
-  <!-- OVERLAY -->
   <div class="overlay"></div>
 
   <div class="hero-content">
@@ -396,11 +378,6 @@ body::-webkit-scrollbar {
       Premium car care, delivered to your doorstep.
     </p>
 
-    <p style="color:white; font-size:13px; font-weight:800; margin-top:20px; line-height:1.8;">
-      ✓ We Come to You &nbsp; ✓ Attention to Detail<br>
-      ✓ Easy Online Booking
-    </p>
-
     <a class="btn main-cta pulse" href="services.html">
       View Services &amp; Prices
     </a>
@@ -410,7 +387,7 @@ body::-webkit-scrollbar {
 
 <footer>
   <div class="brand">Direct<span>2</span>You</div>
-  <p>© 2026 Direct2You Mobile Valeting & Detailing. Dublin, Ireland.</p>
+  <p>© 2026 Direct2You Mobile Valeting &amp; Detailing. Dublin, Ireland.</p>
 </footer>
 
 <script>
