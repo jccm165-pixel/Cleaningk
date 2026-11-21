@@ -1,253 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact | Direct2You</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Direct2You</title>
+  <link rel="stylesheet" href="style.css">
 
-<style>
-@media (min-width: 769px) {
-  body {
-    background: linear-gradient(
-      rgba(0,0,0,.45),
-      rgba(0,0,0,.65)
-    ), url('Contacto4.PNG') center / cover fixed no-repeat;
-  }
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100svh;
+      background: #000;
+    }
 
-  .page-hero {
-    background: transparent !important;
-    min-height: 0 !important;
-    padding: 100px 8% 24px !important;
-    align-items: flex-start;
-  }
+    .page-hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      min-height: 0;
+      padding: 130px 8% 50px;
 
-  .page-hero .badge {
-    margin-bottom: 14px;
-  }
+      background-color: #000;
+      background-image:
+        linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.82) 0%,
+          rgba(0, 0, 0, 0.60) 38%,
+          rgba(0, 0, 0, 0.18) 75%
+        ),
+        url("Logo D2Y.jpg");
+      background-repeat: no-repeat;
+      background-position: center, right 5% center;
+      background-size: cover, min(72vw, 950px) auto;
+    }
 
-  .page-hero h1 {
-    font-size: clamp(60px, 6vw, 84px);
-    margin-bottom: 18px;
-  }
+    .page-hero .badge {
+      margin-bottom: 14px;
+    }
 
-  .page-hero p {
-    font-size: 22px;
-    margin-bottom: 22px;
-  }
+    .page-hero h1 {
+      font-size: clamp(60px, 8vw, 112px);
+      line-height: 1;
+      margin-bottom: 18px;
+    }
 
-  .page-hero + section {
-    background: transparent;
-    padding: 16px 8% 24px;
-  }
+    .page-hero p {
+      max-width: 580px;
+      margin-bottom: 24px;
+      font-size: clamp(18px, 2vw, 26px);
+      color: #fff;
+    }
 
-  .page-hero + section .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+    .contact-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 360px;
+    }
 
-  .page-hero + section .card {
-    padding: 20px;
-  }
+    .contact-buttons .btn {
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      padding: 18px 24px;
+    }
 
-  .page-hero + section h3 {
-    font-size: 24px;
-  }
+    .contact-details {
+      padding: 24px 8%;
+    }
 
-  .page-hero + section p {
-    font-size: 18px;
-  }
+    .contact-details .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 
-  footer {
-    padding: 18px 8%;
-  }
-}
+    .contact-details .card {
+      padding: 30px;
+    }
 
-@media (max-width: 768px) {
-  .page-hero {
-    background-image:
-      linear-gradient(rgba(0,0,0,.15), rgba(0,0,0,.3)),
-      url('Contacto3.PNG') !important;
-    background-size: cover !important;
-    background-position: center bottom !important;
-    min-height: 100svh !important;
-    align-items: flex-start;
-    padding: 160px 6% 60px !important;
-  }
-}
+    .contact-details h3 {
+      margin-bottom: 12px;
+      font-size: 30px;
+    }
 
-@media (min-width: 769px) {
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100svh;
-  }
+    .contact-details p {
+      font-size: 22px;
+      line-height: 1.5;
+    }
 
-  .page-hero {
-    flex-shrink: 0;
-  }
+    footer {
+      margin-top: 0;
+      padding: 18px 8%;
+    }
 
-  .page-hero h1 {
-    font-size: clamp(68px, 7vw, 96px);
-  }
+    @media (max-width: 768px) {
+      .page-hero {
+        flex: none;
+        padding: 160px 6% 36px;
+        background-image:
+          linear-gradient(
+            rgba(0, 0, 0, 0.58),
+            rgba(0, 0, 0, 0.56)
+          ),
+          url("Logo D2Y.jpg");
+        background-position: center, center 62%;
+        background-size: cover, 96% auto;
+      }
 
-  .page-hero p {
-    font-size: 24px;
-  }
+      .page-hero h1 {
+        font-size: clamp(46px, 12vw, 72px);
+      }
 
-  .page-hero .btn {
-    font-size: 18px;
-    padding: 18px 28px;
-    max-width: 360px !important;
-  }
+      .page-hero p {
+        font-size: 18px;
+      }
 
-  .page-hero + section {
-    margin-top: auto;
-    padding: 28px 8% 20px;
-  }
+      .contact-buttons {
+        max-width: 320px;
+      }
 
-  footer {
-    flex-shrink: 0;
-    margin-top: 0;
-    padding: 18px 8%;
-  }
-}
+      .contact-details {
+        padding: 12px 6% 24px;
+      }
 
-.whatsapp-float {
-  display: none !important;
-}
+      .contact-details .grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
 
-@media (max-width: 768px) {
-  .page-hero {
-    background-size: 100% auto !important;
-    background-position: center top !important;
-    background-repeat: no-repeat !important;
-    background-color: #080808;
-  }
+      .contact-details .card {
+        padding: 20px;
+      }
 
-  .page-hero > div > div:last-child {
-    margin-top: 75vw;
-  }
-}
+      .contact-details h3 {
+        font-size: 24px;
+      }
 
-@media (min-width: 769px) {
-  .page-hero h1 {
-    font-size: clamp(80px, 8vw, 112px);
-    line-height: 1;
-  }
+      .contact-details p {
+        font-size: 17px;
+      }
 
-  .page-hero .badge {
-    font-size: 16px;
-    padding: 12px 20px;
-  }
-
-  .page-hero p {
-    font-size: 26px;
-    max-width: 800px;
-  }
-
-  .page-hero .btn {
-    font-size: 22px;
-    padding: 22px 32px;
-    max-width: 440px !important;
-  }
-
-  .page-hero + section .card {
-    padding: 30px;
-    min-height: 150px;
-  }
-
-  .page-hero + section h3 {
-    font-size: 30px;
-    margin-bottom: 12px;
-  }
-
-  .page-hero + section p {
-    font-size: 22px;
-    line-height: 1.5;
-  }
-}
-
-@media (max-width: 768px) {
-  .page-hero {
-    min-height: 0 !important;
-    padding-bottom: 24px !important;
-  }
-
-  .page-hero + section {
-    margin-top: 0;
-    padding: 12px 6% 24px !important;
-  }
-
-  .page-hero + section .grid {
-    gap: 16px;
-  }
-
-  footer {
-    margin-top: 0;
-    padding: 24px 6% !important;
-  }
-}
-</style>
+      footer {
+        padding: 24px 6%;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <header>
+    <a class="brand" href="index.html">Direct<span>2</span>You</a>
 
-<header>
-  <a class="brand" href="index.html">Direct<span>2</span>You</a>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="services.html">Services</a>
-    <a href="about.html">Our Story</a>
-    <a href="why.html">Why Us</a>
-    <a href="gallery.html">Explore</a>
-    <a class="active" href="contact.html">Contact</a>
-  </nav>
-</header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">Our Story</a>
+      <a href="why.html">Why Us</a>
+      <a href="gallery.html">Explore</a>
+      <a class="active" aria-current="page" href="contact.html">Contact</a>
+    </nav>
+  </header>
 
-<section class="page-hero" style="min-height:100svh; background-image:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.65)),url('Contacto1.PNG'); background-size:cover; background-position:center; background-repeat:no-repeat;">
-  <div>
-    <div class="badge">Contact &amp; Booking</div>
+  <section class="page-hero">
+    <div>
+      <div class="badge">Contact &amp; Booking</div>
 
-    <h1>Let’s <span>Talk</span></h1>
+      <h1>Let’s <span>Talk</span></h1>
 
-    <p>Have a question or want to book? Send me a message</p>
+      <p>Have a question or want to book? Send me a message.</p>
 
-    <div style="display:flex; flex-direction:column; gap:14px; align-items:flex-start;">
-      <a class="btn"
-         style="width:100%; max-width:320px; text-align:center;"
-         href="https://wa.me/353894439214">
-        Message me on WhatsApp
-      </a>
+      <div class="contact-buttons">
+        <a class="btn" href="https://wa.me/353894439214">
+          Message me on WhatsApp
+        </a>
 
-      <a class="btn"
-         style="width:100%; max-width:320px; text-align:center;"
-         href="mailto:D2ydetailing165@gmail.com">
-        Email me
-      </a>
+        <a class="btn" href="mailto:D2ydetailing165@gmail.com">
+          Email me
+        </a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section>
-  <div class="grid">
-    <div class="card">
-      <h3>Location</h3>
-      <p>Mobile service across Dublin and nearby areas.</p>
+  <section class="contact-details">
+    <div class="grid">
+      <div class="card">
+        <h3>Location</h3>
+        <p>Mobile service across Dublin and nearby areas.</p>
+      </div>
+
+      <div class="card">
+        <h3>Booking Note</h3>
+        <p>Prices may vary depending on vehicle size and condition.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h3>Booking Note</h3>
-      <p>Prices may vary depending on vehicle size and condition.</p>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="brand">Direct<span>2</span>You</div>
-  <p>© 2026 Direct2You Mobile Valeting &amp; Detailing. Dublin, Ireland.</p>
-</footer>
-
-<a class="whatsapp-float" href="https://wa.me/353894439214">WhatsApp</a>
-
+  <footer>
+    <div class="brand">Direct<span>2</span>You</div>
+    <p>© 2026 Direct2You Mobile Valeting &amp; Detailing. Dublin, Ireland.</p>
+  </footer>
 </body>
 </html>
