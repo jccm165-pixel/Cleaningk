@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gift Cards | D2Y Mobile Detailing</title>
+  <meta name="description" content="Give someone a Mini Valet at their doorstep in Dublin with a personalised D2Y digital gift card.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #101110;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    header, main {
+      width: min(100% - 40px, 1000px);
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid #383b36;
+    }
+
+    header a {
+      color: #fff;
+      text-underline-offset: 4px;
+    }
+
+    main {
+      display: grid;
+      gap: 24px;
+      padding: 36px 0 56px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.1;
+    }
+
+    .gift-card {
+      display: grid;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .gift-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 1.5rem;
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: #e1e4dc;
+    }
+
+    .buy-button {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 14px 22px;
+      border-radius: 8px;
+      background: #a6e63f;
+      color: #101110;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .buy-button:hover {
+      background: #b8ef63;
+    }
+
+    a:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 4px;
+    }
+
+    @media (min-width: 760px) {
+      .gift-card {
+        grid-template-columns: 1.2fr 1fr;
+        gap: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Back to D2Y home</a>
+  </header>
+
+  <main>
+    <h1>Gift Cards</h1>
+
+    <section class="gift-card" aria-labelledby="mini-valet-title">
+      <img
+        src="mini-valet-gift-card.png"
+        alt="Black and lime-green D2Y Mini Valet gift card with space for the recipient’s name and a personal voucher code."
+      >
+
+      <div>
+        <h2 id="mini-valet-title">Mini Valet Gift Card</h2>
+
+        <p>Give someone a Mini Valet at their doorstep in Dublin.
+          They choose the date and we come to them.</p>
+
+        <p>We’ll email the personalised gift card to you, ready to print
+          or forward whenever you choose. The price stays off the card
+          so you can keep it a surprise.</p>
+
+        <p>To book, the recipient simply sends us their voucher code
+          on WhatsApp.</p>
+
+        <a
+          class="buy-button"
+          href="https://buy.stripe.com/7sY4gs89De7fed0dgw4Rq00"
+        >Buy a Gift Card – €70</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
