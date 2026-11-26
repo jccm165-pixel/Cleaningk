@@ -22,31 +22,46 @@
       font-size: 25px;
     }
 
-    .services-page nav {
+    /* Main navigation */
+    .services-page header nav {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 18px;
     }
 
-    .services-page nav .nav-pair {
+    .services-page header nav .nav-pair {
       display: inline-flex;
       flex: 0 0 auto;
       align-items: center;
       gap: inherit;
     }
 
-    .services-page nav a {
-      border: none;
-      background: transparent;
+    .services-page header nav a {
+      display: inline-block;
+      box-sizing: border-box;
+      padding: 8px 12px;
+      border: 1px solid rgba(166, 230, 63, 0.25);
+      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.35);
+      color: #fff;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: 1px;
+      text-decoration: none;
+      text-transform: uppercase;
       white-space: nowrap;
     }
 
-    .services-page nav a.active,
-    .services-page nav a:hover {
-      background: var(--green);
+    .services-page header nav a[aria-current="page"],
+    .services-page header nav a:hover {
+      border-color: #a6e63f;
+      background: #a6e63f;
       color: #080c0f;
+      box-shadow: 0 0 10px rgba(166, 230, 63, 0.38);
     }
 
     .services-page main {
@@ -265,6 +280,15 @@
         font-size: 23px;
       }
 
+      .services-page header nav {
+        gap: 6px;
+      }
+
+      .services-page header nav a {
+        padding: 7px 9px;
+        font-size: 10px;
+      }
+
       .services-page .page-hero {
         padding: 36px 6%;
       }
@@ -448,7 +472,6 @@
                 <li>Tyre dressing</li>
                 <li>Basic interior clean included</li>
               </ul>
-
               <p class="detail-note">
                 Deep scratches are not covered by this treatment.
                 Deep interior cleaning is available separately.
@@ -479,7 +502,6 @@
                 <li>Surface preparation</li>
                 <li>Ceramic coating application</li>
                 <li>Added gloss and water repellency</li>
-                <li>Tyre dressing</li>
               </ul>
             </details>
           </div>
@@ -494,14 +516,17 @@
             <span>Pet Hair Removal</span>
             <strong>€25</strong>
           </div>
+
           <div class="extra-item">
             <span>Headlight Restoration</span>
             <strong>€60 / pair</strong>
           </div>
+
           <div class="extra-item">
             <span>Odour Treatment</span>
             <strong>€30</strong>
           </div>
+
           <div class="extra-item">
             <span>Leather Seat Coating</span>
             <strong>€40</strong>
