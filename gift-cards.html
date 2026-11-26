@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gift Cards | D2Y Mobile Detailing</title>
-  <meta name="description" content="Give someone a Mini Valet at their doorstep in Dublin with a personalised D2Y digital gift card.">
+  <meta
+    name="description"
+    content="Choose a personalised digital gift card for mobile valeting and detailing at the recipient’s doorstep in Dublin."
+  >
 
   <style>
     * {
@@ -20,7 +23,7 @@
     }
 
     header, main {
-      width: min(100% - 40px, 1000px);
+      width: min(calc(100% - 40px), 1000px);
       margin: 0 auto;
     }
 
@@ -35,21 +38,37 @@
     }
 
     main {
-      display: grid;
-      gap: 24px;
       padding: 36px 0 56px;
     }
 
     h1 {
-      margin: 0;
+      margin: 0 0 16px;
       font-size: clamp(2rem, 5vw, 3.5rem);
       line-height: 1.1;
     }
 
+    h2 {
+      margin: 0 0 8px;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      line-height: 1.2;
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: #e1e4dc;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin-bottom: 28px;
+    }
+
     .gift-card {
       display: grid;
-      gap: 24px;
+      gap: 18px;
       align-items: center;
+      padding: 30px 0;
+      border-top: 1px solid #383b36;
     }
 
     .gift-card img {
@@ -58,19 +77,15 @@
       height: auto;
     }
 
-    h2 {
-      margin: 0 0 12px;
-      font-size: 1.5rem;
-    }
-
-    p {
+    .price {
       margin: 0 0 16px;
-      color: #e1e4dc;
+      color: #a6e63f;
+      font-size: 1.25rem;
+      font-weight: 700;
     }
 
     .buy-button {
       display: inline-block;
-      margin-top: 6px;
       padding: 14px 22px;
       border-radius: 8px;
       background: #a6e63f;
@@ -84,7 +99,7 @@
     }
 
     a:focus-visible {
-      outline: 3px solid white;
+      outline: 3px solid #fff;
       outline-offset: 4px;
     }
 
@@ -96,6 +111,7 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <a href="index.html">← Back to D2Y home</a>
@@ -104,29 +120,93 @@
   <main>
     <h1>Gift Cards</h1>
 
-    <section class="gift-card" aria-labelledby="mini-valet-title">
+    <div class="intro">
+      <p>
+        Give someone a valet or detail at their doorstep in Dublin.
+        Choose a service below and we’ll email you a personalised digital
+        gift card to send to the recipient. The price stays off the card.
+      </p>
+      <p>
+        To book, the recipient sends us their unique voucher code on WhatsApp.
+      </p>
+    </div>
+
+    <section class="gift-card" aria-labelledby="mini-valet">
       <img
-        src="mini-valet-gift-card.png"
-        alt="Black and lime-green D2Y Mini Valet gift card with space for the recipient’s name and a personal voucher code."
+        src="Gift-cards.html.PNG"
+        alt="D2Y Mini Valet gift card with a lime-green bow"
       >
-
       <div>
-        <h2 id="mini-valet-title">Mini Valet Gift Card</h2>
-
-        <p>Give someone a Mini Valet at their doorstep in Dublin.
-          They choose the date and we come to them.</p>
-
-        <p>We’ll email the personalised gift card to you, ready to print
-          or forward whenever you choose. The price stays off the card
-          so you can keep it a surprise.</p>
-
-        <p>To book, the recipient simply sends us their voucher code
-          on WhatsApp.</p>
-
+        <h2 id="mini-valet">Mini Valet Gift Card</h2>
+        <p class="price">€70</p>
         <a
           class="buy-button"
-          href="https://buy.stripe.com/7sY4gs89De7fed0dgw4Rq00"
-        >Buy a Gift Card – €70</a>
+          href="https://buy.stripe.com/dRmbIUblPgfnfh45O44Rq01"
+        >Buy Mini Valet Gift Card</a>
+      </div>
+    </section>
+
+    <section class="gift-card" aria-labelledby="full-valet">
+      <img
+        src="Gift-cards.html2.PNG"
+        alt="D2Y Full Valet gift card with a lime-green bow"
+        loading="lazy"
+      >
+      <div>
+        <h2 id="full-valet">Full Valet Gift Card</h2>
+        <p class="price">€130</p>
+        <a
+          class="buy-button"
+          href="https://buy.stripe.com/14AfZa75zaV32uifoE4Rq02"
+        >Buy Full Valet Gift Card</a>
+      </div>
+    </section>
+
+    <section class="gift-card" aria-labelledby="premium-detail">
+      <img
+        src="Gift-cards.html3.PNG"
+        alt="D2Y Premium Detail gift card with a lime-green bow"
+        loading="lazy"
+      >
+      <div>
+        <h2 id="premium-detail">Premium Detail Gift Card</h2>
+        <p class="price">€180</p>
+        <a
+          class="buy-button"
+          href="https://buy.stripe.com/7sY28kcpT9QZ6Ky90g4Rq03"
+        >Buy Premium Detail Gift Card</a>
+      </div>
+    </section>
+
+    <section class="gift-card" aria-labelledby="one-step-correction">
+      <img
+        src="Gift-cards.html4.PNG"
+        alt="D2Y One Step Correction gift card with a lime-green bow"
+        loading="lazy"
+      >
+      <div>
+        <h2 id="one-step-correction">One Step Correction Gift Card</h2>
+        <p class="price">€250</p>
+        <a
+          class="buy-button"
+          href="https://buy.stripe.com/8x29AM75z3sB0maekA4Rq04"
+        >Buy One Step Correction Gift Card</a>
+      </div>
+    </section>
+
+    <section class="gift-card" aria-labelledby="ceramic-coating">
+      <img
+        src="Gift-cards.html5.PNG"
+        alt="D2Y Ceramic Coating gift card with a lime-green bow"
+        loading="lazy"
+      >
+      <div>
+        <h2 id="ceramic-coating">Ceramic Coating Gift Card</h2>
+        <p class="price">€300</p>
+        <a
+          class="buy-button"
+          href="https://buy.stripe.com/4gM8wI1Lfgfn1qe3FW4Rq05"
+        >Buy Ceramic Coating Gift Card</a>
       </div>
     </section>
   </main>
