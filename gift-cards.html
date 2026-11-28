@@ -86,7 +86,7 @@
     main {
       width: min(calc(100% - 40px), 1000px);
       margin: 0 auto;
-      padding: 36px 0 56px;
+      padding: 36px 0 calc(84px + env(safe-area-inset-bottom, 0px));
     }
 
     h1 {
@@ -155,6 +155,29 @@
     }
 
     .buy-button:hover {
+      background: #b8ef63;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: calc(16px + env(safe-area-inset-right, 0px));
+      bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: #a6e63f;
+      color: #080c0f;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+      font-size: 15px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .whatsapp-float:hover {
       background: #b8ef63;
     }
 
@@ -304,5 +327,13 @@
       </div>
     </section>
   </main>
+
+  <a
+    class="whatsapp-float"
+    href="https://wa.me/353894999346"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Contact D2Y Detailing on WhatsApp"
+  >WhatsApp</a>
 </body>
 </html>
